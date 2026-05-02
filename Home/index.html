@@ -3,109 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlazeWingz | Proxy Gateway</title>
+    <title>Gateway</title>
     <style>
         body {
-            background-color: #0b0214;
-            color: #d400ff;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f11;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
             overflow: hidden;
         }
-        .container {
+        #ui-container {
             text-align: center;
-            padding: 40px;
-            border: 2px solid #d400ff;
-            border-radius: 15px;
-            background: rgba(20, 5, 30, 0.9);
-            box-shadow: 0 0 20px #d400ff, inset 0 0 10px #5a006b;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
         }
         h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 10px #ff00ff;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #f1f1f1;
+            letter-spacing: 1px;
+        }
+        .search-box {
+            display: flex;
+            background: #1c1c21;
+            border: 1px solid #2d2d35;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: border-color 0.3s;
+        }
+        .search-box:focus-within {
+            border-color: #6366f1;
         }
         input {
-            width: 80%;
-            padding: 15px;
-            font-size: 1.1rem;
-            border: 1px solid #ff00ff;
-            border-radius: 8px;
-            background: #000;
-            color: #00ff00; /* Neon green text for that 'hacker' feel */
+            flex-grow: 1;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
             outline: none;
-            box-shadow: 0 0 5px #ff00ff;
         }
-        .btn-group {
-            margin-top: 25px;
+        input::placeholder {
+            color: #6b6b76;
         }
         button {
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #000;
-            background: #d400ff;
+            padding: 0 24px;
+            background: #6366f1;
+            color: white;
             border: none;
-            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s ease;
+            transition: background 0.2s;
         }
         button:hover {
-            background: #ff00ff;
-            box-shadow: 0 0 15px #ff00ff;
-            transform: scale(1.05);
+            background: #4f46e5;
         }
-        .footer {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            opacity: 0.6;
+        /* The fullscreen frame that hides the UI */
+        #frame-container {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #000;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(20, 20, 20, 0.8);
+            color: white;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+        }
+        #close-btn:hover {
+            background: rgba(220, 38, 38, 0.9);
+            border-color: rgba(220, 38, 38, 0.9);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>BlazeWingz</h1>
-    <p>Enter a URL to bypass filters</p>
-    
-    <input type="text" id="url-input" placeholder="https://example.com" onkeydown="if(event.key==='Enter') launch()">
-    
-    <div class="btn-group">
-        <button onclick="launch()">Launch Proxy</button>
+    <div id="ui-container">
+        <h1>BlazeWingz Gateway</h1>
+        <div class="search-box">
+            <input type="text" id="url-input" placeholder="Enter target URL..." onkeydown="if(event.key==='Enter') loadSite()">
+            <button onclick="loadSite()">Connect</button>
+        </div>
     </div>
-    
-    <div class="footer">
-        Powered by BlazeWingz GitHub Backend
+
+    <div id="frame-container">
+        <button id="close-btn" onclick="closeSite()">✕ Close Connection</button>
+        <iframe id="viewer" src=""></iframe>
     </div>
-</div>
 
-<script>
-    function launch() {
-        let url = document.getElementById('url-input').value;
-        if (!url) return;
+    <script>
+        function loadSite() {
+            let url = document.getElementById('url-input').value.trim();
+            if (!url) return;
 
-        // Ensure URL starts with http
-        if (!url.startsWith('http')) {
-            url = 'https://' + url;
+            // Auto-add https if the user forgets it
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            // Hide the UI and show the full-screen iframe
+            document.getElementById('ui-container').style.display = 'none';
+            document.getElementById('frame-container').style.display = 'block';
+            
+            // Inject the URL directly into the iframe
+            document.getElementById('viewer').src = url;
         }
 
-        /* Since GitHub is static, we use a public proxy engine.
-           You can change 'croxyproxy.com' to any other service if this one gets blocked.
-        */
-        const proxyUrl = "https://www.croxyproxy.com/_en/proxify.php?u=" + encodeURIComponent(url);
-        
-        // Opens the proxied site in a new tab
-        window.open(proxyUrl, '_blank');
-    }
-</script>
-
+        function closeSite() {
+            // Kill the iframe feed and bring back the search bar
+            document.getElementById('viewer').src = "";
+            document.getElementById('frame-container').style.display = 'none';
+            document.getElementById('ui-container').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
