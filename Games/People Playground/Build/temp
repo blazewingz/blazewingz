@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlazeWingz Gateway</title>
+    <style>
+        body {
+            background-color: #0d0211; /* Matches your dark purple vibe */
+            color: #ff00ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        input {
+            padding: 12px;
+            width: 300px;
+            border: 2px solid #ff00ff;
+            background: #1a0521;
+            color: white;
+            border-radius: 5px;
+            outline: none;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff00ff;
+            color: black;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        button:hover {
+            box-shadow: 0 0 20px #ff00ff;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h1>BlazeWingz Proxy</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL (e.g. google.com)">
+    <button onclick="launchProxy()">Launch</button>
+
+    <script>
+        function launchProxy() {
+            const input = document.getElementById('urlInput').value;
+            if (!input) return alert("Enter something first!");
+            
+            // This uses a public proxy service as an example
+            // You can swap this URL out for any proxy service link you find
+            const proxyBase = "https://www.google.com/search?q="; 
+            
+            window.open(proxyBase + encodeURIComponent(input), '_blank');
+        }
+    </script>
+</body>
+</html>
