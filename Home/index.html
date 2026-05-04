@@ -1,148 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gateway</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlazeWingz | Connection</title>
+    
+    <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <script src="uv/uv.bundle.js" defer></script>
+    <script src="uv/uv.config.js" defer></script>
+    <script src="register-sw.js" defer></script>
+    <script src="search.js" defer></script>
+    <script src="index.js" defer></script>
+
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0f0f11;
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+        :root {
+            --accent: #ff00ff;
+            --glow: rgba(255, 0, 255, 0.4);
         }
-        #ui-container {
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: #05010a url('https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Ambient Overlay for better readability */
+        body::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(11, 2, 20, 0.7) 100%);
+            z-index: 1;
+        }
+
+        .main-ui {
+            position: relative;
+            z-index: 10;
             text-align: center;
+            color: #fff;
+        }
+
+        /* Clock Styling */
+        #day-box {
+            font-family: 'Space Age', sans-serif;
+            font-size: 80px;
+            letter-spacing: 12px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            animation: float 4s ease-in-out infinite;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        #date-box {
+            font-size: 18px;
+            letter-spacing: 5px;
+            font-style: italic;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        /* Typewriter Styling */
+        .type-wrap {
+            height: 30px;
+            margin-bottom: 40px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            font-weight: bold;
+            color: var(--accent);
+            text-shadow: 0 0 8px var(--glow);
+        }
+
+        /* THE SEARCH BAR - DASHBOARD STYLE */
+        #uv-form {
             width: 100%;
             max-width: 500px;
-            padding: 20px;
+            margin: 0 auto;
         }
-        h1 {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #f1f1f1;
-            letter-spacing: 1px;
-        }
-        .search-box {
-            display: flex;
-            background: #1c1c21;
-            border: 1px solid #2d2d35;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: border-color 0.3s;
-        }
-        .search-box:focus-within {
-            border-color: #6366f1;
-        }
-        input {
-            flex-grow: 1;
-            padding: 16px 20px;
+
+        #uv-address {
+            width: 100%;
+            padding: 18px 0;
             background: transparent;
             border: none;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            font-size: 16px;
+            font-size: 20px;
+            text-align: center;
             outline: none;
+            transition: all 0.4s ease;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
         }
-        input::placeholder {
-            color: #6b6b76;
+
+        #uv-address:focus {
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 10px 20px -10px var(--glow);
+            letter-spacing: 4px;
         }
-        button {
-            padding: 0 24px;
-            background: #6366f1;
-            color: white;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background: #4f46e5;
-        }
-        /* The fullscreen frame that hides the UI */
-        #frame-container {
-            display: none;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: #000;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        #close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(20, 20, 20, 0.8);
-            color: white;
-            border: 1px solid #333;
-            padding: 8px 16px;
-            border-radius: 6px;
+
+        #uv-address::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
             font-size: 14px;
-            cursor: pointer;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            transition: 0.2s;
+            letter-spacing: 4px;
         }
-        #close-btn:hover {
-            background: rgba(220, 38, 38, 0.9);
-            border-color: rgba(220, 38, 38, 0.9);
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
+
+        .cursor {
+            border-right: 2px solid var(--accent);
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
     </style>
 </head>
 <body>
 
-    <div id="ui-container">
-        <h1>BlazeWingz Gateway</h1>
-        <div class="search-box">
-            <input type="text" id="url-input" placeholder="Enter target URL..." onkeydown="if(event.key==='Enter') loadSite()">
-            <button onclick="loadSite()">Connect</button>
+    <div class="main-ui">
+        <div id="day-box"></div>
+        <div id="date-box"></div>
+
+        <div class="type-wrap">
+            <span id="text"></span><span class="cursor"></span>
         </div>
+
+        <form id="uv-form">
+            <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
+            <input id="uv-address" type="text" placeholder="Access Gateway" autocomplete="off" />
+        </form>
     </div>
 
-    <div id="frame-container">
-        <button id="close-btn" onclick="closeSite()">✕ Close Connection</button>
-        <iframe id="viewer" src=""></iframe>
-    </div>
+    <iframe style="display: none;" id="uv-frame"></iframe>
 
     <script>
-        function loadSite() {
-            let url = document.getElementById('url-input').value.trim();
-            if (!url) return;
+        // 1. Clock Logic
+        function updateTime() {
+            const now = new Date();
+            const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+            document.getElementById("day-box").textContent = days[now.getDay()];
+            document.getElementById("date-box").textContent = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+        }
+        updateTime(); setInterval(updateTime, 1000);
 
-            // Auto-add https if the user forgets it
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                url = 'https://' + url;
+        // 2. Typewriter Logic
+        const lines = ["WELCOME TO BLAZEWINGZ.", "SYSTEMS OPERATIONAL.", "BING CHILLING.", "AVAILABLE AT bit.ly/blazewingz"];
+        let lIdx = 0, cIdx = 0, isDel = false;
+        function type() {
+            const cur = lines[lIdx];
+            document.getElementById("text").textContent = cur.substring(0, cIdx);
+            if (!isDel && cIdx < cur.length) { cIdx++; setTimeout(type, 100); }
+            else if (isDel && cIdx > 0) { cIdx--; setTimeout(type, 50); }
+            else {
+                isDel = !isDel;
+                if (!isDel) lIdx = (lIdx + 1) % lines.length;
+                setTimeout(type, isDel ? 2000 : 500);
             }
-
-            // Hide the UI and show the full-screen iframe
-            document.getElementById('ui-container').style.display = 'none';
-            document.getElementById('frame-container').style.display = 'block';
-            
-            // Inject the URL directly into the iframe
-            document.getElementById('viewer').src = url;
         }
+        type();
 
-        function closeSite() {
-            // Kill the iframe feed and bring back the search bar
-            document.getElementById('viewer').src = "";
-            document.getElementById('frame-container').style.display = 'none';
-            document.getElementById('ui-container').style.display = 'block';
-        }
+        // 3. Enter Key Fix
+        // We let index.js handle the logic, but we make sure the form submission 
+        // doesn't refresh the page if index.js fails to catch it.
+        document.getElementById('uv-form').addEventListener('submit', (e) => {
+            if (!window.__uv$config) {
+                e.preventDefault();
+                console.error("Ultraviolet is still loading...");
+            }
+        });
     </script>
 </body>
 </html>
