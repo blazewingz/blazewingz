@@ -24,7 +24,7 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* VIDEO WALLPAPER */
+        /* BACKGROUND VIDEO */
         .bg-video {
             position: fixed;
             inset: 0;
@@ -60,7 +60,7 @@
             transform: translateY(-50%);
         }
 
-        /* CLOCK STYLING - RESTORED */
+        /* CLOCK STYLING */
         #day-box {
             font-family: 'Space Age', sans-serif;
             font-size: 80px;
@@ -79,7 +79,7 @@
             margin-bottom: 20px;
         }
 
-        /* TYPEWRITER - RESTORED */
+        /* TYPEWRITER */
         .type-wrap {
             height: 30px;
             margin-bottom: 40px;
@@ -90,7 +90,7 @@
             text-shadow: 0 0 8px var(--glow);
         }
 
-        /* SEARCH BAR - RESTORED */
+        /* SEARCH BAR */
         .home-search input {
             width: 100%;
             max-width: 500px;
@@ -113,7 +113,7 @@
             letter-spacing: 4px;
         }
 
-        /* BUTTONS - RESTORED ORIGINAL PADDING/BLUR */
+        /* QUICK LINKS */
         .quick-links {
             display: flex;
             justify-content: center;
@@ -160,16 +160,8 @@
 </head>
 <body>
 
-    <video 
-        id="bg-video" 
-        class="bg-video" 
-        autoplay 
-        muted 
-        loop 
-        playsinline
-        poster="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Wallpaper.jpg"
-    >
-        <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mov" type="video/quicktime">
+    <video id="bg-video" class="bg-video" autoplay muted loop playsinline preload="auto">
+        <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mp4" type="video/mp4">
     </video>
 
     <div class="main-ui">
@@ -192,16 +184,12 @@
     <script>
         const video = document.getElementById('bg-video');
 
-        // Fixed Error Logger (Won't crash if video.error is null)
-        video.addEventListener('error', function() {
-            if (video.error) {
-                console.error("VIDEO ERROR CODE: " + video.error.code);
-            } else {
-                console.error("Video failed to load (Check your file path or format).");
-            }
-        }, true);
+        // SILENT FORCE PLAY
+        video.play().catch(() => {
+            window.addEventListener('click', () => video.play(), { once: true });
+        });
 
-        // Clock Logic
+        // CLOCK
         function updateTime() {
             const now = new Date();
             const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -213,7 +201,7 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Typewriter Logic
+        // TYPEWRITER
         const lines = ["WELCOME TO BLAZEWINGZ.", "SYSTEMS OPERATIONAL.", "276 PLAYERS RESPONDED.", "FULL DOOM SERIES INSTALLED."];
         let lIdx = 0, cIdx = 0, isDel = false;
         function type() {
@@ -229,7 +217,7 @@
         }
         type();
 
-        // Search Redirect
+        // SEARCH
         document.getElementById("search-input").addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + encodeURIComponent(e.target.value);
