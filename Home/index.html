@@ -60,7 +60,7 @@
             transform: translateY(-50%);
         }
 
-        /* CLOCK STYLING */
+        /* CLOCK STYLING - RESTORED */
         #day-box {
             font-family: 'Space Age', sans-serif;
             font-size: 80px;
@@ -79,7 +79,7 @@
             margin-bottom: 20px;
         }
 
-        /* TYPEWRITER */
+        /* TYPEWRITER - RESTORED */
         .type-wrap {
             height: 30px;
             margin-bottom: 40px;
@@ -90,7 +90,7 @@
             text-shadow: 0 0 8px var(--glow);
         }
 
-        /* SEARCH BAR */
+        /* SEARCH BAR - RESTORED */
         .home-search input {
             width: 100%;
             max-width: 500px;
@@ -113,7 +113,7 @@
             letter-spacing: 4px;
         }
 
-        /* BUTTONS / QUICK LINKS */
+        /* BUTTONS - RESTORED ORIGINAL PADDING/BLUR */
         .quick-links {
             display: flex;
             justify-content: center;
@@ -160,7 +160,15 @@
 </head>
 <body>
 
-    <video id="bg-video" class="bg-video" autoplay muted loop playsinline>
+    <video 
+        id="bg-video" 
+        class="bg-video" 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        poster="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Wallpaper.jpg"
+    >
         <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mov" type="video/quicktime">
     </video>
 
@@ -184,19 +192,16 @@
     <script>
         const video = document.getElementById('bg-video');
 
-        // Force Play Logic
-        video.play().catch(error => {
-            console.error("Autoplay failed:", error);
-            window.addEventListener('click', () => video.play(), { once: true });
-        });
-
-        // ERROR LOGGER: Check console (F12) if video doesn't load
+        // Fixed Error Logger (Won't crash if video.error is null)
         video.addEventListener('error', function() {
-            console.error("VIDEO ERROR CODE: " + video.error.code);
-            console.error("MESSAGE: Browser may not support .mov format from GitHub.");
+            if (video.error) {
+                console.error("VIDEO ERROR CODE: " + video.error.code);
+            } else {
+                console.error("Video failed to load (Check your file path or format).");
+            }
         }, true);
 
-        // CLOCK
+        // Clock Logic
         function updateTime() {
             const now = new Date();
             const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -208,7 +213,7 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // TYPEWRITER
+        // Typewriter Logic
         const lines = ["WELCOME TO BLAZEWINGZ.", "SYSTEMS OPERATIONAL.", "276 PLAYERS RESPONDED.", "FULL DOOM SERIES INSTALLED."];
         let lIdx = 0, cIdx = 0, isDel = false;
         function type() {
@@ -224,7 +229,7 @@
         }
         type();
 
-        // SEARCH
+        // Search Redirect
         document.getElementById("search-input").addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + encodeURIComponent(e.target.value);
