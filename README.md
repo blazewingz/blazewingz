@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZ3eHByZzR3eHByZzR3eHByZzR3eHByZzR3eHByZzR3JnVwPTE/3o7TKMGpxxcaNlkjqE/giphy.gif" width="600" alt="BlazeWingz Banner" />
+  <video src="https://github.com/blazewingz/blazewingz/raw/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4" width="600" height="300" loop autoplay muted playsinline></video>
   <h1> BlazeWingz </h1>
   <p>The ultimate browser-based gaming vault.</p>
 
@@ -7,19 +7,8 @@
 </div>
 
 ---
-
 BlazeWingz is a website, built for gaming. 
 We have a myriad of varying games, I've probably made a list below depending on how lazy I am.
-
-<div align="center">
-
-[![Games Count](https://img.shields.io/badge/Games-27%2B-d500f9?style=for-the-badge&logo=gamepad&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
-[![Site Status](https://img.shields.io/badge/Status-Online-d500f9?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
-[![Platform](https://img.shields.io/badge/Platform-Web-d500f9?style=for-the-badge&logo=html5&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
-
-<img src="https://api.visitorbadge.io/api/visitors?path=blazewingz&label=VISITS&labelColor=%23090909&countColor=%23d500f9" alt="Visitor Badge" />
-
-</div>
 
 <details>
   <summary>Games</summary>
@@ -52,3 +41,13 @@ We have a myriad of varying games, I've probably made a list below depending on 
   - Undertale
   - YOMI Hustle
 </details>
+
+<div align="center">
+
+[![Games Count](https://img.shields.io/badge/Games-27%2B-d500f9?style=for-the-badge&logo=gamepad&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
+[![Site Status](https://img.shields.io/badge/Status-Online-d500f9?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
+[![Platform](https://img.shields.io/badge/Platform-Web-d500f9?style=for-the-badge&logo=html5&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
+
+<img src="https://api.visitorbadge.io/api/visitors?path=blazewingz&label=VISITS&labelColor=%23090909&countColor=%23d500f9" alt="Visitor Badge" />
+
+</div>
