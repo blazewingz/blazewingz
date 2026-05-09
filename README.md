@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true" width="100%" style="height: 200px; object-fit: cover; object-position: center; border-radius: 10px;" alt="BlazeWingz Banner" />
+  <img src="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true" width="100%" height="250" style="object-fit: cover;" alt="BlazeWingz Banner" />
   <h1> BlazeWingz </h1>
   <p>The ultimate browser-based gaming vault.</p>
 
