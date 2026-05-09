@@ -15,7 +15,9 @@ lazy I am.
 [![Games Count](https://img.shields.io/badge/Games-27%2B-d500f9?style=for-the-badge&logo=gamepad)](https://sites.google.com/view/blazewingz/home)
 [![Site Status](https://img.shields.io/badge/Status-Online-00ff00?style=for-the-badge&logo=google-chrome&logoColor=white)](https://sites.google.com/view/blazewingz/home)
 [![Platform](https://img.shields.io/badge/Platform-Web-blue?style=for-the-badge&logo=html5)](https://sites.google.com/view/blazewingz/home)
-
+<div align="center" style="margin-top: 20px;">
+  <img src="https://api.visitorbadge.io/api/visitors?path=blazewingz&label=VISITS&labelColor=%23090909&countColor=%23d500f9" alt="Visitor Badge" />
+</div>
 </div>
 
 <details>
@@ -49,7 +51,3 @@ lazy I am.
   - Undertale
   - YOMI Hustle
 </details>
-
-<div align="center" style="margin-top: 20px;">
-  <img src="https://api.visitorbadge.io/api/visitors?path=blazewingz&label=VISITS&labelColor=%23090909&countColor=%23d500f9" alt="Visitor Badge" />
-</div>
