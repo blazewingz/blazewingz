@@ -1,6 +1,5 @@
-<!-- HEADER -->
 <div align="center">
-  <img src="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true" width="600" style="max-height: 300px; width: auto;" alt="BlazeWingz Banner" />
+  <img src="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true" width="100%" style="height: 200px; object-fit: cover; object-position: center; border-radius: 10px;" alt="BlazeWingz Banner" />
   <h1> BlazeWingz </h1>
   <p>The ultimate browser-based gaming vault.</p>
 
@@ -8,13 +7,11 @@
 </div>
 
 ---
-<!-- DESCRIPTION -->
 BlazeWingz is a website, built for gaming. 
 We have a myriad of varying games, I've probably made a list below depending on how lazy I am.
 
 <div align="center">
 
-<!-- GAMES MENU -->
 </div>
 <details>
   <summary>Games</summary>
@@ -51,7 +48,6 @@ We have a myriad of varying games, I've probably made a list below depending on 
 
 <div align="center">
   
-<!-- BADGES -->
 [![Games Count](https://img.shields.io/badge/Games-27%2B-d500f9?style=for-the-badge&logo=gamepad&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
 [![Site Status](https://img.shields.io/badge/Status-Online-d500f9?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
 [![Platform](https://img.shields.io/badge/Platform-Web-d500f9?style=for-the-badge&logo=html5&labelColor=090909)](https://sites.google.com/view/blazewingz/home)
