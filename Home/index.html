@@ -1,593 +1,681 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    />
-
-    <title>BlazeWingz | Algebra</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link
-        href="https://fonts.cdnfonts.com/css/space-age"
-        rel="stylesheet"
-    >
+<title>BlazeWingz | Skyline</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
-        rel="stylesheet"
-    >
-
-    <style>
+<link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 
-        :root {
-            --accent: #ff00ff;
-            --glow: rgba(255,0,255,0.4);
-        }
+<style>
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #05010a;
-            font-family: 'Playfair Display', serif;
-        }
+:root{
+    --accent:#ff00ff;
+    --glow:rgba(255,0,255,0.4);
+}
 
-        /* =========================
-           FALLBACK STATIC IMAGE
-        ========================== */
+html,
+body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:'Playfair Display',serif;
+}
 
-        .bg-fallback {
-            position: fixed;
-            inset: 0;
+/* WEBGL CANVAS */
 
-            background:
-                url("https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true")
-                no-repeat
-                center
-                center;
+#bg{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    display:block;
+}
 
-            background-size: cover;
+/* OVERLAY */
 
-            z-index: 0;
-        }
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    z-index:1;
 
-        /* =========================
-           LIVE VIDEO
-        ========================== */
+    background:
+        radial-gradient(
+            circle,
+            transparent 10%,
+            rgba(5,0,15,0.72) 100%
+        );
+}
 
-        #bg-video {
-            position: fixed;
-            inset: 0;
+/* MAIN UI */
 
-            width: 100%;
-            height: 100%;
+.main-ui{
+    position:relative;
+    z-index:10;
 
-            object-fit: cover;
+    width:90%;
+    max-width:900px;
 
-            z-index: 1;
+    top:50%;
+    left:50%;
 
-            opacity: 1;
+    transform:translate(-50%,-50%);
 
-            pointer-events: none;
-        }
+    text-align:center;
+    color:white;
+}
 
-        /* =========================
-           DARK OVERLAY
-        ========================== */
+/* CLOCK */
 
-        .overlay {
-            position: fixed;
-            inset: 0;
+#day-box{
+    font-family:'Space Age',sans-serif;
+    font-size:80px;
+    letter-spacing:12px;
+    text-transform:uppercase;
 
-            background:
-                radial-gradient(
-                    circle,
-                    transparent 20%,
-                    rgba(11,2,20,0.72) 100%
-                );
+    margin-bottom:5px;
 
-            z-index: 2;
-            pointer-events: none;
-        }
+    animation:float 4s ease-in-out infinite;
 
-        /* =========================
-           MAIN UI
-        ========================== */
+    text-shadow:0 0 20px var(--glow);
+}
 
-        .main-ui {
-            position: relative;
-            z-index: 10;
+#date-box{
+    font-size:18px;
+    letter-spacing:5px;
+    font-style:italic;
+    opacity:0.8;
 
-            width: 90%;
-            max-width: 900px;
+    margin-bottom:20px;
+}
 
-            margin: auto;
+/* TYPEWRITER */
 
-            text-align: center;
-            color: white;
+.type-wrap{
+    height:30px;
 
-            top: 50%;
-            transform: translateY(-50%);
-        }
+    margin-bottom:40px;
 
-        /* =========================
-           CLOCK
-        ========================== */
+    font-family:'Courier New',monospace;
+    letter-spacing:2px;
+    font-weight:bold;
 
-        #day-box {
-            font-family: 'Space Age', sans-serif;
+    color:var(--accent);
 
-            font-size: 80px;
-            letter-spacing: 12px;
+    text-shadow:0 0 8px var(--glow);
+}
 
-            margin-bottom: 5px;
+/* SEARCH */
 
-            text-transform: uppercase;
+.home-search{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+}
 
-            animation: float 4s ease-in-out infinite;
+.home-search input{
+    width:100%;
 
-            text-shadow:
-                0 0 20px var(--glow),
-                0 0 50px rgba(255,0,255,0.25);
-        }
+    padding:18px 0;
 
-        #date-box {
-            font-size: 18px;
+    background:transparent;
 
-            letter-spacing: 5px;
-            font-style: italic;
+    border:none;
+    border-bottom:2px solid rgba(255,255,255,0.2);
 
-            opacity: 0.85;
+    color:white;
 
-            margin-bottom: 20px;
-        }
+    font-size:20px;
+    text-align:center;
 
-        /* =========================
-           TYPEWRITER
-        ========================== */
+    outline:none;
 
-        .type-wrap {
-            height: 30px;
+    transition:0.4s ease;
 
-            margin-bottom: 40px;
+    font-family:'Playfair Display',serif;
+    letter-spacing:2px;
+}
 
-            font-family: 'Courier New', monospace;
+.home-search input:focus{
+    border-bottom:2px solid var(--accent);
 
-            letter-spacing: 2px;
-            font-weight: bold;
+    box-shadow:
+        0 10px 20px -10px var(--glow);
 
-            color: var(--accent);
+    letter-spacing:4px;
+}
 
-            text-shadow: 0 0 8px var(--glow);
-        }
+.home-search input::placeholder{
+    color:rgba(255,255,255,0.3);
 
-        /* =========================
-           SEARCH
-        ========================== */
+    text-transform:uppercase;
 
-        .home-search {
-            width: 100%;
-            max-width: 500px;
+    font-size:14px;
+    letter-spacing:4px;
+}
 
-            margin: 0 auto;
-        }
+/* QUICK LINKS */
 
-        .home-search input {
-            width: 100%;
+.quick-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
 
-            padding: 18px 0;
+    gap:12px;
 
-            background: transparent;
+    margin-top:40px;
+}
 
-            border: none;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
+.quick-links a{
+    padding:10px 18px;
 
-            color: white;
+    border:1px solid rgba(255,255,255,0.15);
 
-            font-size: 20px;
-            text-align: center;
+    background:rgba(255,255,255,0.04);
 
-            outline: none;
+    backdrop-filter:blur(8px);
 
-            transition: all 0.4s ease;
+    color:white;
+    text-decoration:none;
 
-            font-family: 'Playfair Display', serif;
+    border-radius:10px;
 
-            letter-spacing: 2px;
-        }
+    transition:0.25s ease;
 
-        .home-search input:focus {
-            border-bottom: 2px solid var(--accent);
+    font-size:14px;
+    letter-spacing:1px;
+}
 
-            box-shadow:
-                0 10px 20px -10px var(--glow);
+.quick-links a:hover{
+    transform:translateY(-2px);
 
-            letter-spacing: 4px;
-        }
+    border-color:var(--accent);
 
-        .home-search input::placeholder {
-            color: rgba(255,255,255,0.3);
+    box-shadow:0 0 16px var(--glow);
+}
 
-            text-transform: uppercase;
+/* FLOAT */
 
-            font-size: 14px;
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px);
+    }
 
-            letter-spacing: 4px;
-        }
+    50%{
+        transform:translateY(-10px);
+    }
+}
 
-        /* =========================
-           QUICK LINKS
-        ========================== */
+/* CURSOR */
 
-        .quick-links {
-            display: flex;
+.cursor{
+    border-right:2px solid var(--accent);
+    animation:blink 1s step-end infinite;
+}
 
-            justify-content: center;
-            flex-wrap: wrap;
+@keyframes blink{
+    50%{
+        border-color:transparent;
+    }
+}
 
-            gap: 12px;
+/* MOBILE */
 
-            margin-top: 40px;
-        }
+@media (max-width:700px){
 
-        .quick-links a {
-            padding: 10px 18px;
+    #day-box{
+        font-size:42px;
+        letter-spacing:6px;
+    }
 
-            border:
-                1px solid rgba(255,255,255,0.15);
+    #date-box{
+        font-size:13px;
+        letter-spacing:2px;
+    }
 
-            background:
-                rgba(255,255,255,0.04);
+    .type-wrap{
+        font-size:13px;
+    }
 
-            backdrop-filter: blur(8px);
+    .home-search input{
+        font-size:16px;
+    }
 
-            color: white;
+}
 
-            text-decoration: none;
-
-            border-radius: 10px;
-
-            transition: 0.25s ease;
-
-            font-size: 14px;
-
-            letter-spacing: 1px;
-        }
-
-        .quick-links a:hover {
-            transform: translateY(-2px);
-
-            border-color: var(--accent);
-
-            box-shadow: 0 0 16px var(--glow);
-        }
-
-        /* =========================
-           FLOAT
-        ========================== */
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-
-        }
-
-        /* =========================
-           CURSOR
-        ========================== */
-
-        .cursor {
-            border-right: 2px solid var(--accent);
-
-            animation:
-                blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-
-            50% {
-                border-color: transparent;
-            }
-
-        }
-
-        /* =========================
-           MOBILE
-        ========================== */
-
-        @media (max-width:700px) {
-
-            #day-box {
-                font-size: 42px;
-                letter-spacing: 6px;
-            }
-
-            #date-box {
-                font-size: 13px;
-                letter-spacing: 2px;
-            }
-
-            .type-wrap {
-                font-size: 13px;
-            }
-
-            .home-search input {
-                font-size: 16px;
-            }
-
-        }
-
-    </style>
+</style>
 </head>
 <body>
 
-    <!-- STATIC FALLBACK -->
+<canvas id="bg"></canvas>
 
-    <div class="bg-fallback"></div>
+<div class="main-ui">
 
-    <!-- LIVE VIDEO -->
+    <div id="day-box"></div>
+    <div id="date-box"></div>
 
-    <video
-        id="bg-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-    >
+    <div class="type-wrap">
+        <span id="text"></span><span class="cursor"></span>
+    </div>
 
-        <source
-            src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4"
-            type="video/mp4"
+    <div class="home-search">
+        <input
+            id="home-search"
+            type="text"
+            placeholder="Search The Archives..."
         >
+    </div>
 
-    </video>
+    <div class="quick-links">
 
-    <!-- OVERLAY -->
+        <a href="https://sites.google.com/view/blazewingz/home">
+            Library
+        </a>
 
-    <div class="overlay"></div>
+        <a href="https://sites.google.com/view/blazewingz/games/minecraft">
+            Minecraft
+        </a>
 
-    <!-- MAIN UI -->
+        <a href="https://sites.google.com/view/blazewingz/games/terraria">
+            Terraria
+        </a>
 
-    <div class="main-ui">
-
-        <div id="day-box"></div>
-
-        <div id="date-box"></div>
-
-        <div class="type-wrap">
-            <span id="text"></span>
-            <span class="cursor"></span>
-        </div>
-
-        <div class="home-search">
-
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search The Archives..."
-            >
-
-        </div>
-
-        <div class="quick-links">
-
-            <a href="https://sites.google.com/view/blazewingz/home">
-                Library
-            </a>
-
-            <a href="https://sites.google.com/view/blazewingz/games/minecraft">
-                Minecraft
-            </a>
-
-            <a href="https://sites.google.com/view/blazewingz/games/terraria">
-                Terraria
-            </a>
-
-            <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">
-                YOMI Hustle
-            </a>
-
-        </div>
+        <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">
+            YOMI Hustle
+        </a>
 
     </div>
 
-    <script>
+</div>
 
-        /* =========================
-           FORCE VIDEO PLAY
-        ========================== */
+<script>
 
-        const bgVideo =
-            document.getElementById("bg-video");
+/* =========================
+   CLOCK
+========================= */
 
-        bgVideo.play().catch(() => {
+function updateTime(){
 
-            console.log(
-                "Autoplay blocked."
-            );
+    const now = new Date();
 
-        });
+    const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
 
-        /* =========================
-           CLOCK
-        ========================== */
+    document.getElementById("day-box").textContent =
+        days[now.getDay()];
 
-        function updateTime() {
+    document.getElementById("date-box").textContent =
+        now
+            .toLocaleDateString(
+                'en-GB',
+                {
+                    day:'numeric',
+                    month:'long',
+                    year:'numeric'
+                }
+            )
+            .toUpperCase();
 
-            const now =
-                new Date();
+}
 
-            const days = [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ];
+updateTime();
+setInterval(updateTime,1000);
 
-            document.getElementById(
-                "day-box"
-            ).textContent =
-                days[now.getDay()];
+/* =========================
+   TYPEWRITER
+========================= */
 
-            document.getElementById(
-                "date-box"
-            ).textContent =
-                now
-                    .toLocaleDateString(
-                        "en-GB",
-                        {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric"
-                        }
+const lines = [
+    "WELCOME TO BLAZEWINGZ.",
+    "SYSTEMS OPERATIONAL.",
+    "276 PLAYERS RESPONDED.",
+    "FULL HALF-LIFE SERIES INSTALLED.",
+    "FULL DOOM SERIES INSTALLED.",
+    "AVAILABLE AT bit.ly/blazewingz"
+];
+
+let lIdx = 0;
+let cIdx = 0;
+let isDel = false;
+
+function type(){
+
+    const cur = lines[lIdx];
+
+    document.getElementById("text").textContent =
+        cur.substring(0,cIdx);
+
+    if(!isDel && cIdx < cur.length){
+
+        cIdx++;
+        setTimeout(type,100);
+
+    }else if(isDel && cIdx > 0){
+
+        cIdx--;
+        setTimeout(type,50);
+
+    }else{
+
+        isDel = !isDel;
+
+        if(!isDel){
+            lIdx = (lIdx + 1) % lines.length;
+        }
+
+        setTimeout(type,isDel ? 2000 : 500);
+
+    }
+
+}
+
+type();
+
+/* =========================
+   SEARCH REDIRECT
+========================= */
+
+document
+.getElementById("home-search")
+.addEventListener("keydown",e=>{
+
+    if(e.key === "Enter"){
+
+        const value =
+            e.target.value.trim();
+
+        if(!value) return;
+
+        window.location.href =
+            "https://sites.google.com/view/blazewingz/home?search="
+            + encodeURIComponent(value);
+
+    }
+
+});
+
+/* =========================
+   WEBGL SKYLINE
+========================= */
+
+const canvas =
+    document.getElementById("bg");
+
+const gl =
+    canvas.getContext("webgl");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+gl.viewport(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+);
+
+/* SHADERS */
+
+const vertexShaderSource = `
+
+attribute vec2 position;
+
+void main(){
+
+    gl_Position =
+        vec4(position,0.0,1.0);
+
+}
+
+`;
+
+const fragmentShaderSource = `
+
+precision mediump float;
+
+uniform vec2 resolution;
+uniform float time;
+
+float rand(vec2 co){
+    return fract(
+        sin(
+            dot(co.xy,vec2(12.9898,78.233))
+        ) * 43758.5453
+    );
+}
+
+void main(){
+
+    vec2 uv =
+        gl_FragCoord.xy / resolution.xy;
+
+    vec3 top =
+        vec3(0.01,0.0,0.08);
+
+    vec3 bottom =
+        vec3(0.15,0.0,0.2);
+
+    vec3 color =
+        mix(bottom,top,uv.y);
+
+    /* STARS */
+
+    vec2 gv =
+        floor(uv * 200.0);
+
+    float star =
+        step(0.997,rand(gv));
+
+    color += star * 1.2;
+
+    /* CITY */
+
+    float city = 0.0;
+
+    for(int i=0;i<70;i++){
+
+        float fi = float(i);
+
+        float x =
+            fi / 70.0;
+
+        float w =
+            0.008 +
+            rand(vec2(fi,1.0)) * 0.03;
+
+        float h =
+            0.08 +
+            rand(vec2(fi,2.0)) * 0.45;
+
+        if(
+            uv.x > x &&
+            uv.x < x + w &&
+            uv.y < h
+        ){
+
+            city = 1.0;
+
+            float win =
+                step(
+                    0.92,
+                    rand(
+                        floor(
+                            uv * 80.0
+                        ) + fi + floor(time * 0.4)
                     )
-                    .toUpperCase();
+                );
+
+            color += vec3(
+                win * 0.9,
+                win * 0.5,
+                win
+            ) * 0.6;
 
         }
 
-        updateTime();
+    }
 
-        setInterval(
-            updateTime,
-            1000
+    color =
+        mix(color,vec3(0.0),city);
+
+    /* SCANLINES */
+
+    color -=
+        sin(uv.y * 900.0) * 0.015;
+
+    gl_FragColor =
+        vec4(color,1.0);
+
+}
+
+`;
+
+function createShader(type,source){
+
+    const shader =
+        gl.createShader(type);
+
+    gl.shaderSource(shader,source);
+
+    gl.compileShader(shader);
+
+    return shader;
+
+}
+
+const vertexShader =
+    createShader(
+        gl.VERTEX_SHADER,
+        vertexShaderSource
+    );
+
+const fragmentShader =
+    createShader(
+        gl.FRAGMENT_SHADER,
+        fragmentShaderSource
+    );
+
+const program =
+    gl.createProgram();
+
+gl.attachShader(program,vertexShader);
+gl.attachShader(program,fragmentShader);
+
+gl.linkProgram(program);
+gl.useProgram(program);
+
+/* FULLSCREEN QUAD */
+
+const vertices = new Float32Array([
+    -1,-1,
+     1,-1,
+    -1, 1,
+    -1, 1,
+     1,-1,
+     1, 1
+]);
+
+const buffer =
+    gl.createBuffer();
+
+gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
+
+gl.bufferData(
+    gl.ARRAY_BUFFER,
+    vertices,
+    gl.STATIC_DRAW
+);
+
+const position =
+    gl.getAttribLocation(
+        program,
+        "position"
+    );
+
+gl.enableVertexAttribArray(position);
+
+gl.vertexAttribPointer(
+    position,
+    2,
+    gl.FLOAT,
+    false,
+    0,
+    0
+);
+
+const resolutionUniform =
+    gl.getUniformLocation(
+        program,
+        "resolution"
+    );
+
+const timeUniform =
+    gl.getUniformLocation(
+        program,
+        "time"
+    );
+
+function render(t){
+
+    gl.uniform2f(
+        resolutionUniform,
+        canvas.width,
+        canvas.height
+    );
+
+    gl.uniform1f(
+        timeUniform,
+        t * 0.001
+    );
+
+    gl.drawArrays(
+        gl.TRIANGLES,
+        0,
+        6
+    );
+
+    requestAnimationFrame(render);
+
+}
+
+requestAnimationFrame(render);
+
+/* RESIZE */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        canvas.width =
+            innerWidth;
+
+        canvas.height =
+            innerHeight;
+
+        gl.viewport(
+            0,
+            0,
+            canvas.width,
+            canvas.height
         );
 
-        /* =========================
-           TYPEWRITER
-        ========================== */
+    }
+);
 
-        const lines = [
-
-            "WELCOME TO BLAZEWINGZ.",
-
-            "SYSTEMS OPERATIONAL.",
-
-            "276 PLAYERS RESPONDED.",
-
-            "FULL HALF-LIFE SERIES INSTALLED.",
-
-            "FULL DOOM SERIES INSTALLED.",
-
-            "AVAILABLE AT bit.ly/blazewingz"
-
-        ];
-
-        let lIdx = 0;
-        let cIdx = 0;
-        let isDel = false;
-
-        function type() {
-
-            const cur =
-                lines[lIdx];
-
-            document.getElementById(
-                "text"
-            ).textContent =
-                cur.substring(
-                    0,
-                    cIdx
-                );
-
-            if (
-                !isDel &&
-                cIdx < cur.length
-            ) {
-
-                cIdx++;
-
-                setTimeout(
-                    type,
-                    100
-                );
-
-            }
-
-            else if (
-                isDel &&
-                cIdx > 0
-            ) {
-
-                cIdx--;
-
-                setTimeout(
-                    type,
-                    50
-                );
-
-            }
-
-            else {
-
-                isDel = !isDel;
-
-                if (!isDel) {
-
-                    lIdx =
-                        (lIdx + 1)
-                        % lines.length;
-
-                }
-
-                setTimeout(
-                    type,
-                    isDel
-                        ? 2000
-                        : 500
-                );
-
-            }
-
-        }
-
-        type();
-
-        /* =========================
-           SEARCH REDIRECT
-        ========================== */
-
-        const searchInput =
-            document.getElementById(
-                "searchInput"
-            );
-
-        searchInput.addEventListener(
-            "keydown",
-            function(e) {
-
-                if (e.key === "Enter") {
-
-                    const query =
-                        encodeURIComponent(
-                            searchInput.value
-                        );
-
-                    window.location.href =
-                        "https://sites.google.com/view/blazewingz/home?search="
-                        + query;
-
-                }
-
-            }
-        );
-
-    </script>
+</script>
 
 </body>
 </html>
