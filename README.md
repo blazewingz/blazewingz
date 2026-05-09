@@ -1,5 +1,5 @@
 <div align="center">
-  <video src="https://github.com/blazewingz/blazewingz/raw/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4" width="600" height="500" loop autoplay muted playsinline></video>
+  <video src="https://github.com/blazewingz/blazewingz/raw/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4" width="100%" height="300" style="max-width: 600px;" loop autoplay muted playsinline></video>
   <h1> BlazeWingz </h1>
   <p>The ultimate browser-based gaming vault.</p>
 
