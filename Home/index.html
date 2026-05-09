@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 
     <style>
-
         :root {
             --accent: #ff00ff;
             --glow: rgba(255, 0, 255, 0.4);
@@ -23,14 +22,7 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Playfair Display', serif;
-
-            /* FALLBACK IMAGE */
-            background:
-                #05010a
-                url('https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true')
-                no-repeat center center fixed;
-
-            background-size: cover;
+            background-color: #05010a;
         }
 
         /* VIDEO WALLPAPER */
@@ -40,7 +32,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -2;
+            z-index: 0;
             pointer-events: none;
         }
 
@@ -49,13 +41,12 @@
             content: '';
             position: fixed;
             inset: 0;
-            background:
-                radial-gradient(
-                    circle,
-                    transparent 20%,
-                    rgba(11, 2, 20, 0.72) 100%
-                );
-            z-index: -1;
+            background: radial-gradient(
+                circle,
+                transparent 20%,
+                rgba(11, 2, 20, 0.72) 100%
+            );
+            z-index: 1;
         }
 
         .main-ui {
@@ -165,16 +156,13 @@
 
         /* FLOAT */
         @keyframes float {
-
             0%,
             100% {
                 transform: translateY(0px);
             }
-
             50% {
                 transform: translateY(-10px);
             }
-
         }
 
         /* CURSOR */
@@ -184,41 +172,32 @@
         }
 
         @keyframes blink {
-
             50% {
                 border-color: transparent;
             }
-
         }
 
         /* MOBILE */
         @media (max-width: 700px) {
-
             #day-box {
                 font-size: 42px;
                 letter-spacing: 6px;
             }
-
             #date-box {
                 font-size: 13px;
                 letter-spacing: 2px;
             }
-
             .type-wrap {
                 font-size: 13px;
             }
-
             .home-search input {
                 font-size: 16px;
             }
-
         }
-
     </style>
 </head>
 <body>
 
-    <!-- VIDEO WALLPAPER -->
     <video
         class="bg-video"
         autoplay
@@ -228,10 +207,7 @@
         preload="auto"
         poster="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true"
     >
-        <source
-            <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4">
-            type="video/mp4"
-        >
+        <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4" type="video/mp4">
     </video>
 
     <div class="main-ui">
@@ -244,87 +220,51 @@
         </div>
 
         <div class="home-search">
-
             <input
                 id="home-search-input"
                 type="text"
                 placeholder="Search The Archives..."
             >
-
         </div>
 
         <div class="quick-links">
-
-            <a href="https://sites.google.com/view/blazewingz/home">
-                Library
-            </a>
-
-            <a href="https://sites.google.com/view/blazewingz/games/minecraft">
-                Minecraft
-            </a>
-
-            <a href="https://sites.google.com/view/blazewingz/games/terraria">
-                Terraria
-            </a>
-
-            <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">
-                YOMI Hustle
-            </a>
-
+            <a href="https://sites.google.com/view/blazewingz/home">Library</a>
+            <a href="https://sites.google.com/view/blazewingz/games/minecraft">Minecraft</a>
+            <a href="https://sites.google.com/view/blazewingz/games/terraria">Terraria</a>
+            <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">YOMI Hustle</a>
         </div>
 
     </div>
 
     <script>
-
         /* CLOCK */
-
         function updateTime() {
-
             const now = new Date();
-
             const days = [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
+                "Sunday", "Monday", "Tuesday", "Wednesday",
+                "Thursday", "Friday", "Saturday"
             ];
 
-            document.getElementById("day-box").textContent =
-                days[now.getDay()];
+            document.getElementById("day-box").textContent = days[now.getDay()];
 
-            document.getElementById("date-box").textContent =
-                now
-                    .toLocaleDateString(
-                        'en-GB',
-                        {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                        }
-                    )
-                    .toUpperCase();
-
+            document.getElementById("date-box").textContent = now.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).toUpperCase();
         }
 
         updateTime();
-
         setInterval(updateTime, 1000);
 
         /* TYPEWRITER */
-
         const lines = [
-
             "WELCOME TO BLAZEWINGZ.",
             "SYSTEMS OPERATIONAL.",
             "276 PLAYERS RESPONDED.",
             "FULL HALF-LIFE SERIES INSTALLED.",
             "FULL DOOM SERIES INSTALLED.",
             "AVAILABLE AT bit.ly/blazewingz"
-
         ];
 
         let lIdx = 0;
@@ -332,70 +272,37 @@
         let isDel = false;
 
         function type() {
-
             const cur = lines[lIdx];
-
-            document.getElementById("text").textContent =
-                cur.substring(0, cIdx);
+            document.getElementById("text").textContent = cur.substring(0, cIdx);
 
             if (!isDel && cIdx < cur.length) {
-
                 cIdx++;
-
                 setTimeout(type, 100);
-
-            }
-
-            else if (isDel && cIdx > 0) {
-
+            } else if (isDel && cIdx > 0) {
                 cIdx--;
-
                 setTimeout(type, 50);
-
-            }
-
-            else {
-
+            } else {
                 isDel = !isDel;
-
                 if (!isDel) {
-
                     lIdx = (lIdx + 1) % lines.length;
-
                 }
-
                 setTimeout(type, isDel ? 2000 : 500);
-
             }
-
         }
 
         type();
 
         /* SEARCH REDIRECT */
-
-        const searchInput =
-            document.getElementById("home-search-input");
+        const searchInput = document.getElementById("home-search-input");
 
         searchInput.addEventListener("keydown", function(e) {
-
             if (e.key === "Enter") {
-
-                const value =
-                    encodeURIComponent(searchInput.value.trim());
-
+                const value = encodeURIComponent(searchInput.value.trim());
                 if (value.length > 0) {
-
-                    window.location.href =
-                        "https://sites.google.com/view/blazewingz/home?search="
-                        + value;
-
+                    window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + value;
                 }
-
             }
-
         });
-
     </script>
 
 </body>
