@@ -7,13 +7,13 @@ lazy I am.
 
 <details>
   <summary>Games</summary>
-  - 10 Minutes 'Till Dawn
-  - Balatro
-  - Brotato
-  - Buckshot Roulette
-  - Crazy Cattle 3D
-  - Celeste
-  - Cheese Rolling
+  * 10 Minutes 'Till Dawn
+  * Balatro
+  * Brotato
+  * Buckshot Roulette
+  * Crazy Cattle 3D
+  * Celeste
+  * Cheese Rolling
   - Doom
   - Five Nights at Freddy's
   - GTA: Vice City
@@ -34,11 +34,6 @@ lazy I am.
   - Ultrakill
   - Undertale
   - YOMI Hustle
-  ```js
-  function logSomething(something) {
-    console.log('Something', something);
-  }
-  ```
 </details>
 
 <div align="center" style="margin-top: 20px;">
