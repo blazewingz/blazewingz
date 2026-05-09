@@ -20,151 +20,158 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #05010a; /* Matches the dark theme */
+            background-color: #05010a;
             font-family: 'Playfair Display', serif;
         }
 
-        /* THE VIDEO LAYER */
-        #video-viewport {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Sits behind everything */
-            overflow: hidden;
-        }
-
+        /* VIDEO WALLPAPER */
         .bg-video {
+            position: fixed;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        /* THE OVERLAY GRADIENT */
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle, transparent 20%, rgba(11, 2, 20, 0.8) 100%);
             z-index: 0;
             pointer-events: none;
         }
 
-        /* UI ELEMENTS */
+        /* OVERLAY GRADIENT */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(
+                circle,
+                transparent 20%,
+                rgba(11, 2, 20, 0.72) 100%
+            );
+            z-index: 1;
+        }
+
         .main-ui {
             position: relative;
             z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: white;
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
             text-align: center;
+            color: white;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
+        /* CLOCK STYLING */
         #day-box {
             font-family: 'Space Age', sans-serif;
-            font-size: 5rem;
+            font-size: 80px;
             letter-spacing: 12px;
-            text-shadow: 0 0 20px var(--glow);
+            margin-bottom: 5px;
+            text-transform: uppercase;
             animation: float 4s ease-in-out infinite;
+            text-shadow: 0 0 20px var(--glow);
         }
 
         #date-box {
-            font-size: 1.2rem;
+            font-size: 18px;
             letter-spacing: 5px;
             font-style: italic;
-            opacity: 0.8;
-            margin: 10px 0 30px;
+            opacity: 0.85;
+            margin-bottom: 20px;
         }
 
+        /* TYPEWRITER */
         .type-wrap {
             height: 30px;
+            margin-bottom: 40px;
             font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            font-weight: bold;
             color: var(--accent);
             text-shadow: 0 0 8px var(--glow);
-            font-weight: bold;
         }
 
+        /* SEARCH BAR */
         .home-search input {
+            width: 100%;
+            max-width: 500px;
+            padding: 18px 0;
             background: transparent;
             border: none;
             border-bottom: 2px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 15px;
-            width: 400px;
+            font-size: 20px;
             text-align: center;
-            font-size: 1.2rem;
             outline: none;
-            transition: 0.4s;
-            margin-top: 30px;
+            transition: all 0.4s ease;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
         }
 
         .home-search input:focus {
-            border-color: var(--accent);
+            border-bottom: 2px solid var(--accent);
             box-shadow: 0 10px 20px -10px var(--glow);
+            letter-spacing: 4px;
         }
 
+        /* BUTTONS / QUICK LINKS */
         .quick-links {
-            margin-top: 40px;
             display: flex;
-            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 40px;
         }
 
         .quick-links a {
+            padding: 10px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(5px);
-            border-radius: 5px;
-            transition: 0.3s;
+            border-radius: 10px;
+            transition: 0.25s ease;
+            font-size: 14px;
+            letter-spacing: 1px;
         }
 
         .quick-links a:hover {
+            transform: translateY(-2px);
             border-color: var(--accent);
-            transform: translateY(-3px);
+            box-shadow: 0 0 16px var(--glow);
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
-        @media (max-width: 768px) {
-            #day-box { font-size: 2.5rem; }
-            .home-search input { width: 80%; }
+        .cursor {
+            border-right: 2px solid var(--accent);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        @media (max-width: 700px) {
+            #day-box { font-size: 42px; letter-spacing: 6px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="video-viewport">
-        <video 
-            id="bg-video"
-            class="bg-video" 
-            autoplay 
-            muted 
-            loop 
-            playsinline 
-            preload="auto"
-        >
-            <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mov" type="video/quicktime">
-        </video>
-    </div>
-
-    <div class="overlay"></div>
+    <video id="bg-video" class="bg-video" autoplay muted loop playsinline>
+        <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mov" type="video/quicktime">
+    </video>
 
     <div class="main-ui">
         <div id="day-box"></div>
         <div id="date-box"></div>
         <div class="type-wrap">
-            <span id="text"></span><span class="cursor">|</span>
+            <span id="text"></span><span class="cursor"></span>
         </div>
         <div class="home-search">
-            <input id="search" type="text" placeholder="SEARCH THE ARCHIVES...">
+            <input id="search-input" type="text" placeholder="SEARCH THE ARCHIVES...">
         </div>
         <div class="quick-links">
             <a href="https://sites.google.com/view/blazewingz/home">Library</a>
@@ -175,31 +182,38 @@
     </div>
 
     <script>
-        // Force the video to play regardless of browser stinginess
-        const v = document.getElementById('bg-video');
-        v.play().catch(() => {
-            console.log("Autoplay blocked. Waiting for user interaction.");
-            window.addEventListener('click', () => v.play(), { once: true });
+        const video = document.getElementById('bg-video');
+
+        // Force Play Logic
+        video.play().catch(error => {
+            console.error("Autoplay failed:", error);
+            window.addEventListener('click', () => video.play(), { once: true });
         });
 
-        // Clock Logic
-        function update() {
+        // ERROR LOGGER: Check console (F12) if video doesn't load
+        video.addEventListener('error', function() {
+            console.error("VIDEO ERROR CODE: " + video.error.code);
+            console.error("MESSAGE: Browser may not support .mov format from GitHub.");
+        }, true);
+
+        // CLOCK
+        function updateTime() {
             const now = new Date();
             const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            document.getElementById("day-box").innerText = days[now.getDay()];
-            document.getElementById("date-box").innerText = now.toLocaleDateString('en-GB', {
+            document.getElementById("day-box").textContent = days[now.getDay()];
+            document.getElementById("date-box").textContent = now.toLocaleDateString('en-GB', {
                 day: 'numeric', month: 'long', year: 'numeric'
             }).toUpperCase();
         }
-        setInterval(update, 1000);
-        update();
+        setInterval(updateTime, 1000);
+        updateTime();
 
-        // Typewriter Logic
+        // TYPEWRITER
         const lines = ["WELCOME TO BLAZEWINGZ.", "SYSTEMS OPERATIONAL.", "276 PLAYERS RESPONDED.", "FULL DOOM SERIES INSTALLED."];
         let lIdx = 0, cIdx = 0, isDel = false;
         function type() {
             const cur = lines[lIdx];
-            document.getElementById("text").innerText = cur.substring(0, cIdx);
+            document.getElementById("text").textContent = cur.substring(0, cIdx);
             if (!isDel && cIdx < cur.length) { cIdx++; setTimeout(type, 100); }
             else if (isDel && cIdx > 0) { cIdx--; setTimeout(type, 50); }
             else {
@@ -210,8 +224,8 @@
         }
         type();
 
-        // Search Redirect
-        document.getElementById("search").addEventListener("keydown", (e) => {
+        // SEARCH
+        document.getElementById("search-input").addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + encodeURIComponent(e.target.value);
             }
