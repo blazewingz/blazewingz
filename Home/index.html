@@ -9,22 +9,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 
     <style>
+
         :root {
             --accent: #ff00ff;
             --glow: rgba(255, 0, 255, 0.4);
         }
 
-        body, html {
+        html,
+        body {
             margin: 0;
             padding: 0;
-            height: 100%;
             width: 100%;
+            height: 100%;
             overflow: hidden;
             font-family: 'Playfair Display', serif;
-            background: #05010a;
+
+            /* FALLBACK IMAGE */
+            background:
+                #05010a
+                url('https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true')
+                no-repeat center center fixed;
+
+            background-size: cover;
         }
 
-        /* VIDEO BACKGROUND */
+        /* VIDEO WALLPAPER */
         .bg-video {
             position: fixed;
             inset: 0;
@@ -32,9 +41,10 @@
             height: 100%;
             object-fit: cover;
             z-index: -2;
+            pointer-events: none;
         }
 
-        /* AMBIENT OVERLAY */
+        /* OVERLAY */
         body::before {
             content: '';
             position: fixed;
@@ -48,19 +58,16 @@
             z-index: -1;
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
         .main-ui {
             position: relative;
             z-index: 10;
-            text-align: center;
-            color: white;
             width: 90%;
             max-width: 900px;
+            margin: auto;
+            text-align: center;
+            color: white;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         /* CLOCK */
@@ -78,7 +85,7 @@
             font-size: 18px;
             letter-spacing: 5px;
             font-style: italic;
-            opacity: 0.8;
+            opacity: 0.85;
             margin-bottom: 20px;
         }
 
@@ -93,7 +100,7 @@
             text-shadow: 0 0 8px var(--glow);
         }
 
-        /* SEARCH BAR */
+        /* SEARCH */
         .home-search {
             width: 100%;
             max-width: 500px;
@@ -158,8 +165,16 @@
 
         /* FLOAT */
         @keyframes float {
-            0%,100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
         }
 
         /* CURSOR */
@@ -169,7 +184,11 @@
         }
 
         @keyframes blink {
-            50% { border-color: transparent; }
+
+            50% {
+                border-color: transparent;
+            }
+
         }
 
         /* MOBILE */
@@ -194,6 +213,7 @@
             }
 
         }
+
     </style>
 </head>
 <body>
@@ -205,9 +225,11 @@
         muted
         loop
         playsinline
+        preload="auto"
+        poster="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true"
     >
         <source
-            src="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4?raw=true"
+            src="https://github.com/blazewingz/blazewingz/raw/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4"
             type="video/mp4"
         >
     </video>
@@ -222,11 +244,13 @@
         </div>
 
         <div class="home-search">
+
             <input
                 id="home-search-input"
                 type="text"
                 placeholder="Search The Archives..."
             >
+
         </div>
 
         <div class="quick-links">
@@ -287,17 +311,20 @@
         }
 
         updateTime();
+
         setInterval(updateTime, 1000);
 
         /* TYPEWRITER */
 
         const lines = [
+
             "WELCOME TO BLAZEWINGZ.",
             "SYSTEMS OPERATIONAL.",
             "276 PLAYERS RESPONDED.",
             "FULL HALF-LIFE SERIES INSTALLED.",
             "FULL DOOM SERIES INSTALLED.",
             "AVAILABLE AT bit.ly/blazewingz"
+
         ];
 
         let lIdx = 0;
@@ -314,19 +341,27 @@
             if (!isDel && cIdx < cur.length) {
 
                 cIdx++;
+
                 setTimeout(type, 100);
 
-            } else if (isDel && cIdx > 0) {
+            }
+
+            else if (isDel && cIdx > 0) {
 
                 cIdx--;
+
                 setTimeout(type, 50);
 
-            } else {
+            }
+
+            else {
 
                 isDel = !isDel;
 
                 if (!isDel) {
+
                     lIdx = (lIdx + 1) % lines.length;
+
                 }
 
                 setTimeout(type, isDel ? 2000 : 500);
@@ -346,12 +381,16 @@
 
             if (e.key === "Enter") {
 
-                const query =
+                const value =
                     encodeURIComponent(searchInput.value.trim());
 
-                window.location.href =
-                    "https://sites.google.com/view/blazewingz/home?search="
-                    + query;
+                if (value.length > 0) {
+
+                    window.location.href =
+                        "https://sites.google.com/view/blazewingz/home?search="
+                        + value;
+
+                }
 
             }
 
