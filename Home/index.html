@@ -1,681 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BlazeWingz | Skyline</title>
-
-<link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
-
-<style>
-
-:root{
-    --accent:#ff00ff;
-    --glow:rgba(255,0,255,0.4);
-}
-
-html,
-body{
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    font-family:'Playfair Display',serif;
-}
-
-/* WEBGL CANVAS */
-
-#bg{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:0;
-    display:block;
-}
-
-/* OVERLAY */
-
-body::before{
-    content:'';
-    position:fixed;
-    inset:0;
-    z-index:1;
-
-    background:
-        radial-gradient(
-            circle,
-            transparent 10%,
-            rgba(5,0,15,0.72) 100%
-        );
-}
-
-/* MAIN UI */
-
-.main-ui{
-    position:relative;
-    z-index:10;
-
-    width:90%;
-    max-width:900px;
-
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%,-50%);
-
-    text-align:center;
-    color:white;
-}
-
-/* CLOCK */
-
-#day-box{
-    font-family:'Space Age',sans-serif;
-    font-size:80px;
-    letter-spacing:12px;
-    text-transform:uppercase;
-
-    margin-bottom:5px;
-
-    animation:float 4s ease-in-out infinite;
-
-    text-shadow:0 0 20px var(--glow);
-}
-
-#date-box{
-    font-size:18px;
-    letter-spacing:5px;
-    font-style:italic;
-    opacity:0.8;
-
-    margin-bottom:20px;
-}
-
-/* TYPEWRITER */
-
-.type-wrap{
-    height:30px;
-
-    margin-bottom:40px;
-
-    font-family:'Courier New',monospace;
-    letter-spacing:2px;
-    font-weight:bold;
-
-    color:var(--accent);
-
-    text-shadow:0 0 8px var(--glow);
-}
-
-/* SEARCH */
-
-.home-search{
-    width:100%;
-    max-width:500px;
-    margin:auto;
-}
-
-.home-search input{
-    width:100%;
-
-    padding:18px 0;
-
-    background:transparent;
-
-    border:none;
-    border-bottom:2px solid rgba(255,255,255,0.2);
-
-    color:white;
-
-    font-size:20px;
-    text-align:center;
-
-    outline:none;
-
-    transition:0.4s ease;
-
-    font-family:'Playfair Display',serif;
-    letter-spacing:2px;
-}
-
-.home-search input:focus{
-    border-bottom:2px solid var(--accent);
-
-    box-shadow:
-        0 10px 20px -10px var(--glow);
-
-    letter-spacing:4px;
-}
-
-.home-search input::placeholder{
-    color:rgba(255,255,255,0.3);
-
-    text-transform:uppercase;
-
-    font-size:14px;
-    letter-spacing:4px;
-}
-
-/* QUICK LINKS */
-
-.quick-links{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-
-    gap:12px;
-
-    margin-top:40px;
-}
-
-.quick-links a{
-    padding:10px 18px;
-
-    border:1px solid rgba(255,255,255,0.15);
-
-    background:rgba(255,255,255,0.04);
-
-    backdrop-filter:blur(8px);
-
-    color:white;
-    text-decoration:none;
-
-    border-radius:10px;
-
-    transition:0.25s ease;
-
-    font-size:14px;
-    letter-spacing:1px;
-}
-
-.quick-links a:hover{
-    transform:translateY(-2px);
-
-    border-color:var(--accent);
-
-    box-shadow:0 0 16px var(--glow);
-}
-
-/* FLOAT */
-
-@keyframes float{
-    0%,100%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-}
-
-/* CURSOR */
-
-.cursor{
-    border-right:2px solid var(--accent);
-    animation:blink 1s step-end infinite;
-}
-
-@keyframes blink{
-    50%{
-        border-color:transparent;
-    }
-}
-
-/* MOBILE */
-
-@media (max-width:700px){
-
-    #day-box{
-        font-size:42px;
-        letter-spacing:6px;
-    }
-
-    #date-box{
-        font-size:13px;
-        letter-spacing:2px;
-    }
-
-    .type-wrap{
-        font-size:13px;
-    }
-
-    .home-search input{
-        font-size:16px;
-    }
-
-}
-
-</style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlazeWingz | Algebra</title>
+    
+    <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #ff00ff;
+            --glow: rgba(255, 0, 255, 0.4);
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #05010a;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* VIDEO WALLPAPER */
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* OVERLAY GRADIENT */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(
+                circle,
+                transparent 20%,
+                rgba(11, 2, 20, 0.72) 100%
+            );
+            z-index: 1;
+        }
+
+        .main-ui {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+            color: white;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* CLOCK STYLING - RESTORED */
+        #day-box {
+            font-family: 'Space Age', sans-serif;
+            font-size: 80px;
+            letter-spacing: 12px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            animation: float 4s ease-in-out infinite;
+            text-shadow: 0 0 20px var(--glow);
+        }
+
+        #date-box {
+            font-size: 18px;
+            letter-spacing: 5px;
+            font-style: italic;
+            opacity: 0.85;
+            margin-bottom: 20px;
+        }
+
+        /* TYPEWRITER - RESTORED */
+        .type-wrap {
+            height: 30px;
+            margin-bottom: 40px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            font-weight: bold;
+            color: var(--accent);
+            text-shadow: 0 0 8px var(--glow);
+        }
+
+        /* SEARCH BAR - RESTORED */
+        .home-search input {
+            width: 100%;
+            max-width: 500px;
+            padding: 18px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            outline: none;
+            transition: all 0.4s ease;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+        }
+
+        .home-search input:focus {
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 10px 20px -10px var(--glow);
+            letter-spacing: 4px;
+        }
+
+        /* BUTTONS - RESTORED ORIGINAL PADDING/BLUR */
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .quick-links a {
+            padding: 10px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.25s ease;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .quick-links a:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 0 16px var(--glow);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cursor {
+            border-right: 2px solid var(--accent);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        @media (max-width: 700px) {
+            #day-box { font-size: 42px; letter-spacing: 6px; }
+        }
+    </style>
 </head>
 <body>
 
-<canvas id="bg"></canvas>
+    <video 
+        id="bg-video" 
+        class="bg-video" 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        poster="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Wallpaper.jpg"
+    >
+        <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mov" type="video/quicktime">
+    </video>
 
-<div class="main-ui">
-
-    <div id="day-box"></div>
-    <div id="date-box"></div>
-
-    <div class="type-wrap">
-        <span id="text"></span><span class="cursor"></span>
+    <div class="main-ui">
+        <div id="day-box"></div>
+        <div id="date-box"></div>
+        <div class="type-wrap">
+            <span id="text"></span><span class="cursor"></span>
+        </div>
+        <div class="home-search">
+            <input id="search-input" type="text" placeholder="SEARCH THE ARCHIVES...">
+        </div>
+        <div class="quick-links">
+            <a href="https://sites.google.com/view/blazewingz/home">Library</a>
+            <a href="https://sites.google.com/view/blazewingz/games/minecraft">Minecraft</a>
+            <a href="https://sites.google.com/view/blazewingz/games/terraria">Terraria</a>
+            <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">YOMI Hustle</a>
+        </div>
     </div>
 
-    <div class="home-search">
-        <input
-            id="home-search"
-            type="text"
-            placeholder="Search The Archives..."
-        >
-    </div>
+    <script>
+        const video = document.getElementById('bg-video');
 
-    <div class="quick-links">
+        // Fixed Error Logger (Won't crash if video.error is null)
+        video.addEventListener('error', function() {
+            if (video.error) {
+                console.error("VIDEO ERROR CODE: " + video.error.code);
+            } else {
+                console.error("Video failed to load (Check your file path or format).");
+            }
+        }, true);
 
-        <a href="https://sites.google.com/view/blazewingz/home">
-            Library
-        </a>
-
-        <a href="https://sites.google.com/view/blazewingz/games/minecraft">
-            Minecraft
-        </a>
-
-        <a href="https://sites.google.com/view/blazewingz/games/terraria">
-            Terraria
-        </a>
-
-        <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">
-            YOMI Hustle
-        </a>
-
-    </div>
-
-</div>
-
-<script>
-
-/* =========================
-   CLOCK
-========================= */
-
-function updateTime(){
-
-    const now = new Date();
-
-    const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ];
-
-    document.getElementById("day-box").textContent =
-        days[now.getDay()];
-
-    document.getElementById("date-box").textContent =
-        now
-            .toLocaleDateString(
-                'en-GB',
-                {
-                    day:'numeric',
-                    month:'long',
-                    year:'numeric'
-                }
-            )
-            .toUpperCase();
-
-}
-
-updateTime();
-setInterval(updateTime,1000);
-
-/* =========================
-   TYPEWRITER
-========================= */
-
-const lines = [
-    "WELCOME TO BLAZEWINGZ.",
-    "SYSTEMS OPERATIONAL.",
-    "276 PLAYERS RESPONDED.",
-    "FULL HALF-LIFE SERIES INSTALLED.",
-    "FULL DOOM SERIES INSTALLED.",
-    "AVAILABLE AT bit.ly/blazewingz"
-];
-
-let lIdx = 0;
-let cIdx = 0;
-let isDel = false;
-
-function type(){
-
-    const cur = lines[lIdx];
-
-    document.getElementById("text").textContent =
-        cur.substring(0,cIdx);
-
-    if(!isDel && cIdx < cur.length){
-
-        cIdx++;
-        setTimeout(type,100);
-
-    }else if(isDel && cIdx > 0){
-
-        cIdx--;
-        setTimeout(type,50);
-
-    }else{
-
-        isDel = !isDel;
-
-        if(!isDel){
-            lIdx = (lIdx + 1) % lines.length;
+        // Clock Logic
+        function updateTime() {
+            const now = new Date();
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            document.getElementById("day-box").textContent = days[now.getDay()];
+            document.getElementById("date-box").textContent = now.toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            }).toUpperCase();
         }
+        setInterval(updateTime, 1000);
+        updateTime();
 
-        setTimeout(type,isDel ? 2000 : 500);
-
-    }
-
-}
-
-type();
-
-/* =========================
-   SEARCH REDIRECT
-========================= */
-
-document
-.getElementById("home-search")
-.addEventListener("keydown",e=>{
-
-    if(e.key === "Enter"){
-
-        const value =
-            e.target.value.trim();
-
-        if(!value) return;
-
-        window.location.href =
-            "https://sites.google.com/view/blazewingz/home?search="
-            + encodeURIComponent(value);
-
-    }
-
-});
-
-/* =========================
-   WEBGL SKYLINE
-========================= */
-
-const canvas =
-    document.getElementById("bg");
-
-const gl =
-    canvas.getContext("webgl");
-
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-gl.viewport(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-);
-
-/* SHADERS */
-
-const vertexShaderSource = `
-
-attribute vec2 position;
-
-void main(){
-
-    gl_Position =
-        vec4(position,0.0,1.0);
-
-}
-
-`;
-
-const fragmentShaderSource = `
-
-precision mediump float;
-
-uniform vec2 resolution;
-uniform float time;
-
-float rand(vec2 co){
-    return fract(
-        sin(
-            dot(co.xy,vec2(12.9898,78.233))
-        ) * 43758.5453
-    );
-}
-
-void main(){
-
-    vec2 uv =
-        gl_FragCoord.xy / resolution.xy;
-
-    vec3 top =
-        vec3(0.01,0.0,0.08);
-
-    vec3 bottom =
-        vec3(0.15,0.0,0.2);
-
-    vec3 color =
-        mix(bottom,top,uv.y);
-
-    /* STARS */
-
-    vec2 gv =
-        floor(uv * 200.0);
-
-    float star =
-        step(0.997,rand(gv));
-
-    color += star * 1.2;
-
-    /* CITY */
-
-    float city = 0.0;
-
-    for(int i=0;i<70;i++){
-
-        float fi = float(i);
-
-        float x =
-            fi / 70.0;
-
-        float w =
-            0.008 +
-            rand(vec2(fi,1.0)) * 0.03;
-
-        float h =
-            0.08 +
-            rand(vec2(fi,2.0)) * 0.45;
-
-        if(
-            uv.x > x &&
-            uv.x < x + w &&
-            uv.y < h
-        ){
-
-            city = 1.0;
-
-            float win =
-                step(
-                    0.92,
-                    rand(
-                        floor(
-                            uv * 80.0
-                        ) + fi + floor(time * 0.4)
-                    )
-                );
-
-            color += vec3(
-                win * 0.9,
-                win * 0.5,
-                win
-            ) * 0.6;
-
+        // Typewriter Logic
+        const lines = ["WELCOME TO BLAZEWINGZ.", "SYSTEMS OPERATIONAL.", "276 PLAYERS RESPONDED.", "FULL DOOM SERIES INSTALLED."];
+        let lIdx = 0, cIdx = 0, isDel = false;
+        function type() {
+            const cur = lines[lIdx];
+            document.getElementById("text").textContent = cur.substring(0, cIdx);
+            if (!isDel && cIdx < cur.length) { cIdx++; setTimeout(type, 100); }
+            else if (isDel && cIdx > 0) { cIdx--; setTimeout(type, 50); }
+            else {
+                isDel = !isDel;
+                if (!isDel) lIdx = (lIdx + 1) % lines.length;
+                setTimeout(type, isDel ? 2000 : 500);
+            }
         }
+        type();
 
-    }
-
-    color =
-        mix(color,vec3(0.0),city);
-
-    /* SCANLINES */
-
-    color -=
-        sin(uv.y * 900.0) * 0.015;
-
-    gl_FragColor =
-        vec4(color,1.0);
-
-}
-
-`;
-
-function createShader(type,source){
-
-    const shader =
-        gl.createShader(type);
-
-    gl.shaderSource(shader,source);
-
-    gl.compileShader(shader);
-
-    return shader;
-
-}
-
-const vertexShader =
-    createShader(
-        gl.VERTEX_SHADER,
-        vertexShaderSource
-    );
-
-const fragmentShader =
-    createShader(
-        gl.FRAGMENT_SHADER,
-        fragmentShaderSource
-    );
-
-const program =
-    gl.createProgram();
-
-gl.attachShader(program,vertexShader);
-gl.attachShader(program,fragmentShader);
-
-gl.linkProgram(program);
-gl.useProgram(program);
-
-/* FULLSCREEN QUAD */
-
-const vertices = new Float32Array([
-    -1,-1,
-     1,-1,
-    -1, 1,
-    -1, 1,
-     1,-1,
-     1, 1
-]);
-
-const buffer =
-    gl.createBuffer();
-
-gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
-
-gl.bufferData(
-    gl.ARRAY_BUFFER,
-    vertices,
-    gl.STATIC_DRAW
-);
-
-const position =
-    gl.getAttribLocation(
-        program,
-        "position"
-    );
-
-gl.enableVertexAttribArray(position);
-
-gl.vertexAttribPointer(
-    position,
-    2,
-    gl.FLOAT,
-    false,
-    0,
-    0
-);
-
-const resolutionUniform =
-    gl.getUniformLocation(
-        program,
-        "resolution"
-    );
-
-const timeUniform =
-    gl.getUniformLocation(
-        program,
-        "time"
-    );
-
-function render(t){
-
-    gl.uniform2f(
-        resolutionUniform,
-        canvas.width,
-        canvas.height
-    );
-
-    gl.uniform1f(
-        timeUniform,
-        t * 0.001
-    );
-
-    gl.drawArrays(
-        gl.TRIANGLES,
-        0,
-        6
-    );
-
-    requestAnimationFrame(render);
-
-}
-
-requestAnimationFrame(render);
-
-/* RESIZE */
-
-window.addEventListener(
-    "resize",
-    ()=>{
-
-        canvas.width =
-            innerWidth;
-
-        canvas.height =
-            innerHeight;
-
-        gl.viewport(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
-
-    }
-);
-
-</script>
-
+        // Search Redirect
+        document.getElementById("search-input").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + encodeURIComponent(e.target.value);
+            }
+        });
+    </script>
 </body>
 </html>
