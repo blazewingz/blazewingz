@@ -7,13 +7,14 @@ lazy I am.
 
 <details>
   <summary>Games</summary>
-  * 10 Minutes 'Till Dawn
-  * Balatro
-  * Brotato
-  * Buckshot Roulette
-  * Crazy Cattle 3D
-  * Celeste
-  * Cheese Rolling
+
+  - 10 Minutes 'Till Dawn
+  - Balatro
+  - Brotato
+  - Buckshot Roulette
+  - Crazy Cattle 3D
+  - Celeste
+  - Cheese Rolling
   - Doom
   - Five Nights at Freddy's
   - GTA: Vice City
