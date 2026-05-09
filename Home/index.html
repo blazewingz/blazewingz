@@ -2,16 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
     <title>BlazeWingz | Algebra</title>
-    
-    <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.cdnfonts.com/css/space-age"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
+
         :root {
             --accent: #ff00ff;
-            --glow: rgba(255, 0, 255, 0.4);
+            --glow: rgba(255,0,255,0.4);
         }
 
         html,
@@ -21,250 +33,459 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            background: #05010a;
             font-family: 'Playfair Display', serif;
-            background-color: #05010a;
         }
 
-        /* VIDEO WALLPAPER */
-        .bg-video {
+        /* =========================
+           FALLBACK STATIC IMAGE
+        ========================== */
+
+        .bg-fallback {
             position: fixed;
             inset: 0;
+
+            background:
+                url("https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true")
+                no-repeat
+                center
+                center;
+
+            background-size: cover;
+
+            z-index: 0;
+        }
+
+        /* =========================
+           LIVE VIDEO
+        ========================== */
+
+        #bg-video {
+            position: fixed;
+            inset: 0;
+
             width: 100%;
             height: 100%;
+
             object-fit: cover;
-            z-index: 0;
+
+            z-index: 1;
+
+            opacity: 1;
+
             pointer-events: none;
         }
 
-        /* OVERLAY */
-        body::before {
-            content: '';
+        /* =========================
+           DARK OVERLAY
+        ========================== */
+
+        .overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(
-                circle,
-                transparent 20%,
-                rgba(11, 2, 20, 0.72) 100%
-            );
-            z-index: 1;
+
+            background:
+                radial-gradient(
+                    circle,
+                    transparent 20%,
+                    rgba(11,2,20,0.72) 100%
+                );
+
+            z-index: 2;
+            pointer-events: none;
         }
+
+        /* =========================
+           MAIN UI
+        ========================== */
 
         .main-ui {
             position: relative;
             z-index: 10;
+
             width: 90%;
             max-width: 900px;
+
             margin: auto;
+
             text-align: center;
             color: white;
+
             top: 50%;
             transform: translateY(-50%);
         }
 
-        /* CLOCK */
+        /* =========================
+           CLOCK
+        ========================== */
+
         #day-box {
             font-family: 'Space Age', sans-serif;
+
             font-size: 80px;
             letter-spacing: 12px;
+
             margin-bottom: 5px;
+
             text-transform: uppercase;
+
             animation: float 4s ease-in-out infinite;
-            text-shadow: 0 0 20px var(--glow);
+
+            text-shadow:
+                0 0 20px var(--glow),
+                0 0 50px rgba(255,0,255,0.25);
         }
 
         #date-box {
             font-size: 18px;
+
             letter-spacing: 5px;
             font-style: italic;
+
             opacity: 0.85;
+
             margin-bottom: 20px;
         }
 
-        /* TYPEWRITER */
+        /* =========================
+           TYPEWRITER
+        ========================== */
+
         .type-wrap {
             height: 30px;
+
             margin-bottom: 40px;
+
             font-family: 'Courier New', monospace;
+
             letter-spacing: 2px;
             font-weight: bold;
+
             color: var(--accent);
+
             text-shadow: 0 0 8px var(--glow);
         }
 
-        /* SEARCH */
+        /* =========================
+           SEARCH
+        ========================== */
+
         .home-search {
             width: 100%;
             max-width: 500px;
+
             margin: 0 auto;
         }
 
         .home-search input {
             width: 100%;
+
             padding: 18px 0;
+
             background: transparent;
+
             border: none;
             border-bottom: 2px solid rgba(255,255,255,0.2);
+
             color: white;
+
             font-size: 20px;
             text-align: center;
+
             outline: none;
+
             transition: all 0.4s ease;
+
             font-family: 'Playfair Display', serif;
+
             letter-spacing: 2px;
         }
 
         .home-search input:focus {
             border-bottom: 2px solid var(--accent);
-            box-shadow: 0 10px 20px -10px var(--glow);
+
+            box-shadow:
+                0 10px 20px -10px var(--glow);
+
             letter-spacing: 4px;
         }
 
         .home-search input::placeholder {
             color: rgba(255,255,255,0.3);
+
             text-transform: uppercase;
+
             font-size: 14px;
+
             letter-spacing: 4px;
         }
 
-        /* QUICK LINKS */
+        /* =========================
+           QUICK LINKS
+        ========================== */
+
         .quick-links {
             display: flex;
+
             justify-content: center;
             flex-wrap: wrap;
+
             gap: 12px;
+
             margin-top: 40px;
         }
 
         .quick-links a {
             padding: 10px 18px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.04);
+
+            border:
+                1px solid rgba(255,255,255,0.15);
+
+            background:
+                rgba(255,255,255,0.04);
+
             backdrop-filter: blur(8px);
+
             color: white;
+
             text-decoration: none;
+
             border-radius: 10px;
+
             transition: 0.25s ease;
+
             font-size: 14px;
+
             letter-spacing: 1px;
         }
 
         .quick-links a:hover {
             transform: translateY(-2px);
+
             border-color: var(--accent);
+
             box-shadow: 0 0 16px var(--glow);
         }
 
-        /* FLOAT */
+        /* =========================
+           FLOAT
+        ========================== */
+
         @keyframes float {
+
             0%,
             100% {
                 transform: translateY(0px);
             }
+
             50% {
                 transform: translateY(-10px);
             }
+
         }
 
-        /* CURSOR */
+        /* =========================
+           CURSOR
+        ========================== */
+
         .cursor {
             border-right: 2px solid var(--accent);
-            animation: blink 1s step-end infinite;
+
+            animation:
+                blink 1s step-end infinite;
         }
 
         @keyframes blink {
+
             50% {
                 border-color: transparent;
             }
+
         }
 
-        /* MOBILE */
-        @media (max-width: 700px) {
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width:700px) {
+
             #day-box {
                 font-size: 42px;
                 letter-spacing: 6px;
             }
+
             #date-box {
                 font-size: 13px;
                 letter-spacing: 2px;
             }
+
             .type-wrap {
                 font-size: 13px;
             }
+
             .home-search input {
                 font-size: 16px;
             }
+
         }
+
     </style>
 </head>
 <body>
 
+    <!-- STATIC FALLBACK -->
+
+    <div class="bg-fallback"></div>
+
+    <!-- LIVE VIDEO -->
+
     <video
-        class="bg-video"
+        id="bg-video"
         autoplay
         muted
         loop
         playsinline
         preload="auto"
-        poster="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true"
     >
-        <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4" type="video/mp4">
+
+        <source
+            src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4"
+            type="video/mp4"
+        >
+
     </video>
+
+    <!-- OVERLAY -->
+
+    <div class="overlay"></div>
+
+    <!-- MAIN UI -->
 
     <div class="main-ui">
 
         <div id="day-box"></div>
+
         <div id="date-box"></div>
 
         <div class="type-wrap">
-            <span id="text"></span><span class="cursor"></span>
+            <span id="text"></span>
+            <span class="cursor"></span>
         </div>
 
         <div class="home-search">
+
             <input
-                id="home-search-input"
+                id="searchInput"
                 type="text"
                 placeholder="Search The Archives..."
             >
+
         </div>
 
         <div class="quick-links">
-            <a href="https://sites.google.com/view/blazewingz/home">Library</a>
-            <a href="https://sites.google.com/view/blazewingz/games/minecraft">Minecraft</a>
-            <a href="https://sites.google.com/view/blazewingz/games/terraria">Terraria</a>
-            <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">YOMI Hustle</a>
+
+            <a href="https://sites.google.com/view/blazewingz/home">
+                Library
+            </a>
+
+            <a href="https://sites.google.com/view/blazewingz/games/minecraft">
+                Minecraft
+            </a>
+
+            <a href="https://sites.google.com/view/blazewingz/games/terraria">
+                Terraria
+            </a>
+
+            <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">
+                YOMI Hustle
+            </a>
+
         </div>
 
     </div>
 
     <script>
-        /* CLOCK */
+
+        /* =========================
+           FORCE VIDEO PLAY
+        ========================== */
+
+        const bgVideo =
+            document.getElementById("bg-video");
+
+        bgVideo.play().catch(() => {
+
+            console.log(
+                "Autoplay blocked."
+            );
+
+        });
+
+        /* =========================
+           CLOCK
+        ========================== */
+
         function updateTime() {
-            const now = new Date();
+
+            const now =
+                new Date();
+
             const days = [
-                "Sunday", "Monday", "Tuesday", "Wednesday",
-                "Thursday", "Friday", "Saturday"
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
             ];
 
-            document.getElementById("day-box").textContent = days[now.getDay()];
+            document.getElementById(
+                "day-box"
+            ).textContent =
+                days[now.getDay()];
 
-            document.getElementById("date-box").textContent = now.toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }).toUpperCase();
+            document.getElementById(
+                "date-box"
+            ).textContent =
+                now
+                    .toLocaleDateString(
+                        "en-GB",
+                        {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                        }
+                    )
+                    .toUpperCase();
+
         }
 
         updateTime();
-        setInterval(updateTime, 1000);
 
-        /* TYPEWRITER */
+        setInterval(
+            updateTime,
+            1000
+        );
+
+        /* =========================
+           TYPEWRITER
+        ========================== */
+
         const lines = [
+
             "WELCOME TO BLAZEWINGZ.",
+
             "SYSTEMS OPERATIONAL.",
+
             "276 PLAYERS RESPONDED.",
+
             "FULL HALF-LIFE SERIES INSTALLED.",
+
             "FULL DOOM SERIES INSTALLED.",
+
             "AVAILABLE AT bit.ly/blazewingz"
+
         ];
 
         let lIdx = 0;
@@ -272,37 +493,100 @@
         let isDel = false;
 
         function type() {
-            const cur = lines[lIdx];
-            document.getElementById("text").textContent = cur.substring(0, cIdx);
 
-            if (!isDel && cIdx < cur.length) {
+            const cur =
+                lines[lIdx];
+
+            document.getElementById(
+                "text"
+            ).textContent =
+                cur.substring(
+                    0,
+                    cIdx
+                );
+
+            if (
+                !isDel &&
+                cIdx < cur.length
+            ) {
+
                 cIdx++;
-                setTimeout(type, 100);
-            } else if (isDel && cIdx > 0) {
-                cIdx--;
-                setTimeout(type, 50);
-            } else {
-                isDel = !isDel;
-                if (!isDel) {
-                    lIdx = (lIdx + 1) % lines.length;
-                }
-                setTimeout(type, isDel ? 2000 : 500);
+
+                setTimeout(
+                    type,
+                    100
+                );
+
             }
+
+            else if (
+                isDel &&
+                cIdx > 0
+            ) {
+
+                cIdx--;
+
+                setTimeout(
+                    type,
+                    50
+                );
+
+            }
+
+            else {
+
+                isDel = !isDel;
+
+                if (!isDel) {
+
+                    lIdx =
+                        (lIdx + 1)
+                        % lines.length;
+
+                }
+
+                setTimeout(
+                    type,
+                    isDel
+                        ? 2000
+                        : 500
+                );
+
+            }
+
         }
 
         type();
 
-        /* SEARCH REDIRECT */
-        const searchInput = document.getElementById("home-search-input");
+        /* =========================
+           SEARCH REDIRECT
+        ========================== */
 
-        searchInput.addEventListener("keydown", function(e) {
-            if (e.key === "Enter") {
-                const value = encodeURIComponent(searchInput.value.trim());
-                if (value.length > 0) {
-                    window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + value;
+        const searchInput =
+            document.getElementById(
+                "searchInput"
+            );
+
+        searchInput.addEventListener(
+            "keydown",
+            function(e) {
+
+                if (e.key === "Enter") {
+
+                    const query =
+                        encodeURIComponent(
+                            searchInput.value
+                        );
+
+                    window.location.href =
+                        "https://sites.google.com/view/blazewingz/home?search="
+                        + query;
+
                 }
+
             }
-        });
+        );
+
     </script>
 
 </body>
