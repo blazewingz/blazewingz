@@ -14,296 +14,208 @@
             --glow: rgba(255, 0, 255, 0.4);
         }
 
-        html,
-        body {
+        html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
+            background-color: #05010a; /* Matches the dark theme */
             font-family: 'Playfair Display', serif;
-            background-color: #05010a;
         }
 
-        /* VIDEO WALLPAPER */
-        .bg-video {
+        /* THE VIDEO LAYER */
+        #video-viewport {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Sits behind everything */
+            overflow: hidden;
+        }
+
+        .bg-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* THE OVERLAY GRADIENT */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, transparent 20%, rgba(11, 2, 20, 0.8) 100%);
             z-index: 0;
             pointer-events: none;
         }
 
-        /* OVERLAY */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(
-                circle,
-                transparent 20%,
-                rgba(11, 2, 20, 0.72) 100%
-            );
-            z-index: 1;
-        }
-
+        /* UI ELEMENTS */
         .main-ui {
             position: relative;
             z-index: 10;
-            width: 90%;
-            max-width: 900px;
-            margin: auto;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
             color: white;
-            top: 50%;
-            transform: translateY(-50%);
+            text-align: center;
         }
 
-        /* CLOCK */
         #day-box {
             font-family: 'Space Age', sans-serif;
-            font-size: 80px;
+            font-size: 5rem;
             letter-spacing: 12px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            animation: float 4s ease-in-out infinite;
             text-shadow: 0 0 20px var(--glow);
+            animation: float 4s ease-in-out infinite;
         }
 
         #date-box {
-            font-size: 18px;
+            font-size: 1.2rem;
             letter-spacing: 5px;
             font-style: italic;
-            opacity: 0.85;
-            margin-bottom: 20px;
+            opacity: 0.8;
+            margin: 10px 0 30px;
         }
 
-        /* TYPEWRITER */
         .type-wrap {
             height: 30px;
-            margin-bottom: 40px;
             font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-            font-weight: bold;
             color: var(--accent);
             text-shadow: 0 0 8px var(--glow);
-        }
-
-        /* SEARCH */
-        .home-search {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
+            font-weight: bold;
         }
 
         .home-search input {
-            width: 100%;
-            padding: 18px 0;
             background: transparent;
             border: none;
             border-bottom: 2px solid rgba(255,255,255,0.2);
             color: white;
-            font-size: 20px;
+            padding: 15px;
+            width: 400px;
             text-align: center;
+            font-size: 1.2rem;
             outline: none;
-            transition: all 0.4s ease;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 2px;
+            transition: 0.4s;
+            margin-top: 30px;
         }
 
         .home-search input:focus {
-            border-bottom: 2px solid var(--accent);
+            border-color: var(--accent);
             box-shadow: 0 10px 20px -10px var(--glow);
-            letter-spacing: 4px;
         }
 
-        .home-search input::placeholder {
-            color: rgba(255,255,255,0.3);
-            text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 4px;
-        }
-
-        /* QUICK LINKS */
         .quick-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
             margin-top: 40px;
+            display: flex;
+            gap: 15px;
         }
 
         .quick-links a {
-            padding: 10px 18px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(8px);
             color: white;
             text-decoration: none;
-            border-radius: 10px;
-            transition: 0.25s ease;
-            font-size: 14px;
-            letter-spacing: 1px;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 5px;
+            transition: 0.3s;
         }
 
         .quick-links a:hover {
-            transform: translateY(-2px);
             border-color: var(--accent);
-            box-shadow: 0 0 16px var(--glow);
+            transform: translateY(-3px);
         }
 
-        /* FLOAT */
         @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
-        /* CURSOR */
-        .cursor {
-            border-right: 2px solid var(--accent);
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            50% {
-                border-color: transparent;
-            }
-        }
-
-        /* MOBILE */
-        @media (max-width: 700px) {
-            #day-box {
-                font-size: 42px;
-                letter-spacing: 6px;
-            }
-            #date-box {
-                font-size: 13px;
-                letter-spacing: 2px;
-            }
-            .type-wrap {
-                font-size: 13px;
-            }
-            .home-search input {
-                font-size: 16px;
-            }
+        @media (max-width: 768px) {
+            #day-box { font-size: 2.5rem; }
+            .home-search input { width: 80%; }
         }
     </style>
 </head>
 <body>
 
-    <video
-        class="bg-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        poster="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true"
-    >
-        <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mov" type="video/quicktime">
-    </video>
+    <div id="video-viewport">
+        <video 
+            id="bg-video"
+            class="bg-video" 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            preload="auto"
+        >
+            <source src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mov" type="video/quicktime">
+        </video>
+    </div>
+
+    <div class="overlay"></div>
 
     <div class="main-ui">
-
         <div id="day-box"></div>
         <div id="date-box"></div>
-
         <div class="type-wrap">
-            <span id="text"></span><span class="cursor"></span>
+            <span id="text"></span><span class="cursor">|</span>
         </div>
-
         <div class="home-search">
-            <input
-                id="home-search-input"
-                type="text"
-                placeholder="Search The Archives..."
-            >
+            <input id="search" type="text" placeholder="SEARCH THE ARCHIVES...">
         </div>
-
         <div class="quick-links">
             <a href="https://sites.google.com/view/blazewingz/home">Library</a>
             <a href="https://sites.google.com/view/blazewingz/games/minecraft">Minecraft</a>
             <a href="https://sites.google.com/view/blazewingz/games/terraria">Terraria</a>
             <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">YOMI Hustle</a>
         </div>
-
     </div>
 
     <script>
-        /* CLOCK */
-        function updateTime() {
+        // Force the video to play regardless of browser stinginess
+        const v = document.getElementById('bg-video');
+        v.play().catch(() => {
+            console.log("Autoplay blocked. Waiting for user interaction.");
+            window.addEventListener('click', () => v.play(), { once: true });
+        });
+
+        // Clock Logic
+        function update() {
             const now = new Date();
-            const days = [
-                "Sunday", "Monday", "Tuesday", "Wednesday",
-                "Thursday", "Friday", "Saturday"
-            ];
-
-            document.getElementById("day-box").textContent = days[now.getDay()];
-
-            document.getElementById("date-box").textContent = now.toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            document.getElementById("day-box").innerText = days[now.getDay()];
+            document.getElementById("date-box").innerText = now.toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'long', year: 'numeric'
             }).toUpperCase();
         }
+        setInterval(update, 1000);
+        update();
 
-        updateTime();
-        setInterval(updateTime, 1000);
-
-        /* TYPEWRITER */
-        const lines = [
-            "WELCOME TO BLAZEWINGZ.",
-            "SYSTEMS OPERATIONAL.",
-            "276 PLAYERS RESPONDED.",
-            "FULL HALF-LIFE SERIES INSTALLED.",
-            "FULL DOOM SERIES INSTALLED.",
-            "AVAILABLE AT bit.ly/blazewingz"
-        ];
-
-        let lIdx = 0;
-        let cIdx = 0;
-        let isDel = false;
-
+        // Typewriter Logic
+        const lines = ["WELCOME TO BLAZEWINGZ.", "SYSTEMS OPERATIONAL.", "276 PLAYERS RESPONDED.", "FULL DOOM SERIES INSTALLED."];
+        let lIdx = 0, cIdx = 0, isDel = false;
         function type() {
             const cur = lines[lIdx];
-            document.getElementById("text").textContent = cur.substring(0, cIdx);
-
-            if (!isDel && cIdx < cur.length) {
-                cIdx++;
-                setTimeout(type, 100);
-            } else if (isDel && cIdx > 0) {
-                cIdx--;
-                setTimeout(type, 50);
-            } else {
+            document.getElementById("text").innerText = cur.substring(0, cIdx);
+            if (!isDel && cIdx < cur.length) { cIdx++; setTimeout(type, 100); }
+            else if (isDel && cIdx > 0) { cIdx--; setTimeout(type, 50); }
+            else {
                 isDel = !isDel;
-                if (!isDel) {
-                    lIdx = (lIdx + 1) % lines.length;
-                }
+                if (!isDel) lIdx = (lIdx + 1) % lines.length;
                 setTimeout(type, isDel ? 2000 : 500);
             }
         }
-
         type();
 
-        /* SEARCH REDIRECT */
-        const searchInput = document.getElementById("home-search-input");
-
-        searchInput.addEventListener("keydown", function(e) {
+        // Search Redirect
+        document.getElementById("search").addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
-                const value = encodeURIComponent(searchInput.value.trim());
-                if (value.length > 0) {
-                    window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + value;
-                }
+                window.location.href = "https://sites.google.com/view/blazewingz/home?search=" + encodeURIComponent(e.target.value);
             }
         });
     </script>
-
 </body>
 </html>
