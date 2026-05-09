@@ -19,31 +19,39 @@
             padding: 0;
             height: 100%;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background:
-                #05010a
-                url('https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true')
-                no-repeat center center fixed;
-            background-size: cover;
             overflow: hidden;
             font-family: 'Playfair Display', serif;
+            background: #05010a;
         }
 
-        /* Ambient Overlay */
+        /* VIDEO BACKGROUND */
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        /* AMBIENT OVERLAY */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             inset: 0;
             background:
                 radial-gradient(
                     circle,
                     transparent 20%,
-                    rgba(11, 2, 20, 0.7) 100%
+                    rgba(11, 2, 20, 0.72) 100%
                 );
-            z-index: 1;
+            z-index: -1;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .main-ui {
@@ -190,6 +198,20 @@
 </head>
 <body>
 
+    <!-- VIDEO WALLPAPER -->
+    <video
+        class="bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+    >
+        <source
+            src="https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Skyline%20Wallpaper.mp4?raw=true"
+            type="video/mp4"
+        >
+    </video>
+
     <div class="main-ui">
 
         <div id="day-box"></div>
@@ -201,12 +223,14 @@
 
         <div class="home-search">
             <input
+                id="home-search-input"
                 type="text"
                 placeholder="Search The Archives..."
             >
         </div>
 
         <div class="quick-links">
+
             <a href="https://sites.google.com/view/blazewingz/home">
                 Library
             </a>
@@ -222,6 +246,7 @@
             <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">
                 YOMI Hustle
             </a>
+
         </div>
 
     </div>
@@ -311,6 +336,26 @@
         }
 
         type();
+
+        /* SEARCH REDIRECT */
+
+        const searchInput =
+            document.getElementById("home-search-input");
+
+        searchInput.addEventListener("keydown", function(e) {
+
+            if (e.key === "Enter") {
+
+                const query =
+                    encodeURIComponent(searchInput.value.trim());
+
+                window.location.href =
+                    "https://sites.google.com/view/blazewingz/home?search="
+                    + query;
+
+            }
+
+        });
 
     </script>
 
