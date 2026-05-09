@@ -3,16 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BlazeWingz | Connection</title>
+    <title>BlazeWingz | Algebra</title>
     
     <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
-
-    <script src="uv/uv.bundle.js" defer></script>
-    <script src="uv/uv.config.js" defer></script>
-    <script src="register-sw.js" defer></script>
-    <script src="search.js" defer></script>
-    <script src="index.js" defer></script>
 
     <style>
         :root {
@@ -21,18 +15,34 @@
         }
 
         body, html {
-            margin: 0; padding: 0; height: 100%; width: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: #05010a url('https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true') no-repeat center center fixed;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background:
+                #05010a
+                url('https://github.com/blazewingz/blazewingz/blob/blazewingz/Home/Assets/Wallpaper.jpg?raw=true')
+                no-repeat center center fixed;
             background-size: cover;
             overflow: hidden;
             font-family: 'Playfair Display', serif;
         }
 
-        /* Ambient Overlay for better readability */
+        /* Ambient Overlay */
         body::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, rgba(11, 2, 20, 0.7) 100%);
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(
+                    circle,
+                    transparent 20%,
+                    rgba(11, 2, 20, 0.7) 100%
+                );
             z-index: 1;
         }
 
@@ -40,10 +50,12 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            color: #fff;
+            color: white;
+            width: 90%;
+            max-width: 900px;
         }
 
-        /* Clock Styling */
+        /* CLOCK */
         #day-box {
             font-family: 'Space Age', sans-serif;
             font-size: 80px;
@@ -62,7 +74,7 @@
             margin-bottom: 20px;
         }
 
-        /* Typewriter Styling */
+        /* TYPEWRITER */
         .type-wrap {
             height: 30px;
             margin-bottom: 40px;
@@ -73,20 +85,20 @@
             text-shadow: 0 0 8px var(--glow);
         }
 
-        /* THE SEARCH BAR - DASHBOARD STYLE */
-        #uv-form {
+        /* SEARCH BAR */
+        .home-search {
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
         }
 
-        #uv-address {
+        .home-search input {
             width: 100%;
             padding: 18px 0;
             background: transparent;
             border: none;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            color: white;
             font-size: 20px;
             text-align: center;
             outline: none;
@@ -95,34 +107,91 @@
             letter-spacing: 2px;
         }
 
-        #uv-address:focus {
+        .home-search input:focus {
             border-bottom: 2px solid var(--accent);
             box-shadow: 0 10px 20px -10px var(--glow);
             letter-spacing: 4px;
         }
 
-        #uv-address::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+        .home-search input::placeholder {
+            color: rgba(255,255,255,0.3);
             text-transform: uppercase;
             font-size: 14px;
             letter-spacing: 4px;
         }
 
+        /* QUICK LINKS */
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .quick-links a {
+            padding: 10px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.25s ease;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .quick-links a:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 0 16px var(--glow);
+        }
+
+        /* FLOAT */
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
+            0%,100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
 
+        /* CURSOR */
         .cursor {
             border-right: 2px solid var(--accent);
             animation: blink 1s step-end infinite;
         }
-        @keyframes blink { 50% { border-color: transparent; } }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* MOBILE */
+        @media (max-width: 700px) {
+
+            #day-box {
+                font-size: 42px;
+                letter-spacing: 6px;
+            }
+
+            #date-box {
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+
+            .type-wrap {
+                font-size: 13px;
+            }
+
+            .home-search input {
+                font-size: 16px;
+            }
+
+        }
     </style>
 </head>
 <body>
 
     <div class="main-ui">
+
         <div id="day-box"></div>
         <div id="date-box"></div>
 
@@ -130,49 +199,120 @@
             <span id="text"></span><span class="cursor"></span>
         </div>
 
-        <form id="uv-form">
-            <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
-            <input id="uv-address" type="text" placeholder="Access Gateway" autocomplete="off" />
-        </form>
+        <div class="home-search">
+            <input
+                type="text"
+                placeholder="Search The Archives..."
+            >
+        </div>
+
+        <div class="quick-links">
+            <a href="https://sites.google.com/view/blazewingz/home">
+                Library
+            </a>
+
+            <a href="https://sites.google.com/view/blazewingz/games/minecraft">
+                Minecraft
+            </a>
+
+            <a href="https://sites.google.com/view/blazewingz/games/terraria">
+                Terraria
+            </a>
+
+            <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle">
+                YOMI Hustle
+            </a>
+        </div>
+
     </div>
 
-    <iframe style="display: none;" id="uv-frame"></iframe>
-
     <script>
-        // 1. Clock Logic
-        function updateTime() {
-            const now = new Date();
-            const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-            document.getElementById("day-box").textContent = days[now.getDay()];
-            document.getElementById("date-box").textContent = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
-        }
-        updateTime(); setInterval(updateTime, 1000);
 
-        // 2. Typewriter Logic
-        const lines = ["WELCOME TO BLAZEWINGZ.", "SYSTEMS OPERATIONAL.", "BING CHILLING.", "AVAILABLE AT bit.ly/blazewingz"];
-        let lIdx = 0, cIdx = 0, isDel = false;
-        function type() {
-            const cur = lines[lIdx];
-            document.getElementById("text").textContent = cur.substring(0, cIdx);
-            if (!isDel && cIdx < cur.length) { cIdx++; setTimeout(type, 100); }
-            else if (isDel && cIdx > 0) { cIdx--; setTimeout(type, 50); }
-            else {
-                isDel = !isDel;
-                if (!isDel) lIdx = (lIdx + 1) % lines.length;
-                setTimeout(type, isDel ? 2000 : 500);
-            }
+        /* CLOCK */
+
+        function updateTime() {
+
+            const now = new Date();
+
+            const days = [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ];
+
+            document.getElementById("day-box").textContent =
+                days[now.getDay()];
+
+            document.getElementById("date-box").textContent =
+                now
+                    .toLocaleDateString(
+                        'en-GB',
+                        {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                        }
+                    )
+                    .toUpperCase();
+
         }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        /* TYPEWRITER */
+
+        const lines = [
+            "WELCOME TO BLAZEWINGZ.",
+            "SYSTEMS OPERATIONAL.",
+            "276 PLAYERS RESPONDED.",
+            "FULL HALF-LIFE SERIES INSTALLED.",
+            "FULL DOOM SERIES INSTALLED.",
+            "AVAILABLE AT bit.ly/blazewingz"
+        ];
+
+        let lIdx = 0;
+        let cIdx = 0;
+        let isDel = false;
+
+        function type() {
+
+            const cur = lines[lIdx];
+
+            document.getElementById("text").textContent =
+                cur.substring(0, cIdx);
+
+            if (!isDel && cIdx < cur.length) {
+
+                cIdx++;
+                setTimeout(type, 100);
+
+            } else if (isDel && cIdx > 0) {
+
+                cIdx--;
+                setTimeout(type, 50);
+
+            } else {
+
+                isDel = !isDel;
+
+                if (!isDel) {
+                    lIdx = (lIdx + 1) % lines.length;
+                }
+
+                setTimeout(type, isDel ? 2000 : 500);
+
+            }
+
+        }
+
         type();
 
-        // 3. Enter Key Fix
-        // We let index.js handle the logic, but we make sure the form submission 
-        // doesn't refresh the page if index.js fails to catch it.
-        document.getElementById('uv-form').addEventListener('submit', (e) => {
-            if (!window.__uv$config) {
-                e.preventDefault();
-                console.error("Ultraviolet is still loading...");
-            }
-        });
     </script>
+
 </body>
 </html>
