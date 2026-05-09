@@ -1,6 +1,7 @@
 ## BlazeWingz
 
-*bit.ly/blazewingz*
+[bit.ly/blazewingz](https://sites.google.com/view/blazewingz/home)
+
 BlazeWingz is a website, built for gaming.
 We have a myriad of varying games, I've probably made a list below depending on how
 lazy I am.
@@ -38,6 +39,5 @@ lazy I am.
 </details>
 
 <div align="center" style="margin-top: 20px;">
-  <p style="font-family: monospace; color: #d500f9; letter-spacing: 2px; text-shadow: 0 0 5px #d500f9;">Visitor Count</p>
   <img src="https://api.visitorbadge.io/api/visitors?path=blazewingz&label=VISITS&labelColor=%23090909&countColor=%23d500f9" alt="Visitor Badge" />
 </div>
