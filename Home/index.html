@@ -1,546 +1,732 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>BlazeWingz | Home</title>
-
-    <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap" rel="stylesheet">
-
-    <style>
-
-        :root {
-            --accent: #ff00ff;
-            --glow: rgba(255,0,255,0.4);
-        }
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #05010a;
-            font-family: 'PT Serif', serif;
-        }
-
-        /* VIDEO */
-
-        .bg-video {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            pointer-events: none;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>BlazeWingz | Home</title>
+
+<link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --accent:#ff00ff;
+    --glow:rgba(255,0,255,0.4);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#05010a;
+    font-family:'PT Serif', serif;
+    cursor:none;
+}
+
+/* VIDEO */
+
+.bg-video{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+    pointer-events:none;
+
+    transform:scale(1.05);
+    filter:
+        brightness(0.55)
+        saturate(1.15);
+}
+
+/* OVERLAY */
+
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 10%,
+            rgba(5,0,15,0.78) 100%
+        );
+
+    z-index:1;
+    pointer-events:none;
+}
+
+/* CURSOR GLOW */
+
+#cursor-glow{
+    position:fixed;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,0,255,0.20) 0%,
+            rgba(255,0,255,0.08) 35%,
+            transparent 75%
+        );
+
+    pointer-events:none;
+    z-index:2;
+
+    transform:
+        translate(-50%,-50%);
+
+    mix-blend-mode:screen;
+
+    transition:
+        width 0.2s ease,
+        height 0.2s ease;
+}
+
+/* MAIN */
+
+.main-ui{
+    position:relative;
+    z-index:10;
+
+    width:90%;
+    max-width:900px;
 
-        /* OVERLAY */
+    margin:auto;
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
+    text-align:center;
+    color:white;
 
-            background:
-                radial-gradient(
-                    circle,
-                    transparent 20%,
-                    rgba(11,2,20,0.72) 100%
-                );
+    top:50%;
+    transform:
+        translateY(-50%)
+        perspective(1400px)
+        rotateX(0deg)
+        rotateY(0deg);
 
-            z-index: 1;
-        }
+    transition:
+        transform 0.12s ease-out;
+}
 
-        /* MAIN */
+/* FADE */
 
-        .main-ui {
-            position: relative;
-            z-index: 10;
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
 
-            width: 90%;
-            max-width: 900px;
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 
-            margin: auto;
+/* GLOW */
 
-            text-align: center;
-            color: white;
+@keyframes glowPulse{
 
-            top: 50%;
-            transform: translateY(-50%);
-        }
+    0%{
+        text-shadow:
+            0 0 10px rgba(200,100,255,0.8),
+            0 0 30px rgba(180,80,255,0.4),
+            0 0 45px rgba(150,60,255,0.25);
+    }
 
-        /* CLOCK */
+    50%{
+        text-shadow:
+            0 0 20px rgba(220,140,255,1),
+            0 0 40px rgba(200,100,255,0.6),
+            0 0 60px rgba(180,80,255,0.4);
+    }
 
-        #day-box {
-            font-family: 'Space Age', sans-serif;
-            font-size: 80px;
-            letter-spacing: 12px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
+    100%{
+        text-shadow:
+            0 0 10px rgba(200,100,255,0.8),
+            0 0 30px rgba(180,80,255,0.4),
+            0 0 45px rgba(150,60,255,0.25);
+    }
 
-            animation: float 4s ease-in-out infinite;
+}
 
-            text-shadow:
-                0 0 20px var(--glow);
-        }
+.fade-glow{
+    animation:
+        fadeIn 2s ease forwards,
+        glowPulse 6s ease-in-out infinite;
 
-        #date-box {
-            font-size: 18px;
-            letter-spacing: 5px;
-            font-style: italic;
-            opacity: 0.85;
-            margin-bottom: 20px;
-        }
+    opacity:0;
+}
 
-        /* TYPEWRITER */
+/* DAY */
 
-        .type-wrap {
-            height: 30px;
-            margin-bottom: 40px;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-            font-weight: bold;
-            color: #ee00ff;
-            text-shadow:
-                0 0 8px var(--glow);
-        }
+#day-box{
+    font-family:'Space Age', sans-serif;
+    font-size:80px;
+    letter-spacing:12px;
+    margin-bottom:10px;
+    text-transform:uppercase;
 
-        /* SEARCH */
+    animation-delay:0.2s;
+}
 
-        .home-search {
-            width: 100%;
-            max-width: 520px;
-            margin: auto;
-            position: relative;
-        }
+/* DATE */
 
-        .home-search input {
+#date-box{
+    font-size:20px;
+    letter-spacing:5px;
+    margin-bottom:12px;
 
-            width: 100%;
+    opacity:0.92;
 
-            padding: 18px 0;
+    animation-delay:0.6s;
+}
 
-            background: transparent;
+/* TIME */
 
-            border: none;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
+#time-box{
+    font-size:22px;
+    letter-spacing:6px;
 
-            color: white;
+    margin-bottom:35px;
 
-            font-size: 20px;
-            text-align: center;
+    opacity:0.82;
 
-            outline: none;
+    animation-delay:1s;
+}
 
-            transition: 0.35s ease;
+/* TYPEWRITER */
 
-            font-family: 'PT Serif', serif;
+.type-wrap{
+    height:30px;
+    margin-bottom:40px;
 
-            letter-spacing: 2px;
+    font-family:'Courier New', monospace;
 
-        }
+    letter-spacing:2px;
+    font-weight:bold;
 
-        .home-search input:focus {
+    color:#ee00ff;
 
-            border-bottom: 2px solid var(--accent);
+    text-shadow:
+        0 0 8px var(--glow);
+}
 
-            box-shadow:
-                0 10px 20px -10px var(--glow);
+/* SEARCH */
 
-            letter-spacing: 4px;
+.home-search{
+    width:100%;
+    max-width:520px;
+    margin:auto;
+    position:relative;
+}
 
-        }
+.home-search input{
 
-        .home-search input::placeholder {
+    width:100%;
 
-            color: rgba(255,255,255,0.3);
+    padding:18px 0;
 
-            text-transform: uppercase;
+    background:transparent;
 
-            font-size: 14px;
+    border:none;
+    border-bottom:2px solid rgba(255,255,255,0.18);
 
-            letter-spacing: 4px;
+    color:white;
 
-        }
+    font-size:20px;
+    text-align:center;
 
-        /* SEARCH RESULTS */
+    outline:none;
 
-        #search-results {
+    transition:0.35s ease;
 
-            width: 100%;
+    font-family:'PT Serif', serif;
 
-            margin-top: 14px;
+    letter-spacing:2px;
 
-            display: none;
-            flex-direction: column;
+    backdrop-filter:blur(4px);
 
-            gap: 10px;
+}
 
-        }
+.home-search input:focus{
 
-        .search-item {
+    border-bottom:2px solid var(--accent);
 
-            display: flex;
-            align-items: center;
+    box-shadow:
+        0 10px 20px -10px var(--glow);
 
-            gap: 14px;
+    letter-spacing:4px;
 
-            padding: 10px;
+}
 
-            border-radius: 14px;
+.home-search input::placeholder{
 
-            background: rgba(0,0,0,0.45);
+    color:rgba(255,255,255,0.28);
 
-            backdrop-filter: blur(14px);
+    text-transform:uppercase;
 
-            border:
-                1px solid rgba(255,255,255,0.08);
+    font-size:14px;
 
-            text-decoration: none;
-            color: white;
+    letter-spacing:4px;
 
-            transition: 0.25s ease;
+}
 
-        }
+/* RESULTS */
 
-        .search-item:hover {
+#search-results{
 
-            transform: scale(1.02);
+    width:100%;
 
-            border-color:
-                rgba(255,0,255,0.5);
+    margin-top:14px;
 
-            box-shadow:
-                0 0 20px rgba(255,0,255,0.2);
+    display:none;
+    flex-direction:column;
 
-        }
+    gap:10px;
 
-        .search-item img {
+}
 
-            width: 60px;
-            height: 60px;
+.search-item{
 
-            object-fit: cover;
+    display:flex;
+    align-items:center;
 
-            border-radius: 10px;
+    gap:14px;
 
-            flex-shrink: 0;
+    padding:10px;
 
-        }
+    border-radius:16px;
 
-        .search-info {
-            text-align: left;
-        }
+    background:rgba(0,0,0,0.42);
 
-        .search-title {
+    backdrop-filter:blur(18px);
 
-            font-size: 18px;
-            margin-bottom: 4px;
+    border:
+        1px solid rgba(255,255,255,0.08);
 
-        }
+    text-decoration:none;
+    color:white;
 
-        .search-sub {
+    transition:0.25s ease;
 
-            font-size: 11px;
+    overflow:hidden;
 
-            opacity: 0.6;
+}
 
-            letter-spacing: 2px;
+.search-item:hover{
 
-            text-transform: uppercase;
+    transform:
+        scale(1.02)
+        translateY(-2px);
 
-        }
+    border-color:
+        rgba(255,0,255,0.5);
 
-        /* QUICK LINKS */
+    box-shadow:
+        0 0 20px rgba(255,0,255,0.2);
 
-        .quick-links {
+}
 
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
+.search-item img{
 
-            gap: 12px;
+    width:60px;
+    height:60px;
 
-            margin-top: 40px;
+    object-fit:cover;
 
-        }
+    border-radius:12px;
 
-        .quick-links a {
+    flex-shrink:0;
 
-            padding: 10px 18px;
+}
 
-            border:
-                1px solid rgba(255,255,255,0.15);
+.search-info{
+    text-align:left;
+}
 
-            background:
-                rgba(255,255,255,0.04);
+.search-title{
+    font-size:18px;
+    margin-bottom:4px;
+}
 
-            backdrop-filter: blur(8px);
+.search-sub{
 
-            color: white;
+    font-size:11px;
 
-            text-decoration: none;
+    opacity:0.6;
 
-            border-radius: 10px;
+    letter-spacing:2px;
 
-            transition: 0.25s ease;
+    text-transform:uppercase;
 
-            font-size: 14px;
+}
 
-            letter-spacing: 1px;
+/* QUICK LINKS */
 
-        }
+.quick-links{
 
-        .quick-links a:hover {
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
 
-            transform: translateY(-2px);
+    gap:12px;
 
-            border-color: var(--accent);
+    margin-top:40px;
 
-            box-shadow:
-                0 0 16px var(--glow);
+}
 
-        }
+.quick-links a{
 
-        /* FLOAT */
+    padding:10px 18px;
 
-        @keyframes float {
+    border:
+        1px solid rgba(255,255,255,0.14);
 
-            0%,100% {
-                transform: translateY(0px);
-            }
+    background:
+        rgba(255,255,255,0.04);
 
-            50% {
-                transform: translateY(-10px);
-            }
+    backdrop-filter:blur(8px);
 
-        }
+    color:white;
 
-        /* CURSOR */
+    text-decoration:none;
 
-        .cursor {
+    border-radius:12px;
 
-            border-right: 2px solid var(--accent);
+    transition:0.25s ease;
 
-            animation:
-                blink 1s step-end infinite;
+    font-size:14px;
 
-        }
+    letter-spacing:1px;
 
-        @keyframes blink {
+}
 
-            50% {
-                border-color: transparent;
-            }
+.quick-links a:hover{
 
-        }
+    transform:
+        translateY(-2px);
 
-        /* MOBILE */
+    border-color:var(--accent);
 
-        @media (max-width: 700px) {
+    box-shadow:
+        0 0 16px var(--glow);
 
-            #day-box {
-                font-size: 42px;
-                letter-spacing: 6px;
-            }
+}
 
-            #date-box {
-                font-size: 13px;
-                letter-spacing: 2px;
-            }
+/* CURSOR */
 
-            .type-wrap {
-                font-size: 13px;
-            }
+.cursor{
 
-            .home-search input {
-                font-size: 16px;
-            }
+    border-right:2px solid var(--accent);
 
-        }
+    animation:
+        blink 1s step-end infinite;
 
-    </style>
+}
+
+@keyframes blink{
+
+    50%{
+        border-color:transparent;
+    }
+
+}
+
+/* MOBILE */
+
+@media (max-width:700px){
+
+    body{
+        cursor:auto;
+    }
+
+    #cursor-glow{
+        display:none;
+    }
+
+    #day-box{
+        font-size:42px;
+        letter-spacing:6px;
+    }
+
+    #date-box{
+        font-size:13px;
+        letter-spacing:2px;
+    }
+
+    #time-box{
+        font-size:15px;
+        letter-spacing:4px;
+    }
+
+    .type-wrap{
+        font-size:13px;
+    }
+
+    .home-search input{
+        font-size:16px;
+    }
+
+}
+
+</style>
 </head>
 <body>
 
-    <!-- VIDEO -->
+<!-- VIDEO -->
 
-    <video
-        id="bg-video"
-        class="bg-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
+<video
+    id="bg-video"
+    class="bg-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+>
+    <source
+        src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mp4"
+        type="video/mp4"
     >
-        <source
-            src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mp4"
-            type="video/mp4"
+</video>
+
+<!-- CURSOR -->
+
+<div id="cursor-glow"></div>
+
+<!-- MAIN -->
+
+<div class="main-ui" id="main-ui">
+
+    <div id="day-box" class="fade-glow"></div>
+
+    <div id="date-box" class="fade-glow"></div>
+
+    <div id="time-box" class="fade-glow"></div>
+
+    <div class="type-wrap">
+        <span id="text"></span>
+        <span class="cursor"></span>
+    </div>
+
+    <!-- SEARCH -->
+
+    <div class="home-search">
+
+        <input
+            id="search-input"
+            type="text"
+            placeholder="SEARCH THE ARCHIVES..."
+            autocomplete="off"
         >
-    </video>
 
-    <!-- MAIN -->
-
-    <div class="main-ui">
-
-        <div id="day-box"></div>
-
-        <div id="date-box"></div>
-
-        <div class="type-wrap">
-            <span id="text"></span>
-            <span class="cursor"></span>
-        </div>
-
-        <!-- SEARCH -->
-
-        <div class="home-search">
-
-            <input
-                id="search-input"
-                type="text"
-                placeholder="SEARCH THE ARCHIVES..."
-                autocomplete="off"
-            >
-
-            <div id="search-results"></div>
-
-        </div>
-
-        <!-- QUICK LINKS -->
-
-        <div class="quick-links">
-
-            <a href="https://sites.google.com/view/blazewingz/library">
-                Library
-            </a>
-
-            <a href="https://blazewingz.github.io/blazewingz-mobile">
-                Mobile Version
-            </a>
-
-            <a href="https://github.com/Knightsbytes/Precursor">
-                Precursor
-            </a>
-
-        </div>
+        <div id="search-results"></div>
 
     </div>
 
-    <script>
+    <!-- QUICK LINKS -->
 
-        /* VIDEO FORCE PLAY */
+    <div class="quick-links">
 
-        const video = document.getElementById('bg-video');
+        <a href="https://sites.google.com/view/blazewingz/library" target="_blank">
+            Library
+        </a>
 
-        video.play().catch(() => {
+        <a href="https://blazewingz.github.io/blazewingz-mobile" target="_blank">
+            Mobile Version
+        </a>
 
-            window.addEventListener(
-                'click',
-                () => video.play(),
-                { once: true }
-            );
+        <a href="https://github.com/Knightsbytes/Precursor" target="_blank">
+            Precursor
+        </a>
 
-        });
+    </div>
 
-        /* CLOCK */
+</div>
 
-        function updateTime() {
+<script>
 
-            const now = new Date();
+/* VIDEO FORCE PLAY */
 
-            const days = [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ];
+const video =
+    document.getElementById('bg-video');
 
-            document.getElementById("day-box").textContent =
-                days[now.getDay()];
+video.play().catch(() => {
 
-            document.getElementById("date-box").textContent =
-                now.toLocaleDateString(
-                    'en-GB',
-                    {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    }
-                ).toUpperCase();
+    window.addEventListener(
+        'click',
+        () => video.play(),
+        { once:true }
+    );
 
+});
+
+/* CLOCK */
+
+function updateTime(){
+
+    const now =
+        new Date();
+
+    const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+
+    document.getElementById("day-box").textContent =
+        days[now.getDay()];
+
+    document.getElementById("date-box").textContent =
+        now.toLocaleDateString(
+            'en-GB',
+            {
+                day:'numeric',
+                month:'long',
+                year:'numeric'
+            }
+        ).toUpperCase();
+
+    const time =
+        now.toLocaleTimeString(
+            'en-GB',
+            {
+                hour:'2-digit',
+                minute:'2-digit'
+            }
+        );
+
+    document.getElementById("time-box").textContent =
+        `– ${time} –`;
+
+}
+
+updateTime();
+
+setInterval(updateTime,1000);
+
+/* TYPEWRITER */
+
+const lines = [
+
+    "Welcome to BlazeWingz",
+    "You can report bugs by clicking on the 'Give Feedback' button at the bottom of every page.",
+    "Website probably works.",
+    "whats 9+10?",
+    "bing chilling",
+    "blazewingz, by blazewingz, for blazewingz."
+
+];
+
+let lIdx = 0;
+let cIdx = 0;
+let isDel = false;
+
+function type(){
+
+    const cur =
+        lines[lIdx];
+
+    document.getElementById("text").textContent =
+        cur.substring(0,cIdx);
+
+    if(!isDel && cIdx < cur.length){
+
+        cIdx++;
+
+        setTimeout(type,100);
+
+    }
+
+    else if(isDel && cIdx > 0){
+
+        cIdx--;
+
+        setTimeout(type,50);
+
+    }
+
+    else{
+
+        isDel = !isDel;
+
+        if(!isDel){
+            lIdx =
+                (lIdx + 1) % lines.length;
         }
 
-        updateTime();
+        setTimeout(
+            type,
+            isDel ? 2000 : 500
+        );
 
-        setInterval(updateTime, 1000);
+    }
 
-        /* TYPEWRITER */
+}
 
-        const lines = [
+type();
 
-            "Welcome to BlazeWingz",
-            "You can report bugs by clicking on the 'Give Feedback' button at the bottom of every page.",
-            "Website probably works.",
-            "whats 9+10?",
-            "bing chilling",
-            "blazewingz, by blazewingz, for blazewingz."
+/* ====================================== */
+/* MOUSE ATMOSPHERE                       */
+/* ====================================== */
 
-        ];
+const glow =
+    document.getElementById("cursor-glow");
 
-        let lIdx = 0;
-        let cIdx = 0;
-        let isDel = false;
+const ui =
+    document.getElementById("main-ui");
 
-        function type() {
+document.addEventListener("mousemove", e => {
 
-            const cur = lines[lIdx];
+    const x =
+        e.clientX;
 
-            document.getElementById("text").textContent =
-                cur.substring(0, cIdx);
+    const y =
+        e.clientY;
 
-            if (!isDel && cIdx < cur.length) {
+    glow.style.left =
+        x + "px";
 
-                cIdx++;
+    glow.style.top =
+        y + "px";
 
-                setTimeout(type, 100);
+    const rotateY =
+        ((x / window.innerWidth) - 0.5) * 8;
 
-            }
+    const rotateX =
+        ((y / window.innerHeight) - 0.5) * -8;
 
-            else if (isDel && cIdx > 0) {
+    ui.style.transform = `
+        translateY(-50%)
+        perspective(1400px)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+    `;
 
-                cIdx--;
+});
 
-                setTimeout(type, 50);
+/* ====================================== */
+/* GAME DATABASE                          */
+/* ====================================== */
 
-            }
-
-            else {
-
-                isDel = !isDel;
-
-                if (!isDel) {
-                    lIdx = (lIdx + 1) % lines.length;
-                }
-
-                setTimeout(type, isDel ? 2000 : 500);
-
-            }
-
-        }
-
-        type();
-
-        const gameCards = `
+const gameCards = `
 
 <!-- =================== GAMES =================== -->
 
@@ -704,134 +890,147 @@
 
 `;
 
-        /* ====================================== */
-        /* SEARCH SYSTEM                          */
-        /* ====================================== */
+/* ====================================== */
+/* SEARCH SYSTEM                          */
+/* ====================================== */
 
-        const parser =
-            new DOMParser();
+const parser =
+    new DOMParser();
 
-        const doc =
-            parser.parseFromString(gameCards, "text/html");
+const doc =
+    parser.parseFromString(
+        gameCards,
+        "text/html"
+    );
 
-        const gameElements =
-            [...doc.querySelectorAll(".bw-card")];
+const gameElements =
+    [...doc.querySelectorAll(".bw-card")];
 
-        const games =
-            gameElements.map(card => ({
+const games =
+    gameElements.map(card => ({
 
-                title:
-                    card.querySelector(".bw-name")
-                    ?.textContent
-                    ?.trim(),
+        title:
+            card.querySelector(".bw-name")
+            ?.textContent
+            ?.trim(),
 
-                image:
-                    card.querySelector("img")
-                    ?.src,
+        image:
+            card.querySelector("img")
+            ?.src,
 
-                url:
-                    card.href
+        url:
+            card.href
 
-            }));
+    }));
 
-        const input =
-            document.getElementById("search-input");
+const input =
+    document.getElementById("search-input");
 
-        const results =
-            document.getElementById("search-results");
+const results =
+    document.getElementById("search-results");
 
-        input.addEventListener("input", () => {
+input.addEventListener("input", () => {
 
-            const value =
-                input.value.toLowerCase().trim();
+    const value =
+        input.value
+        .toLowerCase()
+        .trim();
 
-            if (!value) {
+    if(!value){
 
-                results.style.display = "none";
+        results.style.display =
+            "none";
 
-                results.innerHTML = "";
+        results.innerHTML = "";
 
-                return;
+        return;
 
-            }
+    }
 
-            const matches =
-                games.filter(game =>
-                    game.title
-                    .toLowerCase()
-                    .includes(value)
-                );
+    const matches =
+        games.filter(game =>
+            game.title
+            .toLowerCase()
+            .includes(value)
+        );
 
-            results.innerHTML = "";
+    results.innerHTML = "";
 
-            if (matches.length === 0) {
+    if(matches.length === 0){
 
-                results.style.display = "none";
+        results.style.display =
+            "none";
 
-                return;
+        return;
 
-            }
+    }
 
-            results.style.display = "flex";
+    results.style.display =
+        "flex";
 
-            matches.slice(0,5).forEach(game => {
+    matches
+    .slice(0,5)
+    .forEach(game => {
 
-                const a =
-                    document.createElement("a");
+        const a =
+            document.createElement("a");
 
-                a.className = "search-item";
+        a.className =
+            "search-item";
 
-                a.href = game.url;
+        a.href =
+            game.url;
 
-                a.target = "_blank";
+        a.target =
+            "_blank";
 
-                a.innerHTML = `
+        a.innerHTML = `
 
-                    <img src="${game.image}">
+            <img src="${game.image}">
 
-                    <div class="search-info">
+            <div class="search-info">
 
-                        <div class="search-title">
-                            ${game.title}
-                        </div>
+                <div class="search-title">
+                    ${game.title}
+                </div>
 
-                        <div class="search-sub">
-                            Launch Game
-                        </div>
+                <div class="search-sub">
+                    Launch Game
+                </div>
 
-                    </div>
+            </div>
 
-                `;
+        `;
 
-                results.appendChild(a);
+        results.appendChild(a);
 
-            });
+    });
 
-        });
+});
 
-        /* ENTER = FIRST RESULT */
+/* ENTER = FIRST RESULT */
 
-        input.addEventListener("keydown", e => {
+input.addEventListener("keydown", e => {
 
-            if (e.key === "Enter") {
+    if(e.key === "Enter"){
 
-                const first =
-                    results.querySelector(".search-item");
+        const first =
+            results.querySelector(".search-item");
 
-                if (first) {
+        if(first){
 
-                    window.open(
-                        first.href,
-                        "_blank"
-                    );
+            window.open(
+                first.href,
+                "_blank"
+            );
 
-                }
+        }
 
-            }
+    }
 
-        });
+});
 
-    </script>
+</script>
 
 </body>
 </html>
