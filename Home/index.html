@@ -29,10 +29,7 @@ body{
     overflow:hidden;
     background:#05010a;
     font-family:'PT Serif', serif;
-}
-
-body{
-    cursor:auto;
+    cursor:default;
 }
 
 /* VIDEO */
@@ -46,11 +43,14 @@ body{
     z-index:0;
     pointer-events:none;
 
-    transform:scale(1.04);
+    transform:scale(1.03);
 
     filter:
-        brightness(0.72)
-        saturate(1.08);
+        brightness(0.82)
+        saturate(1.08)
+        contrast(1.03);
+
+    transition:transform 0.4s ease;
 }
 
 /* OVERLAY */
@@ -64,7 +64,7 @@ body::before{
         radial-gradient(
             circle at center,
             rgba(0,0,0,0) 0%,
-            rgba(6,0,14,0.58) 100%
+            rgba(5,0,15,0.34) 100%
         );
 
     z-index:1;
@@ -84,20 +84,21 @@ body::before{
     background:
         radial-gradient(
             circle,
-            rgba(255,0,255,0.18) 0%,
-            rgba(255,0,255,0.08) 45%,
+            rgba(255,0,255,0.10) 0%,
+            rgba(255,0,255,0.04) 40%,
             transparent 75%
         );
 
     pointer-events:none;
 
-    z-index:3;
+    z-index:2;
 
     transform:translate(-50%,-50%);
 
-    mix-blend-mode:screen;
+    transition:
+        transform 0.08s linear;
 
-    opacity:0.9;
+    opacity:0.7;
 }
 
 /* MAIN */
@@ -123,47 +124,21 @@ body::before{
         rotateY(0deg);
 
     transition:
-        transform 0.18s ease-out;
+        transform 0.12s ease-out;
 }
 
-/* INTRO */
+/* FADE */
 
-.intro{
-    opacity:0;
-    transform:translateY(16px);
-    animation:introFade 1.4s ease forwards;
-}
-
-.delay-1{ animation-delay:0.15s; }
-.delay-2{ animation-delay:0.35s; }
-.delay-3{ animation-delay:0.55s; }
-.delay-4{ animation-delay:0.75s; }
-.delay-5{ animation-delay:0.95s; }
-
-@keyframes introFade{
+@keyframes fadeIn{
 
     from{
         opacity:0;
-        transform:translateY(16px);
+        transform:translateY(12px);
     }
 
     to{
         opacity:1;
         transform:translateY(0);
-    }
-
-}
-
-/* FLOAT */
-
-@keyframes float{
-
-    0%,100%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
     }
 
 }
@@ -195,6 +170,20 @@ body::before{
 
 }
 
+/* FLOAT */
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+}
+
 /* DAY */
 
 #day-box{
@@ -209,10 +198,17 @@ body::before{
 
     text-transform:uppercase;
 
+    opacity:0;
+
     animation:
+        fadeIn 2s ease forwards,
         glowPulse 6s ease-in-out infinite,
         float 4s ease-in-out infinite;
 
+    animation-delay:
+        0.2s,
+        0s,
+        0s;
 }
 
 /* DATE */
@@ -225,11 +221,15 @@ body::before{
 
     margin-bottom:12px;
 
-    opacity:0.92;
+    opacity:0;
 
     animation:
+        fadeIn 2s ease forwards,
         glowPulse 6s ease-in-out infinite;
 
+    animation-delay:
+        0.6s,
+        0s;
 }
 
 /* TIME */
@@ -242,11 +242,15 @@ body::before{
 
     margin-bottom:35px;
 
-    opacity:0.82;
+    opacity:0;
 
     animation:
+        fadeIn 2s ease forwards,
         glowPulse 6s ease-in-out infinite;
 
+    animation-delay:
+        1s,
+        0s;
 }
 
 /* TYPEWRITER */
@@ -268,17 +272,34 @@ body::before{
     text-shadow:
         0 0 8px var(--glow);
 
+    opacity:0;
+
+    animation:
+        fadeIn 2s ease forwards;
+
+    animation-delay:1.4s;
 }
 
 /* SEARCH */
 
 .home-search{
+
     width:100%;
+
     max-width:520px;
+
     margin:auto;
+
     position:relative;
 
-    min-height:74px;
+    min-height:340px;
+
+    opacity:0;
+
+    animation:
+        fadeIn 2s ease forwards;
+
+    animation-delay:1.8s;
 }
 
 .home-search input{
@@ -290,11 +311,13 @@ body::before{
     background:transparent;
 
     border:none;
+
     border-bottom:2px solid rgba(255,255,255,0.18);
 
     color:white;
 
     font-size:20px;
+
     text-align:center;
 
     outline:none;
@@ -305,6 +328,7 @@ body::before{
 
     letter-spacing:2px;
 
+    backdrop-filter:blur(4px);
 }
 
 .home-search input:focus{
@@ -315,7 +339,6 @@ body::before{
         0 10px 20px -10px var(--glow);
 
     letter-spacing:4px;
-
 }
 
 .home-search input::placeholder{
@@ -327,49 +350,27 @@ body::before{
     font-size:14px;
 
     letter-spacing:4px;
-
 }
 
 /* RESULTS */
 
 #search-results{
 
-    position:absolute;
-
-    top:100%;
-    left:0;
-
     width:100%;
 
     margin-top:14px;
 
     display:none;
+
     flex-direction:column;
 
     gap:10px;
-
-    animation:
-        resultsFade 0.25s ease;
-
-}
-
-@keyframes resultsFade{
-
-    from{
-        opacity:0;
-        transform:translateY(8px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-
 }
 
 .search-item{
 
     display:flex;
+
     align-items:center;
 
     gap:14px;
@@ -378,7 +379,7 @@ body::before{
 
     border-radius:16px;
 
-    background:rgba(0,0,0,0.42);
+    background:rgba(0,0,0,0.32);
 
     backdrop-filter:blur(18px);
 
@@ -386,30 +387,31 @@ body::before{
         1px solid rgba(255,255,255,0.08);
 
     text-decoration:none;
+
     color:white;
 
     transition:0.25s ease;
 
     overflow:hidden;
-
 }
 
 .search-item:hover{
 
     transform:
-        scale(1.02);
+        scale(1.02)
+        translateY(-2px);
 
     border-color:
         rgba(255,0,255,0.5);
 
     box-shadow:
-        0 0 20px rgba(255,0,255,0.2);
-
+        0 0 20px rgba(255,0,255,0.15);
 }
 
 .search-item img{
 
     width:60px;
+
     height:60px;
 
     object-fit:cover;
@@ -417,7 +419,6 @@ body::before{
     border-radius:12px;
 
     flex-shrink:0;
-
 }
 
 .search-info{
@@ -425,7 +426,9 @@ body::before{
 }
 
 .search-title{
+
     font-size:18px;
+
     margin-bottom:4px;
 }
 
@@ -438,7 +441,6 @@ body::before{
     letter-spacing:2px;
 
     text-transform:uppercase;
-
 }
 
 /* QUICK LINKS */
@@ -446,13 +448,21 @@ body::before{
 .quick-links{
 
     display:flex;
+
     justify-content:center;
+
     flex-wrap:wrap;
 
     gap:12px;
 
     margin-top:40px;
 
+    opacity:0;
+
+    animation:
+        fadeIn 2s ease forwards;
+
+    animation-delay:2.2s;
 }
 
 .quick-links a{
@@ -478,7 +488,6 @@ body::before{
     font-size:14px;
 
     letter-spacing:1px;
-
 }
 
 .quick-links a:hover{
@@ -490,7 +499,6 @@ body::before{
 
     box-shadow:
         0 0 16px var(--glow);
-
 }
 
 /* CURSOR */
@@ -501,7 +509,6 @@ body::before{
 
     animation:
         blink 1s step-end infinite;
-
 }
 
 @keyframes blink{
@@ -566,7 +573,7 @@ body::before{
     >
 </video>
 
-<!-- CURSOR GLOW -->
+<!-- CURSOR -->
 
 <div id="cursor-glow"></div>
 
@@ -574,20 +581,20 @@ body::before{
 
 <div class="main-ui" id="main-ui">
 
-    <div id="day-box" class="intro delay-1"></div>
+    <div id="day-box"></div>
 
-    <div id="date-box" class="intro delay-2"></div>
+    <div id="date-box"></div>
 
-    <div id="time-box" class="intro delay-3"></div>
+    <div id="time-box"></div>
 
-    <div class="type-wrap intro delay-4">
+    <div class="type-wrap">
         <span id="text"></span>
         <span class="cursor"></span>
     </div>
 
     <!-- SEARCH -->
 
-    <div class="home-search intro delay-5">
+    <div class="home-search">
 
         <input
             id="search-input"
@@ -602,7 +609,7 @@ body::before{
 
     <!-- QUICK LINKS -->
 
-    <div class="quick-links intro delay-5">
+    <div class="quick-links">
 
         <a href="https://sites.google.com/view/blazewingz/library" target="_blank">
             Library
@@ -746,7 +753,7 @@ function type(){
 
 }
 
-setTimeout(type,1200);
+type();
 
 /* MOUSE ATMOSPHERE */
 
@@ -771,10 +778,10 @@ document.addEventListener("mousemove", e => {
         y + "px";
 
     const rotateY =
-        ((x / window.innerWidth) - 0.5) * 4;
+        ((x / window.innerWidth) - 0.5) * 5;
 
     const rotateX =
-        ((y / window.innerHeight) - 0.5) * -4;
+        ((y / window.innerHeight) - 0.5) * -5;
 
     ui.style.transform = `
         translateY(-50%)
@@ -785,9 +792,7 @@ document.addEventListener("mousemove", e => {
 
 });
 
-/* ====================================== */
-/* GAME DATABASE                          */
-/* ====================================== */
+/* GAME DATABASE */
 
 const gameCards = `
 
@@ -795,9 +800,7 @@ PASTE YOUR GAME CARDS HERE
 
 `;
 
-/* ====================================== */
-/* SEARCH SYSTEM                          */
-/* ====================================== */
+/* SEARCH SYSTEM */
 
 const parser =
     new DOMParser();
