@@ -46,11 +46,13 @@ body{
     transform:scale(1.03);
 
     filter:
-        brightness(0.82)
+        brightness(0.96)
         saturate(1.08)
-        contrast(1.03);
+        contrast(1.02);
 
-    transition:transform 0.4s ease;
+    transition:
+        transform 0.4s ease,
+        filter 0.4s ease;
 }
 
 /* OVERLAY */
@@ -64,7 +66,7 @@ body::before{
         radial-gradient(
             circle at center,
             rgba(0,0,0,0) 0%,
-            rgba(5,0,15,0.34) 100%
+            rgba(5,0,15,0.18) 100%
         );
 
     z-index:1;
@@ -84,8 +86,8 @@ body::before{
     background:
         radial-gradient(
             circle,
-            rgba(255,0,255,0.10) 0%,
-            rgba(255,0,255,0.04) 40%,
+            rgba(255,0,255,0.08) 0%,
+            rgba(255,0,255,0.03) 42%,
             transparent 75%
         );
 
@@ -98,7 +100,7 @@ body::before{
     transition:
         transform 0.08s linear;
 
-    opacity:0.7;
+    opacity:0.55;
 }
 
 /* MAIN */
@@ -180,6 +182,26 @@ body::before{
 
     50%{
         transform:translateY(-10px);
+    }
+
+}
+
+/* SEARCH RESULTS ANIMATION */
+
+@keyframes resultsIn{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(-6px)
+            scale(0.985);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
     }
 
 }
@@ -365,6 +387,11 @@ body::before{
     flex-direction:column;
 
     gap:10px;
+
+    opacity:0;
+
+    transition:
+        opacity 0.18s ease;
 }
 
 .search-item{
@@ -379,7 +406,7 @@ body::before{
 
     border-radius:16px;
 
-    background:rgba(0,0,0,0.32);
+    background:rgba(0,0,0,0.24);
 
     backdrop-filter:blur(18px);
 
@@ -390,9 +417,15 @@ body::before{
 
     color:white;
 
-    transition:0.25s ease;
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
 
     overflow:hidden;
+
+    animation:
+        resultsIn 0.32s cubic-bezier(.2,.8,.2,1);
 }
 
 .search-item:hover{
@@ -551,6 +584,7 @@ body::before{
     }
 
 }
+
 /* GAME CARDS */
 
 .bw-card {
@@ -598,11 +632,10 @@ body::before{
     text-align: center;
     text-shadow: 0 0 10px var(--glow);
 }
+
 </style>
 </head>
 <body>
-
-<!-- VIDEO -->
 
 <video
     id="bg-video"
@@ -619,11 +652,7 @@ body::before{
     >
 </video>
 
-<!-- CURSOR -->
-
 <div id="cursor-glow"></div>
-
-<!-- MAIN -->
 
 <div class="main-ui" id="main-ui">
 
@@ -638,8 +667,6 @@ body::before{
         <span class="cursor"></span>
     </div>
 
-    <!-- SEARCH -->
-
     <div class="home-search">
 
         <input
@@ -652,8 +679,6 @@ body::before{
         <div id="search-results"></div>
 
     </div>
-
-    <!-- QUICK LINKS -->
 
     <div class="quick-links">
 
@@ -1050,10 +1075,14 @@ input.addEventListener("input", () => {
 
     if(!value){
 
-        results.style.display =
-            "none";
+        results.style.opacity = "0";
 
-        results.innerHTML = "";
+        setTimeout(() => {
+
+            results.style.display = "none";
+            results.innerHTML = "";
+
+        },120);
 
         return;
 
@@ -1070,8 +1099,13 @@ input.addEventListener("input", () => {
 
     if(matches.length === 0){
 
-        results.style.display =
-            "none";
+        results.style.opacity = "0";
+
+        setTimeout(() => {
+
+            results.style.display = "none";
+
+        },120);
 
         return;
 
@@ -1082,7 +1116,7 @@ input.addEventListener("input", () => {
 
     matches
     .slice(0,5)
-    .forEach(game => {
+    .forEach((game,i) => {
 
         const a =
             document.createElement("a");
@@ -1095,6 +1129,9 @@ input.addEventListener("input", () => {
 
         a.target =
             "_blank";
+
+        a.style.animationDelay =
+            `${i * 0.04}s`;
 
         a.innerHTML = `
 
@@ -1115,6 +1152,12 @@ input.addEventListener("input", () => {
         `;
 
         results.appendChild(a);
+
+    });
+
+    requestAnimationFrame(() => {
+
+        results.style.opacity = "1";
 
     });
 
