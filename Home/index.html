@@ -376,12 +376,6 @@ body::before{
 
 #search-results{
 
-    position:absolute;
-
-    top:100%;
-
-    left:0;
-
     width:100%;
 
     margin-top:14px;
@@ -405,9 +399,28 @@ body::before{
 
     z-index:50;
 
-    max-height: 60vh;
-    overflow-y: auto;
-    padding-bottom: 10px;
+    max-height:40vh;
+
+    overflow-y:auto;
+
+    padding-right:6px;
+}
+
+#search-results::-webkit-scrollbar{
+
+    width:6px;
+}
+
+#search-results::-webkit-scrollbar-track{
+
+    background:transparent;
+}
+
+#search-results::-webkit-scrollbar-thumb{
+
+    background:var(--glow);
+
+    border-radius:10px;
 }
 
 #search-results.active{
@@ -444,8 +457,6 @@ body::before{
     color:white;
 
     transition:0.25s ease;
-
-    /* Removed overflow:hidden to allow transform scale effects */
 
     opacity:0;
 
@@ -513,7 +524,7 @@ body::before{
 
     gap:12px;
 
-    margin-top:40px;
+    margin-top:35px;
 
     opacity:0;
 
@@ -567,14 +578,6 @@ body::before{
 
     animation:
         blink 1s step-end infinite;
-}
-
-@keyframes blink{
-
-    50%{
-        border-color:transparent;
-    }
-
 }
 
 /* MOBILE */
@@ -703,21 +706,21 @@ body::before{
 
         <div id="search-results"></div>
 
-        <div class="quick-links">
+    </div>
 
-            <a href="https://sites.google.com/view/blazewingz/library" target="_blank">
-                Library
-            </a>
+    <div class="quick-links">
 
-            <a href="https://blazewingz.github.io/blazewingz-mobile" target="_blank">
-                Mobile Version
-            </a>
+        <a href="https://sites.google.com/view/blazewingz/library" target="_blank">
+            Library
+        </a>
 
-            <a href="https://github.com/Knightsbytes/Precursor" target="_blank">
-                Precursor
-            </a>
+        <a href="https://blazewingz.github.io/blazewingz-mobile" target="_blank">
+            Mobile Version
+        </a>
 
-        </div>
+        <a href="https://github.com/Knightsbytes/Precursor" target="_blank">
+            Precursor
+        </a>
 
     </div>
 
@@ -1061,9 +1064,6 @@ const input =
 const results =
     document.getElementById("search-results");
 
-const quickLinks = 
-    document.querySelector(".quick-links");
-
 input.addEventListener("input", () => {
 
     const value =
@@ -1074,7 +1074,6 @@ input.addEventListener("input", () => {
     if(!value){
 
         results.classList.remove("active");
-        quickLinks.style.marginTop = "40px";
 
         setTimeout(() => {
 
@@ -1098,7 +1097,6 @@ input.addEventListener("input", () => {
     if(matches.length === 0){
 
         results.classList.remove("active");
-        quickLinks.style.marginTop = "40px";
 
         return;
 
@@ -1148,10 +1146,6 @@ input.addEventListener("input", () => {
     requestAnimationFrame(() => {
 
         results.classList.add("active");
-        
-        // Push links down based on how many results appeared
-        const height = results.offsetHeight;
-        quickLinks.style.marginTop = (height + 20) + "px";
 
     });
 
