@@ -551,7 +551,53 @@ body::before{
     }
 
 }
+/* GAME CARDS */
 
+.bw-card {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.bw-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bw-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 0, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.bw-card:hover .bw-overlay {
+    opacity: 1;
+}
+
+.bw-name {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 10px var(--glow);
+}
 </style>
 </head>
 <body>
