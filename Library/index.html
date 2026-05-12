@@ -4,1186 +4,1339 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BlazeWingz — Library</title>
+<title>BlazeWingz | Library</title>
 
 <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
-/* =========================
-   RESET
-========================= */
+:root{
+    --accent:#d46cff;
+    --bg:#05010a;
+    --card:#0d0814;
+    --border:rgba(255,255,255,0.08);
+    --glow:rgba(212,108,255,0.35);
+}
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-  background:#000;
-  color:white;
-  font-family:Arial,sans-serif;
-  overflow-x:hidden;
+    margin:0;
+    background:#05010a;
+    color:white;
+    overflow-x:hidden;
+    font-family:'PT Serif', serif;
 }
 
-/* =========================
-   HERO
-========================= */
+/* BACKGROUND */
 
-.bw-hero{
-  position:relative;
-  width:100%;
-  min-height:92vh;
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
 
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.15),
-      rgba(0,0,0,0.55),
-      rgba(0,0,0,0.92)
-    ),
-    url('https://github.com/blazewingz/blazewingz/blob/ee82226ae283e2dc18cf646e0a44f7ccaf82e82c/Home/Assets/Wallpaper.jpg?raw=true');
+    background:
+        radial-gradient(circle at top, rgba(120,0,255,0.12), transparent 40%),
+        radial-gradient(circle at bottom, rgba(255,0,140,0.08), transparent 40%);
 
-  background-size:cover;
-  background-position:center;
-  background-attachment:fixed;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  overflow:hidden;
+    pointer-events:none;
+    z-index:-2;
 }
 
-.bw-hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
+#cursor-glow{
+    position:fixed;
+    width:180px;
+    height:180px;
+    border-radius:50%;
 
-  background:
-    radial-gradient(circle at center,
-      rgba(160,90,255,0.16),
-      transparent 60%);
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,0,255,0.12) 0%,
+            rgba(255,0,255,0.05) 35%,
+            transparent 72%
+        );
 
-  pointer-events:none;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    z-index:9999;
+    opacity:0.65;
+}
+
+/* HERO */
+
+.hero{
+    position:relative;
+    height:62vh;
+    min-height:520px;
+    overflow:hidden;
+}
+
+.hero-bg{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.2),
+            rgba(5,1,10,0.88)
+        ),
+        url('https://github.com/blazewingz/blazewingz/blob/ee82226ae283e2dc18cf646e0a44f7ccaf82e82c/Home/Assets/Wallpaper.jpg?raw=true');
+
+    background-size:cover;
+    background-position:center;
+    transform:scale(1.05);
+    will-change:transform;
+}
+
+.hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(circle at center, transparent 0%, rgba(5,1,10,0.6) 100%);
+
+    pointer-events:none;
+}
+
+.hero-content{
+    position:relative;
+    z-index:5;
+
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:0 20px;
 }
 
 @keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
 
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 @keyframes glowPulse{
-  0%{
-    text-shadow:
-      0 0 10px rgba(200,100,255,0.8),
-      0 0 30px rgba(180,80,255,0.4),
-      0 0 45px rgba(150,60,255,0.25);
-  }
+    0%{
+        text-shadow:
+            0 0 10px rgba(200,100,255,0.7),
+            0 0 35px rgba(180,80,255,0.35);
+    }
 
-  50%{
-    text-shadow:
-      0 0 20px rgba(220,140,255,1),
-      0 0 40px rgba(200,100,255,0.6),
-      0 0 60px rgba(180,80,255,0.4);
-  }
+    50%{
+        text-shadow:
+            0 0 18px rgba(220,140,255,1),
+            0 0 45px rgba(200,100,255,0.55);
+    }
 
-  100%{
-    text-shadow:
-      0 0 10px rgba(200,100,255,0.8),
-      0 0 30px rgba(180,80,255,0.4),
-      0 0 45px rgba(150,60,255,0.25);
-  }
+    100%{
+        text-shadow:
+            0 0 10px rgba(200,100,255,0.7),
+            0 0 35px rgba(180,80,255,0.35);
+    }
 }
 
-.bw-title{
-  position:relative;
-  z-index:2;
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px);
+    }
 
-  font-family:'Space Age',sans-serif;
-  font-size:clamp(60px,10vw,140px);
-
-  letter-spacing:10px;
-  text-transform:uppercase;
-
-  animation:
-    fadeIn 2s ease forwards,
-    glowPulse 6s ease-in-out infinite;
+    50%{
+        transform:translateY(-10px);
+    }
 }
 
-.bw-sub{
-  margin-top:16px;
-  opacity:0.7;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  font-size:12px;
+.hero-title{
+    font-family:'Space Age', sans-serif;
+    font-size:clamp(52px,9vw,110px);
+    letter-spacing:10px;
+    text-transform:uppercase;
+
+    opacity:0;
+
+    animation:
+        fadeIn 2s ease forwards,
+        glowPulse 6s ease-in-out infinite,
+        float 6s ease-in-out infinite;
 }
 
-/* =========================
-   MAIN
-========================= */
+.hero-sub{
+    margin-top:14px;
 
-.bw-main{
-  position:relative;
-  z-index:2;
+    letter-spacing:4px;
+    font-size:14px;
+    opacity:0.7;
 
-  max-width:1700px;
-  margin:auto;
+    opacity:0;
 
-  padding:
-    40px
-    28px
-    100px;
+    animation:
+        fadeIn 2s ease forwards;
+
+    animation-delay:0.5s;
 }
 
-/* =========================
-   SECTION TITLES
-========================= */
+/* MAIN */
 
-.bw-section-title{
-  font-family:'PT Serif',serif;
-  font-size:32px;
-  margin-bottom:18px;
+.main{
+    width:min(1600px,100%);
+    margin:auto;
+    padding:0 18px 80px;
 }
 
-/* =========================
-   FEATURED GRID
-========================= */
+/* TOP BAR */
 
-.bw-featured-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin-bottom:34px;
+.top-wrap{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    padding-top:18px;
+    padding-bottom:16px;
+
+    backdrop-filter:blur(18px);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(5,1,10,0.92),
+            rgba(5,1,10,0.68)
+        );
 }
 
-@media(max-width:1100px){
+.top-inner{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
 
-  .bw-featured-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+/* SEARCH */
+
+.search-row{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.search-wrap{
+    position:relative;
+    width:min(620px,100%);
+}
+
+.search{
+    width:100%;
+
+    padding:18px 55px 18px 22px;
+
+    background:rgba(255,255,255,0.04);
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    border-radius:18px;
+
+    color:white;
+
+    font-size:16px;
+    letter-spacing:1px;
+
+    outline:none;
+
+    transition:0.3s ease;
+
+    backdrop-filter:blur(14px);
+}
+
+.search:focus{
+    border-color:rgba(212,108,255,0.6);
+
+    box-shadow:
+        0 0 30px rgba(212,108,255,0.16);
+
+    transform:translateY(-1px);
+}
+
+.search::placeholder{
+    color:rgba(255,255,255,0.35);
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:12px;
+}
+
+.search-icon{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    width:18px;
+    height:18px;
+    opacity:0.6;
+}
+
+/* FILTER */
+
+.filter-btn{
+    width:54px;
+    height:54px;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    background:rgba(255,255,255,0.04);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    position:relative;
+
+    transition:0.25s ease;
+}
+
+.filter-btn:hover{
+    border-color:rgba(212,108,255,0.5);
+
+    box-shadow:
+        0 0 24px rgba(212,108,255,0.14);
+}
+
+.dropdown{
+    position:absolute;
+    top:64px;
+    right:0;
+
+    width:200px;
+
+    background:rgba(10,6,18,0.96);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:18px;
+
+    backdrop-filter:blur(18px);
+
+    padding:8px;
+
+    display:none;
+    flex-direction:column;
+    gap:5px;
+}
+
+.dropdown button{
+    background:none;
+    border:none;
+
+    color:white;
+
+    padding:12px 14px;
+
+    border-radius:12px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+}
+
+.dropdown button:hover{
+    background:rgba(255,255,255,0.06);
+}
+
+.dropdown button.active{
+    background:white;
+    color:black;
+}
+
+.separator{
+    height:1px;
+    background:rgba(255,255,255,0.08);
+    margin:5px 0;
+}
+
+/* TAGS */
+
+.tags{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.tag{
+    background:white;
+    color:black;
+
+    padding:8px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    cursor:pointer;
+}
+
+/* FEATURED */
+
+.featured-card{
+    position:relative;
+
+    width:100%;
+    height:230px;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    text-decoration:none;
+    color:white;
+
+    display:block;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    transition:0.4s ease;
+}
+
+.featured-card:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.35),
+        0 0 30px rgba(212,108,255,0.18);
+}
+
+.featured-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    transition:0.5s ease;
+}
+
+.featured-card:hover img{
+    transform:scale(1.04);
+}
+
+.featured-overlay{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+
+    padding:24px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,0.72),
+            rgba(0,0,0,0.1)
+        );
+}
+
+.featured-label{
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    opacity:0.7;
+    margin-bottom:6px;
+}
+
+.featured-title{
+    font-size:34px;
+    line-height:1;
+}
+
+/* GRID */
+
+.grid{
+    margin-top:26px;
+
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:18px;
+}
+
+@media (max-width:1400px){
+    .grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+}
+
+@media (max-width:1000px){
+    .grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media (max-width:700px){
+    .grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media (max-width:520px){
+
+    .hero{
+        height:52vh;
+        min-height:420px;
+    }
+
+    .hero-title{
+        letter-spacing:5px;
+    }
+
+    .featured-card{
+        height:190px;
+    }
+
+    .featured-title{
+        font-size:26px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
 
 }
 
-@media(max-width:650px){
-
-  .bw-featured-grid{
-    grid-template-columns:1fr;
-  }
-
-}
+/* CARDS */
 
 .bw-card{
-  position:relative;
-  overflow:hidden;
+    position:relative;
 
-  border-radius:14px;
+    aspect-ratio:1/1;
 
-  background:#111;
+    overflow:hidden;
 
-  text-decoration:none;
+    border-radius:22px;
 
-  aspect-ratio:1/1;
+    text-decoration:none;
 
-  transition:
-    transform .22s ease,
-    opacity .22s ease;
+    background:#111;
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
 }
 
 .bw-card:hover{
-  transform:scale(1.02);
-}
+    border-color:rgba(212,108,255,0.35);
 
-.bw-card::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-
-  height:40%;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(0,0,0,.82),
-      rgba(0,0,0,0)
-    );
-
-  z-index:1;
+    box-shadow:
+        0 16px 30px rgba(0,0,0,0.35),
+        0 0 25px rgba(212,108,255,0.1);
 }
 
 .bw-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 
-  transition:transform .45s ease;
+    transition:0.45s ease;
 }
 
 .bw-card:hover img{
-  transform:scale(1.07);
+    transform:scale(1.06);
+}
+
+.bw-card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,0.72),
+            rgba(0,0,0,0)
+        );
+
+    pointer-events:none;
 }
 
 .bw-overlay{
-  position:absolute;
-  inset:0;
+    position:absolute;
+    inset:0;
 
-  z-index:2;
+    display:flex;
+    align-items:flex-end;
 
-  display:flex;
-  align-items:flex-end;
+    padding:16px;
 
-  padding:18px;
+    z-index:2;
 }
 
 .bw-name{
-  font-family:'PT Serif',serif;
-  font-size:22px;
-  font-weight:700;
+    font-size:20px;
+    color:white;
 
-  color:white;
+    transform:translateY(160%);
+    transition:0.32s cubic-bezier(.2,.8,.2,1);
 
-  transform:translateY(180%);
-  transition:transform .35s cubic-bezier(.2,.8,.2,1);
-
-  text-shadow:
-    0 2px 6px rgba(0,0,0,0.9),
-    0 6px 18px rgba(0,0,0,0.8),
-    0 0 6px rgba(255,255,255,0.15);
-
-  -webkit-text-stroke:0.6px black;
+    text-shadow:
+        0 2px 8px rgba(0,0,0,0.9),
+        0 0 12px rgba(255,255,255,0.12);
 }
 
 .bw-card:hover .bw-name{
-  transform:translateY(0);
+    transform:translateY(0);
 }
 
-/* =========================
-   FEATURED BANNER
-========================= */
-
-.bw-featured-banner{
-  position:relative;
-
-  display:block;
-
-  overflow:hidden;
-
-  border-radius:18px;
-
-  margin-bottom:38px;
-
-  text-decoration:none;
+.random-card .bw-name{
+    transform:translateY(0);
 }
 
-.bw-featured-banner img{
-  width:100%;
-  height:320px;
-  object-fit:cover;
+/* CARD TILT */
 
-  transition:transform .45s ease;
+.card-inner{
+    width:100%;
+    height:100%;
+    transition:transform 0.14s ease;
+    will-change:transform;
 }
 
-.bw-featured-banner:hover img{
-  transform:scale(1.04);
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width:10px;
 }
 
-.bw-featured-banner::after{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(0,0,0,.92),
-      rgba(0,0,0,.15)
-    );
+::-webkit-scrollbar-track{
+    background:#09040f;
 }
 
-.bw-featured-content{
-  position:absolute;
-  left:24px;
-  bottom:24px;
-
-  z-index:2;
-}
-
-.bw-featured-label{
-  font-size:12px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  opacity:0.75;
-  margin-bottom:8px;
-}
-
-.bw-featured-title{
-  font-family:'PT Serif',serif;
-  font-size:40px;
-}
-
-/* =========================
-   STICKY CONTROLS
-========================= */
-
-.bw-controls-wrap{
-  position:sticky;
-  top:0;
-
-  z-index:999;
-
-  padding:
-    14px
-    0;
-
-  margin-bottom:28px;
-
-  backdrop-filter:blur(14px);
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,.92),
-      rgba(0,0,0,.72)
-    );
-
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.08);
-}
-
-.bw-top{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
-.bw-search-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.bw-search-wrap{
-  position:relative;
-}
-
-.bw-search{
-  width:320px;
-
-  padding:
-    11px
-    38px
-    11px
-    14px;
-
-  border-radius:10px;
-
-  background:#111;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  color:white;
-
-  outline:none;
-}
-
-.bw-search:focus{
-  border-color:rgba(180,100,255,.8);
-  box-shadow:
-    0 0 0 4px
-    rgba(160,90,255,.12);
-}
-
-.bw-search-icon{
-  position:absolute;
-
-  right:12px;
-  top:50%;
-
-  transform:translateY(-50%);
-
-  width:16px;
-  height:16px;
-
-  opacity:0.6;
-}
-
-.bw-filter-btn{
-  width:42px;
-  height:42px;
-
-  border-radius:10px;
-
-  background:#111;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  cursor:pointer;
-
-  position:relative;
-}
-
-.bw-indicator{
-  height:42px;
-
-  display:flex;
-  align-items:center;
-
-  padding:0 14px;
-
-  border-radius:10px;
-
-  background:#111;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  font-size:13px;
-}
-
-.bw-dropdown{
-  position:absolute;
-
-  top:50px;
-  right:0;
-
-  min-width:190px;
-
-  border-radius:12px;
-
-  padding:8px;
-
-  background:
-    rgba(16,16,16,.96);
-
-  border:
-    1px solid
-    rgba(255,255,255,.08);
-
-  backdrop-filter:blur(10px);
-
-  display:none;
-  flex-direction:column;
-  gap:4px;
-}
-
-.bw-dropdown button{
-  border:none;
-  background:none;
-
-  color:white;
-
-  padding:10px;
-
-  text-align:left;
-
-  border-radius:8px;
-
-  cursor:pointer;
-}
-
-.bw-dropdown button:hover{
-  background:rgba(255,255,255,.08);
-}
-
-.bw-dropdown button.active{
-  background:white;
-  color:black;
-}
-
-.bw-separator{
-  height:1px;
-  background:rgba(255,255,255,.1);
-  margin:4px 0;
-}
-
-.bw-tags{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.bw-tag{
-  background:white;
-  color:black;
-
-  padding:
-    6px
-    10px;
-
-  border-radius:999px;
-
-  font-size:12px;
-
-  cursor:pointer;
-}
-
-/* =========================
-   LIBRARY GRID
-========================= */
-
-.bw-library-grid{
-  display:grid;
-
-  grid-template-columns:
-    repeat(5,minmax(0,1fr));
-
-  gap:18px;
-}
-
-@media(max-width:1500px){
-
-  .bw-library-grid{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-}
-
-@media(max-width:1100px){
-
-  .bw-library-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-}
-
-@media(max-width:780px){
-
-  .bw-library-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-}
-
-@media(max-width:560px){
-
-  .bw-library-grid{
-    grid-template-columns:1fr;
-  }
-
-}
-
-#bw-random-card .bw-name{
-  transform:translateY(0);
+::-webkit-scrollbar-thumb{
+    background:rgba(212,108,255,0.28);
+    border-radius:999px;
 }
 
 </style>
 </head>
-
 <body>
+
+<div id="cursor-glow"></div>
 
 <!-- HERO -->
 
-<section class="bw-hero">
+<section class="hero">
 
-  <div>
+    <div class="hero-bg" id="hero-bg"></div>
 
-    <div class="bw-title">
-      GAMES
+    <div class="hero-content">
+
+        <div class="hero-title">
+            GAMES
+        </div>
+
+        <div class="hero-sub">
+            THE BLAZEWINGZ ARCHIVES
+        </div>
+
     </div>
-
-    <div class="bw-sub">
-      Impossible Ports. Play Anywhere.
-    </div>
-
-  </div>
 
 </section>
 
 <!-- MAIN -->
 
-<div class="bw-main">
+<div class="main">
 
-  <!-- FAN FAVOURITES -->
+    <div class="top-wrap">
 
-  <div class="bw-section-title">
-    Fan Favourites
-  </div>
+        <div class="top-inner">
 
-  <div class="bw-featured-grid">
+            <div class="search-row">
 
-    <a href="https://sites.google.com/view/blazewingz/games/brotato" target="_blank" class="bw-card">
-      <img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_download_software/1x1_NSwitchDS_Brotato_image500w.jpg">
-      <div class="bw-overlay"><div class="bw-name">Brotato</div></div>
-    </a>
+                <div class="search-wrap">
 
-    <a href="https://sites.google.com/view/blazewingz/games/gta-vice-city" target="_blank" class="bw-card">
-      <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/GTA:%20Vice%20City/GTA-Vice-City.png?raw=true">
-      <div class="bw-overlay"><div class="bw-name">GTA: Vice City</div></div>
-    </a>
+                    <input
+                        id="search"
+                        class="search"
+                        placeholder="Search Library..."
+                    >
 
-    <a href="https://sites.google.com/view/blazewingz/games/minecraft" target="_blank" class="bw-card">
-      <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Minecraft/Minecraft%20Logo.png?raw=true">
-      <div class="bw-overlay"><div class="bw-name">Minecraft</div></div>
-    </a>
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="white">
+                        <path d="M10 2a8 8 0 105.29 14.29l4.71 4.7 1.41-1.41-4.7-4.71A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+                    </svg>
 
-    <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle" target="_blank" class="bw-card">
-      <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/YOMI%20Hustle/YOMI-Hustle.png?raw=true">
-      <div class="bw-overlay"><div class="bw-name">YOMI Hustle</div></div>
-    </a>
+                </div>
 
-  </div>
+                <div class="filter-btn" id="filter-btn">
 
-  <!-- FEATURED -->
+                    <svg width="18" height="18" fill="white">
+                        <rect y="3" width="18" height="2"/>
+                        <rect y="8" width="14" height="2"/>
+                        <rect y="13" width="10" height="2"/>
+                    </svg>
 
-  <a id="bw-featured-banner" target="_blank" class="bw-featured-banner">
+                    <div class="dropdown" id="dropdown">
 
-    <img id="bw-featured-img">
+                        <button data-sort="az">
+                            A–Z
+                        </button>
 
-    <div class="bw-featured-content">
+                        <button data-sort="za">
+                            Z–A
+                        </button>
 
-      <div class="bw-featured-label">
-        Featured
-      </div>
+                        <div class="separator"></div>
 
-      <div class="bw-featured-title" id="bw-featured-title">
-      </div>
+                        <button data-filter="multiplayer">
+                            Multiplayer
+                        </button>
+
+                        <button data-filter="featured">
+                            Featured
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="tags" id="tags"></div>
+
+            <a
+                id="featured-card"
+                class="featured-card"
+                target="_blank"
+            >
+                <img id="featured-img">
+
+                <div class="featured-overlay">
+
+                    <div class="featured-label">
+                        Featured
+                    </div>
+
+                    <div
+                        class="featured-title"
+                        id="featured-title"
+                    ></div>
+
+                </div>
+
+            </a>
+
+        </div>
 
     </div>
 
-  </a>
+    <!-- GRID -->
 
-  <!-- CONTROLS -->
+    <div class="grid" id="grid">
 
-  <div class="bw-controls-wrap">
+<!-- RANDOM -->
 
-    <div class="bw-top">
+<a href="#" class="bw-card random-card" id="random-card">
+<div class="card-inner">
 
-      <div class="bw-search-row">
+<img id="random-img">
 
-        <div class="bw-search-wrap">
+<div class="bw-overlay">
+<div class="bw-name">
+Random Game
+</div>
+</div>
 
-          <input
-            id="bw-search"
-            class="bw-search"
-            placeholder="Search Library..."
-          >
+</div>
+</a>
 
-          <svg class="bw-search-icon" viewBox="0 0 24 24" fill="white">
-            <path d="M10 2a8 8 0 105.29 14.29l4.71 4.7 1.41-1.41-4.7-4.71A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
-          </svg>
+<!-- GAMES -->
 
-        </div>
+<a href="https://sites.google.com/view/blazewingz/games/10-minutes-till-dawn" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/10%20Minutes/10%20Minutes%20'Till%20Dawn%20Logo.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">10 Minutes 'Till Dawn</div></div>
+</div>
+</a>
 
-        <div class="bw-filter-btn" id="bw-filter-btn">
+<a href="https://sites.google.com/view/blazewingz/games/balatro" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://i.scdn.co/image/ab67616d0000b273b153ba98e093ff8841fc5d73">
+<div class="bw-overlay"><div class="bw-name">Balatro</div></div>
+</div>
+</a>
 
-          <svg width="18" height="18" fill="white">
-            <rect y="3" width="18" height="2"/>
-            <rect y="8" width="14" height="2"/>
-            <rect y="13" width="10" height="2"/>
-          </svg>
+<a href="https://sites.google.com/view/blazewingz/games/brotato" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_download_software/1x1_NSwitchDS_Brotato_image500w.jpg">
+<div class="bw-overlay"><div class="bw-name">Brotato</div></div>
+</div>
+</a>
 
-          <div class="bw-dropdown" id="bw-dropdown">
+<a href="https://sites.google.com/view/blazewingz/games/buckshot-roulette" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://bleedingcool.com/wp-content/uploads/2024/10/Buckshot-Roulette-Main-Art-900x900.jpg">
+<div class="bw-overlay"><div class="bw-name">Buckshot Roulette</div></div>
+</div>
+</a>
 
-            <button data-sort="az">
-              A–Z
-            </button>
+<a href="https://sites.google.com/view/blazewingz/games/crazy-cattle-3d" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://curverush.com/data/image/crazy-cattle-3d.png">
+<div class="bw-overlay"><div class="bw-name">Crazy Cattle 3D</div></div>
+</div>
+</a>
 
-            <button data-sort="za">
-              Z–A
-            </button>
+<a href="https://sites.google.com/view/blazewingz/games/celeste" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Celeste/Celeste.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">Celeste</div></div>
+</div>
+</a>
 
-            <div class="bw-separator"></div>
+<a href="https://sites.google.com/view/blazewingz/games/cheese-rolling" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://assets-prd.ignimgs.com/2026/01/01/untitled-1-1767290877734.png">
+<div class="bw-overlay"><div class="bw-name">Cheese Rolling</div></div>
+</div>
+</a>
 
-            <button data-filter="multiplayer">
-              Multiplayer
-            </button>
+<a href="https://sites.google.com/view/blazewingz/games/doom" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://oramind.com/content/images/2020/08/doom-560.jpg">
+<div class="bw-overlay"><div class="bw-name">Doom</div></div>
+</div>
+</a>
 
-            <button data-filter="featured">
-              Featured
-            </button>
+<a href="https://sites.google.com/view/blazewingz/games/fnaf" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://cdn2.steamgriddb.com/icon/6aab1270668d8cac7cef2566a1c5f569.png">
+<div class="bw-overlay"><div class="bw-name">Five Nights at Freddy's</div></div>
+</div>
+</a>
 
-          </div>
+<a href="https://sites.google.com/view/blazewingz/games/half-life" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://cdn.wikimg.net/en/strategywiki/images/thumb/b/ba/Half-Life_Boxart.jpg/250px-Half-Life_Boxart.jpg">
+<div class="bw-overlay"><div class="bw-name">Half-Life</div></div>
+</div>
+</a>
 
-        </div>
+<a href="https://sites.google.com/view/blazewingz/games/hollow-knight-x-silksong" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://pbs.twimg.com/media/G8QFE9VaQAA4XOT.jpg">
+<div class="bw-overlay"><div class="bw-name">Hollow Knight & Silksong</div></div>
+</div>
+</a>
 
-        <div class="bw-indicator" id="bw-indicator">
-          A–Z
-        </div>
+<a href="https://sites.google.com/view/blazewingz/games/minecraft" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Minecraft/Minecraft%20Logo.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">Minecraft</div></div>
+</div>
+</a>
 
-      </div>
+<a href="https://sites.google.com/view/blazewingz/games/my-friend-peppa" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_5/SQ_NSwitch_MyFriendPeppaPig_EN_image500w.jpg">
+<div class="bw-overlay"><div class="bw-name">My Friend Peppa Pig</div></div>
+</div>
+</a>
 
-      <div class="bw-tags" id="bw-tags"></div>
+<a href="https://sites.google.com/view/blazewingz/games/osu" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/osu!/osu!.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">osu!</div></div>
+</div>
+</a>
 
-    </div>
+<a href="https://sites.google.com/view/blazewingz/games/people-playground" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://assets-prd.ignimgs.com/2023/07/30/people-1690697393849.jpg">
+<div class="bw-overlay"><div class="bw-name">people playground</div></div>
+</div>
+</a>
 
-  </div>
+<a href="https://sites.google.com/view/blazewingz/games/raft" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://vectorseek.com/wp-content/uploads/2023/08/Raft-Logo-Vector.svg-.png">
+<div class="bw-overlay"><div class="bw-name">Raft</div></div>
+</div>
+</a>
 
-  <!-- LIBRARY -->
+<a href="https://sites.google.com/view/blazewingz/games/repo" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/REPO/REPO.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">REPO</div></div>
+</div>
+</a>
 
-  <div class="bw-library-grid" id="bw-grid">
+<a href="https://sites.google.com/view/blazewingz/games/slime-rancher" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://assets1.ignimgs.com/2018/08/30/slime-rancher---button-fin-1535671208121.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80">
+<div class="bw-overlay"><div class="bw-name">Slime Rancher</div></div>
+</div>
+</a>
 
-    <!-- RANDOM -->
+<a href="https://sites.google.com/view/blazewingz/games/stardew-valley" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://www.simsnetwork.com/sites/simsnetwork.com/files/styles/twittercard/public/simpedia/box-arts/StardewValleyBox.png?itok=6XolDRMa">
+<div class="bw-overlay"><div class="bw-name">Stardew Valley</div></div>
+</div>
+</a>
 
-    <a href="#" class="bw-card" id="bw-random-card">
+<a href="https://sites.google.com/view/blazewingz/games/terraria" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://forums.terraria.org/index.php?attachments/icon-png.280655/">
+<div class="bw-overlay"><div class="bw-name">Terraria</div></div>
+</div>
+</a>
 
-      <img id="bw-random-img">
+<a href="https://sites.google.com/view/blazewingz/games/the-binding-of-isaac" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Binding%20of%20Isaac/Curse%20of%20Binding.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">The Binding of Isaac</div></div>
+</div>
+</a>
 
-      <div class="bw-overlay">
-        <div class="bw-name">
-          Random Game
-        </div>
-      </div>
+<a href="https://sites.google.com/view/blazewingz/games/to-the-core" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/To%20The%20Core/To%20The%20Core.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">To The Core</div></div>
+</div>
+</a>
 
-    </a>
+<a href="https://sites.google.com/view/blazewingz/games/ultrakill" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Ultrakill/Ultrakill.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">Ultrakill</div></div>
+</div>
+</a>
 
-  </div>
+<a href="https://sites.google.com/view/blazewingz/games/undertale" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA09239_00/1/i_691ab24757a01bfc94c6f293abd4fac52478bdac0d5829388ceb9a4e4da9c7d1/i/icon0.png">
+<div class="bw-overlay"><div class="bw-name">Undertale</div></div>
+</div>
+</a>
+
+<a href="https://sites.google.com/view/blazewingz/games/gta-vice-city" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/GTA:%20Vice%20City/GTA-Vice-City.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">GTA: Vice City</div></div>
+</div>
+</a>
+
+<a href="https://sites.google.com/view/blazewingz/games/yomi-hustle" target="_blank" class="bw-card">
+<div class="card-inner">
+<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/YOMI%20Hustle/YOMI-Hustle.png?raw=true">
+<div class="bw-overlay"><div class="bw-name">YOMI Hustle</div></div>
+</div>
+</a>
+
+</div>
 
 </div>
 
 <script>
 
-/* =========================
-   GAMES
-========================= */
+/* PARALLAX */
 
-const games = [
+const heroBg =
+    document.getElementById("hero-bg");
 
-{
-  name:"10 Minutes 'Till Dawn",
-  link:"https://sites.google.com/view/blazewingz/games/10-minutes-till-dawn",
-  img:"https://github.com/blazewingz/Assets/blob/blazewingz/Assets/10%20Minutes/10%20Minutes%20'Till%20Dawn%20Logo.png?raw=true"
-},
+window.addEventListener("scroll", () => {
 
-{
-  name:"Balatro",
-  link:"https://sites.google.com/view/blazewingz/games/balatro",
-  img:"https://i.scdn.co/image/ab67616d0000b273b153ba98e093ff8841fc5d73"
-},
+    heroBg.style.transform =
+        `scale(1.05) translateY(${window.scrollY * 0.18}px)`;
 
-{
-  name:"Brotato",
-  link:"https://sites.google.com/view/blazewingz/games/brotato",
-  img:"https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_download_software/1x1_NSwitchDS_Brotato_image500w.jpg"
-},
+});
 
-{
-  name:"Buckshot Roulette",
-  link:"https://sites.google.com/view/blazewingz/games/buckshot-roulette",
-  img:"https://bleedingcool.com/wp-content/uploads/2024/10/Buckshot-Roulette-Main-Art-900x900.jpg"
-},
+/* CURSOR GLOW */
 
-{
-  name:"Celeste",
-  link:"https://sites.google.com/view/blazewingz/games/celeste",
-  img:"https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Celeste/Celeste.png?raw=true"
-},
+const glow =
+    document.getElementById("cursor-glow");
 
-{
-  name:"Doom",
-  link:"https://sites.google.com/view/blazewingz/games/doom",
-  img:"https://oramind.com/content/images/2020/08/doom-560.jpg"
-},
+document.addEventListener("mousemove", e => {
 
-{
-  name:"Half-Life",
-  link:"https://sites.google.com/view/blazewingz/games/half-life",
-  img:"https://cdn.wikimg.net/en/strategywiki/images/thumb/b/ba/Half-Life_Boxart.jpg/250px-Half-Life_Boxart.jpg"
-},
+    glow.style.left =
+        e.clientX + "px";
 
-{
-  name:"Minecraft",
-  link:"https://sites.google.com/view/blazewingz/games/minecraft",
-  img:"https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Minecraft/Minecraft%20Logo.png?raw=true"
-},
+    glow.style.top =
+        e.clientY + "px";
 
-{
-  name:"Terraria",
-  link:"https://sites.google.com/view/blazewingz/games/terraria",
-  img:"https://forums.terraria.org/index.php?attachments/icon-png.280655/"
-},
+});
 
-{
-  name:"YOMI Hustle",
-  link:"https://sites.google.com/view/blazewingz/games/yomi-hustle",
-  img:"https://github.com/blazewingz/Assets/blob/blazewingz/Assets/YOMI%20Hustle/YOMI-Hustle.png?raw=true"
-},
+/* CARD TILT */
 
-{
-  name:"Ultrakill",
-  link:"https://sites.google.com/view/blazewingz/games/ultrakill",
-  img:"https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Ultrakill/Ultrakill.png?raw=true"
-},
+document.querySelectorAll(".bw-card").forEach(card => {
 
-{
-  name:"Undertale",
-  link:"https://sites.google.com/view/blazewingz/games/undertale",
-  img:"https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA09239_00/1/i_691ab24757a01bfc94c6f293abd4fac52478bdac0d5829388ceb9a4e4da9c7d1/i/icon0.png"
-}
+    const inner =
+        card.querySelector(".card-inner");
 
-];
+    card.addEventListener("mousemove", e => {
 
-/* =========================
-   FEATURED ROTATION
-========================= */
+        const rect =
+            card.getBoundingClientRect();
+
+        const x =
+            e.clientX - rect.left;
+
+        const y =
+            e.clientY - rect.top;
+
+        const rotateY =
+            ((x / rect.width) - 0.5) * 10;
+
+        const rotateX =
+            ((y / rect.height) - 0.5) * -10;
+
+        inner.style.transform =
+            `
+            perspective(900px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            scale(1.02)
+            `;
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        inner.style.transform =
+            `
+            perspective(900px)
+            rotateX(0deg)
+            rotateY(0deg)
+            scale(1)
+            `;
+
+    });
+
+});
+
+/* FEATURED */
 
 const featuredGames = [
 
 {
-  name:"Minecraft",
-  link:"https://sites.google.com/view/blazewingz/games/minecraft",
-  img:"https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/minecraft-4.jpg?w=1600&h=900&fit=crop"
+    name:"Minecraft",
+    link:"https://sites.google.com/view/blazewingz/games/minecraft",
+    img:"https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/minecraft-4.jpg?w=1600&h=900&fit=crop"
 },
 
 {
-  name:"Brotato",
-  link:"https://sites.google.com/view/blazewingz/games/brotato",
-  img:"https://wallpapercave.com/wp/wp13551118.png"
+    name:"Brotato",
+    link:"https://sites.google.com/view/blazewingz/games/brotato",
+    img:"https://wallpapercave.com/wp/wp13551118.png"
 },
 
 {
-  name:"GTA: Vice City",
-  link:"https://sites.google.com/view/blazewingz/games/gta-vice-city",
-  img:"https://c4.wallpaperflare.com/wallpaper/500/833/264/car-gamer-grand-theft-auto-grand-theft-auto-vice-city-wallpaper-preview.jpg"
+    name:"GTA: Vice City",
+    link:"https://sites.google.com/view/blazewingz/games/gta-vice-city",
+    img:"https://c4.wallpaperflare.com/wallpaper/500/833/264/car-gamer-grand-theft-auto-grand-theft-auto-vice-city-wallpaper-preview.jpg"
 },
 
 {
-  name:"YOMI Hustle",
-  link:"https://sites.google.com/view/blazewingz/games/yomi-hustle",
-  img:"https://images.steamusercontent.com/ugc/2038477893869161638/BB643F4DC6895EF1DBCA8AC1D613C5E3B7A55475/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
+    name:"YOMI Hustle",
+    link:"https://sites.google.com/view/blazewingz/games/yomi-hustle",
+    img:"https://images.steamusercontent.com/ugc/2038477893869161638/BB643F4DC6895EF1DBCA8AC1D613C5E3B7A55475/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
 }
 
 ];
 
-const featuredBanner = document.getElementById("bw-featured-banner");
-const featuredImg = document.getElementById("bw-featured-img");
-const featuredTitle = document.getElementById("bw-featured-title");
-
-function updateFeatured(){
-
-  const game =
+const featured =
     featuredGames[
-      Math.floor(
-        Math.random() * featuredGames.length
-      )
+        Math.floor(Math.random() * featuredGames.length)
     ];
 
-  featuredBanner.href = game.link;
-  featuredImg.src = game.img;
-  featuredTitle.textContent = game.name;
+document.getElementById("featured-card").href =
+    featured.link;
 
-}
+document.getElementById("featured-img").src =
+    featured.img;
 
-updateFeatured();
+document.getElementById("featured-title").textContent =
+    featured.name;
 
-setInterval(updateFeatured,7000);
+/* FILTER SYSTEM */
 
-/* =========================
-   BUILD LIBRARY
-========================= */
+const grid =
+    document.getElementById("grid");
 
-const grid = document.getElementById("bw-grid");
+const dropdown =
+    document.getElementById("dropdown");
 
-games.forEach(game=>{
+const filterBtn =
+    document.getElementById("filter-btn");
 
-  const card = document.createElement("a");
+const searchInput =
+    document.getElementById("search");
 
-  card.href = game.link;
-  card.target = "_blank";
-  card.className = "bw-card";
+const tagsEl =
+    document.getElementById("tags");
 
-  card.innerHTML = `
-    <img src="${game.img}">
-    <div class="bw-overlay">
-      <div class="bw-name">
-        ${game.name}
-      </div>
-    </div>
-  `;
+const randomCard =
+    document.getElementById("random-card");
 
-  grid.appendChild(card);
-
-});
-
-/* =========================
-   CONTROLS
-========================= */
-
-const dropdown = document.getElementById("bw-dropdown");
-const filterBtn = document.getElementById("bw-filter-btn");
-const searchInput = document.getElementById("bw-search");
-const tagsEl = document.getElementById("bw-tags");
-const indicator = document.getElementById("bw-indicator");
-
-const randomCard = document.getElementById("bw-random-card");
-const randomImg = document.getElementById("bw-random-img");
+const randomImg =
+    document.getElementById("random-img");
 
 let cards =
-  Array.from(
-    grid.querySelectorAll(".bw-card")
-  ).filter(c=>c!==randomCard);
+    Array.from(
+        grid.querySelectorAll(".bw-card")
+    ).filter(c => c !== randomCard);
 
 let filters = [];
 let search = "";
 let sortMode = "az";
 
 const multiplayer = [
-  "Minecraft",
-  "YOMI Hustle"
+    "Minecraft",
+    "YOMI Hustle",
+    "Cheese Rolling"
 ];
 
-const featured = [
-  "Balatro",
-  "Brotato",
-  "Minecraft",
-  "Terraria",
-  "YOMI Hustle"
+const featuredFilter = [
+    "Balatro",
+    "Brotato",
+    "GTA: Vice City",
+    "Minecraft",
+    "Terraria",
+    "YOMI Hustle"
 ];
 
-/* =========================
-   DROPDOWN
-========================= */
+/* DROPDOWN */
 
 filterBtn.onclick = e => {
 
-  e.stopPropagation();
+    e.stopPropagation();
 
-  dropdown.style.display =
-    dropdown.style.display === "flex"
-    ? "none"
-    : "flex";
+    dropdown.style.display =
+        dropdown.style.display === "flex"
+        ? "none"
+        : "flex";
 
 };
 
-document.addEventListener(
-  "click",
-  ()=> dropdown.style.display = "none"
-);
+document.addEventListener("click", () => {
 
-/* =========================
-   FILTER BUTTONS
-========================= */
-
-dropdown.querySelectorAll("button")
-.forEach(btn=>{
-
-  btn.onclick = ()=>{
-
-    const s = btn.dataset.sort;
-    const f = btn.dataset.filter;
-
-    if(s){
-      sortMode = s;
-    }
-
-    if(f){
-
-      if(filters.includes(f)){
-
-        filters =
-          filters.filter(x=>x!==f);
-
-      }else{
-
-        filters.push(f);
-
-      }
-
-    }
-
-    updateUI();
-    render();
-
-  };
+    dropdown.style.display = "none";
 
 });
 
-/* =========================
-   UI
-========================= */
+/* BUTTONS */
 
-function updateUI(){
+dropdown.querySelectorAll("button").forEach(btn => {
 
-  dropdown
-  .querySelectorAll("[data-sort]")
-  .forEach(b=>{
+    btn.onclick = () => {
 
-    b.classList.toggle(
-      "active",
-      b.dataset.sort === sortMode
-    );
+        const s =
+            btn.dataset.sort;
 
-  });
+        const f =
+            btn.dataset.filter;
 
-  tagsEl.innerHTML = "";
+        if(s){
+            sortMode = s;
+        }
 
-  filters.forEach(f=>{
+        if(f){
 
-    const t = document.createElement("div");
+            if(filters.includes(f)){
 
-    t.className = "bw-tag";
+                filters =
+                    filters.filter(x => x !== f);
 
-    t.innerText = f + " ✕";
+            }
 
-    t.onclick = ()=>{
+            else{
 
-      filters =
-        filters.filter(x=>x!==f);
+                filters.push(f);
 
-      updateUI();
-      render();
+            }
+
+        }
+
+        updateUI();
+        render();
 
     };
 
-    tagsEl.appendChild(t);
+});
 
-  });
+/* TAGS */
 
-  let text =
-    sortMode === "az"
-    ? "A–Z"
-    : "Z–A";
+function updateUI(){
 
-  if(filters.length){
+    dropdown
+    .querySelectorAll("[data-sort]")
+    .forEach(b => {
 
-    text +=
-      " • " +
-      filters.join(", ");
+        b.classList.toggle(
+            "active",
+            b.dataset.sort === sortMode
+        );
 
-  }
+    });
 
-  indicator.textContent = text;
+    tagsEl.innerHTML = "";
+
+    filters.forEach(f => {
+
+        const t =
+            document.createElement("div");
+
+        t.className =
+            "tag";
+
+        t.innerText =
+            f + " ✕";
+
+        t.onclick = () => {
+
+            filters =
+                filters.filter(x => x !== f);
+
+            updateUI();
+            render();
+
+        };
+
+        tagsEl.appendChild(t);
+
+    });
 
 }
 
-/* =========================
-   SEARCH
-========================= */
+/* SEARCH */
 
 searchInput.oninput = e => {
 
-  search =
-    e.target.value.toLowerCase();
+    search =
+        e.target.value.toLowerCase();
 
-  render();
+    render();
 
 };
 
-/* =========================
-   RENDER
-========================= */
+/* RENDER */
 
 function render(){
 
-  let list = [...cards];
+    let list = [...cards];
 
-  list.sort((a,b)=>{
+    list.sort((a,b) => {
 
-    const aName =
-      a.querySelector(".bw-name")
-      .innerText
-      .trim();
+        const aName =
+            a.querySelector(".bw-name")
+            .innerText
+            .trim();
 
-    const bName =
-      b.querySelector(".bw-name")
-      .innerText
-      .trim();
+        const bName =
+            b.querySelector(".bw-name")
+            .innerText
+            .trim();
 
-    return sortMode === "az"
-      ? aName.localeCompare(bName)
-      : bName.localeCompare(aName);
+        return sortMode === "az"
+            ? aName.localeCompare(bName)
+            : bName.localeCompare(aName);
 
-  });
+    });
 
-  cards.forEach(c=>c.remove());
+    grid.innerHTML = "";
 
-  list.forEach(card=>{
+    grid.appendChild(randomCard);
 
-    const cleanName =
-      card.querySelector(".bw-name")
-      .innerText
-      .trim();
+    list.forEach(card => {
 
-    const lowerName =
-      cleanName.toLowerCase();
+        const cleanName =
+            card.querySelector(".bw-name")
+            .innerText
+            .trim();
 
-    if(
-      search &&
-      !lowerName.includes(search)
-    ){
-      return;
-    }
+        const lower =
+            cleanName.toLowerCase();
 
-    for(let f of filters){
+        if(
+            search &&
+            !lower.includes(search)
+        ){
+            return;
+        }
 
-      if(
-        f === "multiplayer" &&
-        !multiplayer.includes(cleanName)
-      ){
-        return;
-      }
+        for(let f of filters){
 
-      if(
-        f === "featured" &&
-        !featured.includes(cleanName)
-      ){
-        return;
-      }
+            if(
+                f === "multiplayer" &&
+                !multiplayer.includes(cleanName)
+            ){
+                return;
+            }
 
-    }
+            if(
+                f === "featured" &&
+                !featuredFilter.includes(cleanName)
+            ){
+                return;
+            }
 
-    grid.appendChild(card);
+        }
 
-  });
+        grid.appendChild(card);
+
+    });
 
 }
 
-/* =========================
-   RANDOM CARD
-========================= */
+/* RANDOM */
 
 function pick(){
 
-  return games[
-    Math.floor(
-      Math.random() * games.length
-    )
-  ];
+    return cards[
+        Math.floor(Math.random() * cards.length)
+    ];
 
 }
 
+let currentRandom =
+    pick();
+
 function updateRandom(){
 
-  const game = pick();
+    currentRandom =
+        pick();
 
-  randomImg.style.opacity = 0;
+    randomImg.style.opacity = 0;
 
-  setTimeout(()=>{
+    setTimeout(() => {
 
-    randomImg.src = game.img;
+        randomImg.src =
+            currentRandom.querySelector("img").src;
 
-    randomImg.style.opacity = 1;
+        randomImg.style.opacity = 1;
 
-    randomCard.href = game.link;
-
-  },200);
+    },180);
 
 }
 
@@ -1191,9 +1344,16 @@ updateRandom();
 
 setInterval(updateRandom,5000);
 
-/* =========================
-   INIT
-========================= */
+randomCard.onclick = e => {
+
+    e.preventDefault();
+
+    window.open(
+        currentRandom.href,
+        "_blank"
+    );
+
+};
 
 updateUI();
 render();
