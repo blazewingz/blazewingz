@@ -16,7 +16,6 @@
     --bg:#05010a;
     --card:#0d0814;
     --border:rgba(255,255,255,0.08);
-    --glow:rgba(212,108,255,0.35);
 }
 
 *{
@@ -52,22 +51,23 @@ body::before{
 
 #cursor-glow{
     position:fixed;
-    width:180px;
-    height:180px;
+    width:220px;
+    height:220px;
     border-radius:50%;
 
     background:
         radial-gradient(
             circle,
             rgba(255,0,255,0.12) 0%,
-            rgba(255,0,255,0.05) 35%,
+            rgba(255,0,255,0.04) 40%,
             transparent 72%
         );
 
     transform:translate(-50%,-50%);
     pointer-events:none;
     z-index:9999;
-    opacity:0.65;
+    opacity:0.7;
+    filter:blur(10px);
 }
 
 /* HERO */
@@ -93,8 +93,22 @@ body::before{
 
     background-size:cover;
     background-position:center;
-    transform:scale(1.05);
-    will-change:transform;
+    transform:scale(1.08);
+
+    animation:
+        heroDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes heroDrift{
+
+    from{
+        background-position:center;
+    }
+
+    to{
+        background-position:center 8%;
+    }
+
 }
 
 .hero::after{
@@ -104,8 +118,6 @@ body::before{
 
     background:
         radial-gradient(circle at center, transparent 0%, rgba(5,1,10,0.6) 100%);
-
-    pointer-events:none;
 }
 
 .hero-content{
@@ -120,43 +132,23 @@ body::before{
     align-items:center;
 
     text-align:center;
-
-    padding:0 20px;
 }
 
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:translateY(12px);
-    }
+.hero-title{
+    font-family:'Space Age', sans-serif;
+    font-size:clamp(52px,9vw,110px);
+    letter-spacing:10px;
 
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+    text-shadow:
+        0 0 15px rgba(200,100,255,0.8),
+        0 0 40px rgba(180,80,255,0.3);
 
-@keyframes glowPulse{
-    0%{
-        text-shadow:
-            0 0 10px rgba(200,100,255,0.7),
-            0 0 35px rgba(180,80,255,0.35);
-    }
-
-    50%{
-        text-shadow:
-            0 0 18px rgba(220,140,255,1),
-            0 0 45px rgba(200,100,255,0.55);
-    }
-
-    100%{
-        text-shadow:
-            0 0 10px rgba(200,100,255,0.7),
-            0 0 35px rgba(180,80,255,0.35);
-    }
+    animation:
+        float 6s ease-in-out infinite;
 }
 
 @keyframes float{
+
     0%,100%{
         transform:translateY(0px);
     }
@@ -164,20 +156,7 @@ body::before{
     50%{
         transform:translateY(-10px);
     }
-}
 
-.hero-title{
-    font-family:'Space Age', sans-serif;
-    font-size:clamp(52px,9vw,110px);
-    letter-spacing:10px;
-    text-transform:uppercase;
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards,
-        glowPulse 6s ease-in-out infinite,
-        float 6s ease-in-out infinite;
 }
 
 .hero-sub{
@@ -186,13 +165,6 @@ body::before{
     letter-spacing:4px;
     font-size:14px;
     opacity:0.7;
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards;
-
-    animation-delay:0.5s;
 }
 
 /* MAIN */
@@ -203,7 +175,7 @@ body::before{
     padding:0 18px 80px;
 }
 
-/* TOP BAR */
+/* TOP */
 
 .top-wrap{
     position:sticky;
@@ -264,6 +236,10 @@ body::before{
     transition:0.3s ease;
 
     backdrop-filter:blur(14px);
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.02),
+        0 10px 25px rgba(0,0,0,0.22);
 }
 
 .search:focus{
@@ -271,8 +247,6 @@ body::before{
 
     box-shadow:
         0 0 30px rgba(212,108,255,0.16);
-
-    transform:translateY(-1px);
 }
 
 .search::placeholder{
@@ -311,15 +285,6 @@ body::before{
     cursor:pointer;
 
     position:relative;
-
-    transition:0.25s ease;
-}
-
-.filter-btn:hover{
-    border-color:rgba(212,108,255,0.5);
-
-    box-shadow:
-        0 0 24px rgba(212,108,255,0.14);
 }
 
 .dropdown{
@@ -357,23 +322,10 @@ body::before{
     text-align:left;
 
     cursor:pointer;
-
-    transition:0.2s ease;
 }
 
 .dropdown button:hover{
     background:rgba(255,255,255,0.06);
-}
-
-.dropdown button.active{
-    background:white;
-    color:black;
-}
-
-.separator{
-    height:1px;
-    background:rgba(255,255,255,0.08);
-    margin:5px 0;
 }
 
 /* TAGS */
@@ -394,8 +346,6 @@ body::before{
     border-radius:999px;
 
     font-size:12px;
-
-    cursor:pointer;
 }
 
 /* FEATURED */
@@ -418,6 +368,22 @@ body::before{
     border:1px solid rgba(255,255,255,0.08);
 
     transition:0.4s ease;
+}
+
+.featured-card::before{
+    content:'';
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.08),
+            transparent 35%
+        );
+
+    z-index:1;
 }
 
 .featured-card:hover{
@@ -450,6 +416,8 @@ body::before{
 
     padding:24px;
 
+    z-index:2;
+
     background:
         linear-gradient(
             to top,
@@ -458,17 +426,8 @@ body::before{
         );
 }
 
-.featured-label{
-    font-size:11px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    opacity:0.7;
-    margin-bottom:6px;
-}
-
 .featured-title{
     font-size:34px;
-    line-height:1;
 }
 
 /* GRID */
@@ -479,49 +438,6 @@ body::before{
     display:grid;
     grid-template-columns:repeat(5,minmax(0,1fr));
     gap:18px;
-}
-
-@media (max-width:1400px){
-    .grid{
-        grid-template-columns:repeat(4,minmax(0,1fr));
-    }
-}
-
-@media (max-width:1000px){
-    .grid{
-        grid-template-columns:repeat(3,minmax(0,1fr));
-    }
-}
-
-@media (max-width:700px){
-    .grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-    }
-}
-
-@media (max-width:520px){
-
-    .hero{
-        height:52vh;
-        min-height:420px;
-    }
-
-    .hero-title{
-        letter-spacing:5px;
-    }
-
-    .featured-card{
-        height:190px;
-    }
-
-    .featured-title{
-        font-size:26px;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
 }
 
 /* CARDS */
@@ -542,17 +458,16 @@ body::before{
     border:1px solid rgba(255,255,255,0.06);
 
     transition:
-        transform 0.22s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease;
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.bw-card:hover{
-    border-color:rgba(212,108,255,0.35);
+.card-inner{
+    width:100%;
+    height:100%;
+    position:relative;
 
-    box-shadow:
-        0 16px 30px rgba(0,0,0,0.35),
-        0 0 25px rgba(212,108,255,0.1);
+    transform-style:preserve-3d;
 }
 
 .bw-card img{
@@ -560,11 +475,23 @@ body::before{
     height:100%;
     object-fit:cover;
 
-    transition:0.45s ease;
+    transition:
+        transform 0.35s ease,
+        filter 0.35s ease;
 }
 
-.bw-card:hover img{
-    transform:scale(1.06);
+.bw-overlay{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:flex-end;
+
+    padding:16px;
+
+    z-index:2;
+
+    transform:translateZ(45px);
 }
 
 .bw-card::after{
@@ -578,20 +505,6 @@ body::before{
             rgba(0,0,0,0.72),
             rgba(0,0,0,0)
         );
-
-    pointer-events:none;
-}
-
-.bw-overlay{
-    position:absolute;
-    inset:0;
-
-    display:flex;
-    align-items:flex-end;
-
-    padding:16px;
-
-    z-index:2;
 }
 
 .bw-name{
@@ -614,13 +527,32 @@ body::before{
     transform:translateY(0);
 }
 
-/* CARD TILT */
+/* MOBILE */
 
-.card-inner{
-    width:100%;
-    height:100%;
-    transition:transform 0.14s ease;
-    will-change:transform;
+@media (max-width:1400px){
+    .grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+}
+
+@media (max-width:1000px){
+    .grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media (max-width:700px){
+    .grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media (max-width:520px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
 }
 
 /* SCROLLBAR */
@@ -644,315 +576,284 @@ body::before{
 
 <div id="cursor-glow"></div>
 
-<!-- HERO -->
-
 <section class="hero">
 
-    <div class="hero-bg" id="hero-bg"></div>
+<div class="hero-bg" id="hero-bg"></div>
 
-    <div class="hero-content">
+<div class="hero-content">
 
-        <div class="hero-title">
-            GAMES
-        </div>
+<div class="hero-title">
+GAMES
+</div>
 
-        <div class="hero-sub">
-            THE BLAZEWINGZ ARCHIVES
-        </div>
+<div class="hero-sub">
+THE BLAZEWINGZ ARCHIVES
+</div>
 
-    </div>
+</div>
 
 </section>
 
-<!-- MAIN -->
-
 <div class="main">
 
-    <div class="top-wrap">
+<div class="top-wrap">
 
-        <div class="top-inner">
+<div class="top-inner">
 
-            <div class="search-row">
+<div class="search-row">
 
-                <div class="search-wrap">
+<div class="search-wrap">
 
-                    <input
-                        id="search"
-                        class="search"
-                        placeholder="Search Library..."
-                    >
+<input
+id="search"
+class="search"
+placeholder="Search Library..."
+>
 
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="white">
-                        <path d="M10 2a8 8 0 105.29 14.29l4.71 4.7 1.41-1.41-4.7-4.71A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
-                    </svg>
+<svg class="search-icon" viewBox="0 0 24 24" fill="white">
+<path d="M10 2a8 8 0 105.29 14.29l4.71 4.7 1.41-1.41-4.7-4.71A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+</svg>
 
-                </div>
+</div>
 
-                <div class="filter-btn" id="filter-btn">
+<div class="filter-btn" id="filter-btn">
 
-                    <svg width="18" height="18" fill="white">
-                        <rect y="3" width="18" height="2"/>
-                        <rect y="8" width="14" height="2"/>
-                        <rect y="13" width="10" height="2"/>
-                    </svg>
+<svg width="18" height="18" fill="white">
+<rect y="3" width="18" height="2"/>
+<rect y="8" width="14" height="2"/>
+<rect y="13" width="10" height="2"/>
+</svg>
 
-                    <div class="dropdown" id="dropdown">
+<div class="dropdown" id="dropdown">
 
-                        <button data-sort="az">
-                            A–Z
-                        </button>
+<button data-sort="az">
+A–Z
+</button>
 
-                        <button data-sort="za">
-                            Z–A
-                        </button>
+<button data-sort="za">
+Z–A
+</button>
 
-                        <div class="separator"></div>
+<button data-filter="multiplayer">
+Multiplayer
+</button>
 
-                        <button data-filter="multiplayer">
-                            Multiplayer
-                        </button>
+<button data-filter="featured">
+Featured
+</button>
 
-                        <button data-filter="featured">
-                            Featured
-                        </button>
+</div>
 
-                    </div>
+</div>
 
-                </div>
+</div>
 
-            </div>
+<div class="tags" id="tags"></div>
 
-            <div class="tags" id="tags"></div>
+<a id="featured-card" class="featured-card" target="_blank">
 
-            <a
-                id="featured-card"
-                class="featured-card"
-                target="_blank"
-            >
-                <img id="featured-img">
+<img id="featured-img">
 
-                <div class="featured-overlay">
+<div class="featured-overlay">
 
-                    <div class="featured-label">
-                        Featured
-                    </div>
+<div class="featured-title" id="featured-title"></div>
 
-                    <div
-                        class="featured-title"
-                        id="featured-title"
-                    ></div>
+</div>
 
-                </div>
+</a>
 
-            </a>
+</div>
 
-        </div>
+</div>
 
-    </div>
-
-    <!-- GRID -->
-
-    <div class="grid" id="grid">
-
-<!-- RANDOM -->
+<div class="grid" id="grid">
 
 <a href="#" class="bw-card random-card" id="random-card">
 <div class="card-inner">
-
 <img id="random-img">
-
 <div class="bw-overlay">
-<div class="bw-name">
-Random Game
+<div class="bw-name">Random Game</div>
 </div>
-</div>
-
 </div>
 </a>
 
-<!-- GAMES -->
+<!-- =================== GAMES =================== -->
 
-<a href="https://sites.google.com/view/blazewingz/games/10-minutes-till-dawn" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/10%20Minutes/10%20Minutes%20'Till%20Dawn%20Logo.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">10 Minutes 'Till Dawn</div></div>
-</div>
-</a>
+<!-- 10 MINUTES 'TILL DAWN -->
+  <a href="https://sites.google.com/view/blazewingz/games/10-minutes-till-dawn" target="_blank" class="bw-card">
+    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/10%20Minutes/10%20Minutes%20'Till%20Dawn%20Logo.png?raw=true">
+    <div class="bw-overlay"><div class="bw-name">10 Minutes 'Till Dawn</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/balatro" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://i.scdn.co/image/ab67616d0000b273b153ba98e093ff8841fc5d73">
-<div class="bw-overlay"><div class="bw-name">Balatro</div></div>
-</div>
-</a>
+<!-- BALATRO -->
+  <a href="https://sites.google.com/view/blazewingz/games/balatro" target="_blank" class="bw-card">
+    <img src="https://i.scdn.co/image/ab67616d0000b273b153ba98e093ff8841fc5d73">
+    <div class="bw-overlay"><div class="bw-name">Balatro</div></div>
+  </a>
 
+<!-- BROTATO -->
 <a href="https://sites.google.com/view/blazewingz/games/brotato" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_download_software/1x1_NSwitchDS_Brotato_image500w.jpg">
-<div class="bw-overlay"><div class="bw-name">Brotato</div></div>
-</div>
+  <img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_download_software/1x1_NSwitchDS_Brotato_image500w.jpg">
+  <div class="bw-overlay"><div class="bw-name">Brotato</div></div>
 </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/buckshot-roulette" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://bleedingcool.com/wp-content/uploads/2024/10/Buckshot-Roulette-Main-Art-900x900.jpg">
-<div class="bw-overlay"><div class="bw-name">Buckshot Roulette</div></div>
-</div>
+<!-- BUCKSHOT ROULETTE -->
+  <a href="https://sites.google.com/view/blazewingz/games/buckshot-roulette" target="_blank" class="bw-card">
+    <img src="https://bleedingcool.com/wp-content/uploads/2024/10/Buckshot-Roulette-Main-Art-900x900.jpg">
+    <div class="bw-overlay"><div class="bw-name">Buckshot Roulette</div></div>
+  </a>
+
+<!-- CELESTE -->
+  <a href="https://sites.google.com/view/blazewingz/games/celeste" target="_blank" class="bw-card">
+    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Celeste/Celeste.png?raw=true">
+    <div class="bw-overlay"><div class="bw-name">Celeste</div></div>
+  </a>
+
+<!-- CHEESE ROLLING -->
+  <a href="https://sites.google.com/view/blazewingz/games/cheese-rolling" target="_blank" class="bw-card">
+    <img src="https://assets-prd.ignimgs.com/2026/01/01/untitled-1-1767290877734.png">
+    <div class="bw-overlay"><div class="bw-name">Cheese Rolling</div></div>
+  </a>
+
+<!-- CRAZY CATTLE 3D -->
+  <a href="https://sites.google.com/view/blazewingz/games/crazy-cattle-3d" target="_blank" class="bw-card">
+    <img src="https://curverush.com/data/image/crazy-cattle-3d.png">
+    <div class="bw-overlay"><div class="bw-name">Crazy Cattle 3D</div></div>
+  </a>
+
+<!-- CRUELTY SQUAD -->
+<a href="https://sites.google.com/view/blazewingz/games/cruelty-squad" target="_blank" class="bw-card">
+  <img src="https://truffled.lol/png/games/cruelty.webp">
+  <div class="bw-overlay"><div class="bw-name">Cruelty Squad</div></div>
 </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/crazy-cattle-3d" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://curverush.com/data/image/crazy-cattle-3d.png">
-<div class="bw-overlay"><div class="bw-name">Crazy Cattle 3D</div></div>
-</div>
-</a>
+  <!-- DOOM -->
+  <a href="https://sites.google.com/view/blazewingz/games/doom" target="_blank" class="bw-card">
+    <img src="https://oramind.com/content/images/2020/08/doom-560.jpg">
+    <div class="bw-overlay"><div class="bw-name">Doom</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/celeste" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Celeste/Celeste.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">Celeste</div></div>
-</div>
-</a>
+<!-- FNAF -->
+  <a href="https://sites.google.com/view/blazewingz/games/fnaf" target="_blank" class="bw-card">
+    <img src="https://cdn2.steamgriddb.com/icon/6aab1270668d8cac7cef2566a1c5f569.png">
+    <div class="bw-overlay"><div class="bw-name">Five Nights at Freddy's</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/cheese-rolling" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://assets-prd.ignimgs.com/2026/01/01/untitled-1-1767290877734.png">
-<div class="bw-overlay"><div class="bw-name">Cheese Rolling</div></div>
-</div>
-</a>
+<!-- FISH -->
+  <a href="https://sites.google.com/view/blazewingz/games/fish" target="_blank" class="bw-card">
+    <img src="https://truffled.lol/png/games/fish.webp">
+    <div class="bw-overlay"><div class="bw-name">Fish</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/doom" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://oramind.com/content/images/2020/08/doom-560.jpg">
-<div class="bw-overlay"><div class="bw-name">Doom</div></div>
-</div>
-</a>
+<!-- HALF LIFE -->
+  <a href="https://sites.google.com/view/blazewingz/games/half-life" target="_blank" class="bw-card">
+    <img src="https://cdn.wikimg.net/en/strategywiki/images/thumb/b/ba/Half-Life_Boxart.jpg/250px-Half-Life_Boxart.jpg">
+    <div class="bw-overlay"><div class="bw-name">Half-Life</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/fnaf" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://cdn2.steamgriddb.com/icon/6aab1270668d8cac7cef2566a1c5f569.png">
-<div class="bw-overlay"><div class="bw-name">Five Nights at Freddy's</div></div>
-</div>
-</a>
+<!-- HOLLOW KNIGHT X SILKSONG -->
+  <a href="https://sites.google.com/view/blazewingz/games/hollow-knight-x-silksong" target="_blank" class="bw-card">
+    <img src="https://pbs.twimg.com/media/G8QFE9VaQAA4XOT.jpg">
+    <div class="bw-overlay"><div class="bw-name">Hollow Knight & Silksong</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/half-life" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://cdn.wikimg.net/en/strategywiki/images/thumb/b/ba/Half-Life_Boxart.jpg/250px-Half-Life_Boxart.jpg">
-<div class="bw-overlay"><div class="bw-name">Half-Life</div></div>
-</div>
-</a>
-
-<a href="https://sites.google.com/view/blazewingz/games/hollow-knight-x-silksong" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://pbs.twimg.com/media/G8QFE9VaQAA4XOT.jpg">
-<div class="bw-overlay"><div class="bw-name">Hollow Knight & Silksong</div></div>
-</div>
-</a>
-
+<!-- MINECRAFT -->
 <a href="https://sites.google.com/view/blazewingz/games/minecraft" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Minecraft/Minecraft%20Logo.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">Minecraft</div></div>
-</div>
+  <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Minecraft/Minecraft%20Logo.png?raw=true">
+  <div class="bw-overlay"><div class="bw-name">Minecraft</div></div>
 </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/my-friend-peppa" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_5/SQ_NSwitch_MyFriendPeppaPig_EN_image500w.jpg">
-<div class="bw-overlay"><div class="bw-name">My Friend Peppa Pig</div></div>
-</div>
-</a>
+<!-- MY FRIEND PEPPA -->
+  <a href="https://sites.google.com/view/blazewingz/games/my-friend-peppa" target="_blank" class="bw-card">
+    <img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_5/SQ_NSwitch_MyFriendPeppaPig_EN_image500w.jpg">
+    <div class="bw-overlay"><div class="bw-name">My Friend Peppa Pig</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/osu" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/osu!/osu!.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">osu!</div></div>
-</div>
-</a>
+<!-- PEOPLE PLAYGROUND -->
+  <a href="https://sites.google.com/view/blazewingz/games/people-playground" target="_blank" class="bw-card">
+    <img src="https://assets-prd.ignimgs.com/2023/07/30/people-1690697393849.jpg">
+    <div class="bw-overlay"><div class="bw-name">people playground</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/people-playground" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://assets-prd.ignimgs.com/2023/07/30/people-1690697393849.jpg">
-<div class="bw-overlay"><div class="bw-name">people playground</div></div>
-</div>
-</a>
+<!-- RAFT -->
+  <a href="https://sites.google.com/view/blazewingz/games/raft" target="_blank" class="bw-card">
+    <img src="https://vectorseek.com/wp-content/uploads/2023/08/Raft-Logo-Vector.svg-.png">
+    <div class="bw-overlay"><div class="bw-name">Raft</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/raft" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://vectorseek.com/wp-content/uploads/2023/08/Raft-Logo-Vector.svg-.png">
-<div class="bw-overlay"><div class="bw-name">Raft</div></div>
-</div>
-</a>
+<!-- REPO -->
+  <a href="https://sites.google.com/view/blazewingz/games/repo" target="_blank" class="bw-card">
+    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/REPO/REPO.png?raw=true">
+    <div class="bw-overlay"><div class="bw-name">REPO</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/repo" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/REPO/REPO.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">REPO</div></div>
-</div>
-</a>
+<!-- SLIME RANCHER -->
+  <a href="https://sites.google.com/view/blazewingz/games/slime-rancher" target="_blank" class="bw-card">
+    <img src="https://assets1.ignimgs.com/2018/08/30/slime-rancher---button-fin-1535671208121.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80">
+    <div class="bw-overlay"><div class="bw-name">Slime Rancher</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/slime-rancher" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://assets1.ignimgs.com/2018/08/30/slime-rancher---button-fin-1535671208121.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80">
-<div class="bw-overlay"><div class="bw-name">Slime Rancher</div></div>
-</div>
-</a>
+<!-- SLOPE -->
+  <a href="https://sites.google.com/view/blazewingz/games/slope" target="_blank" class="bw-card">
+    <img src="https://nargames.com/storage/uploads/thumbs/slope.webp">
+    <div class="bw-overlay"><div class="bw-name">Slope</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/stardew-valley" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://www.simsnetwork.com/sites/simsnetwork.com/files/styles/twittercard/public/simpedia/box-arts/StardewValleyBox.png?itok=6XolDRMa">
-<div class="bw-overlay"><div class="bw-name">Stardew Valley</div></div>
-</div>
-</a>
+<!-- STARBOUND -->
+  <a href="https://sites.google.com/view/blazewingz/games/starbound" target="_blank" class="bw-card">
+    <img src="https://truffled.lol/png/games/starbound.webp">
+    <div class="bw-overlay"><div class="bw-name">Starbound</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/terraria" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://forums.terraria.org/index.php?attachments/icon-png.280655/">
-<div class="bw-overlay"><div class="bw-name">Terraria</div></div>
-</div>
-</a>
+<!-- STARDEW VALLEY -->
+  <a href="https://sites.google.com/view/blazewingz/games/stardew-valley" target="_blank" class="bw-card">
+    <img src="https://www.simsnetwork.com/sites/simsnetwork.com/files/styles/twittercard/public/simpedia/box-arts/StardewValleyBox.png?itok=6XolDRMa">
+    <div class="bw-overlay"><div class="bw-name">Stardew Valley</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/the-binding-of-isaac" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Binding%20of%20Isaac/Curse%20of%20Binding.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">The Binding of Isaac</div></div>
-</div>
-</a>
+<!-- TERRARIA -->
+  <a href="https://sites.google.com/view/blazewingz/games/terraria" target="_blank" class="bw-card">
+    <img src="https://forums.terraria.org/index.php?attachments/icon-png.280655/">
+    <div class="bw-overlay"><div class="bw-name">Terraria</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/to-the-core" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/To%20The%20Core/To%20The%20Core.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">To The Core</div></div>
-</div>
-</a>
+<!-- BINDING OF ISAAC -->
+  <a href="https://sites.google.com/view/blazewingz/games/the-binding-of-isaac" target="_blank" class="bw-card">
+    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Binding%20of%20Isaac/Curse%20of%20Binding.png?raw=true">
+    <div class="bw-overlay"><div class="bw-name">The Binding of Isaac</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/ultrakill" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Ultrakill/Ultrakill.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">Ultrakill</div></div>
-</div>
-</a>
+<!-- TO THE CORE -->
+  <a href="https://sites.google.com/view/blazewingz/games/to-the-core" target="_blank" class="bw-card">
+    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/To%20The%20Core/To%20The%20Core.png?raw=true">
+    <div class="bw-overlay"><div class="bw-name">To The Core</div></div>
+  </a>
 
-<a href="https://sites.google.com/view/blazewingz/games/undertale" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA09239_00/1/i_691ab24757a01bfc94c6f293abd4fac52478bdac0d5829388ceb9a4e4da9c7d1/i/icon0.png">
-<div class="bw-overlay"><div class="bw-name">Undertale</div></div>
-</div>
-</a>
+<!-- ULTRAKILL -->
+  <a href="https://sites.google.com/view/blazewingz/games/ultrakill" target="_blank" class="bw-card">
+    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Ultrakill/Ultrakill.png?raw=true">
+    <div class="bw-overlay"><div class="bw-name">Ultrakill</div></div>
+  </a>
 
+<!-- UNDERTALE -->
+  <a href="https://sites.google.com/view/blazewingz/games/undertale" target="_blank" class="bw-card">
+    <img src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA09239_00/1/i_691ab24757a01bfc94c6f293abd4fac52478bdac0d5829388ceb9a4e4da9c7d1/i/icon0.png">
+    <div class="bw-overlay"><div class="bw-name">Undertale</div></div>
+  </a>
+
+<!-- VICE CITY -->
 <a href="https://sites.google.com/view/blazewingz/games/gta-vice-city" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/GTA:%20Vice%20City/GTA-Vice-City.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">GTA: Vice City</div></div>
-</div>
+  <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/GTA:%20Vice%20City/GTA-Vice-City.png?raw=true">
+  <div class="bw-overlay"><div class="bw-name">GTA: Vice City</div></div>
 </a>
 
+<!-- YOMI HUSTLE -->
 <a href="https://sites.google.com/view/blazewingz/games/yomi-hustle" target="_blank" class="bw-card">
-<div class="card-inner">
-<img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/YOMI%20Hustle/YOMI-Hustle.png?raw=true">
-<div class="bw-overlay"><div class="bw-name">YOMI Hustle</div></div>
-</div>
+  <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/YOMI%20Hustle/YOMI-Hustle.png?raw=true">
+  <div class="bw-overlay"><div class="bw-name">YOMI Hustle</div></div>
 </a>
+
+<!-- END OF GAMES -->
 
 </div>
 
@@ -960,403 +861,206 @@ Random Game
 
 <script>
 
-/* PARALLAX */
+/* HERO PARALLAX */
 
 const heroBg =
-    document.getElementById("hero-bg");
+document.getElementById("hero-bg");
 
-window.addEventListener("scroll", () => {
+window.addEventListener("scroll",()=>{
 
-    heroBg.style.transform =
-        `scale(1.05) translateY(${window.scrollY * 0.18}px)`;
+heroBg.style.transform=
+`scale(1.08) translateY(${window.scrollY*0.18}px)`;
 
 });
 
 /* CURSOR GLOW */
 
 const glow =
-    document.getElementById("cursor-glow");
+document.getElementById("cursor-glow");
 
-document.addEventListener("mousemove", e => {
+let mouseX=0;
+let mouseY=0;
 
-    glow.style.left =
-        e.clientX + "px";
+let glowX=0;
+let glowY=0;
 
-    glow.style.top =
-        e.clientY + "px";
+document.addEventListener("mousemove",e=>{
+
+mouseX=e.clientX;
+mouseY=e.clientY;
 
 });
 
+(function animateGlow(){
+
+glowX+=(mouseX-glowX)*0.12;
+glowY+=(mouseY-glowY)*0.12;
+
+glow.style.left=glowX+"px";
+glow.style.top=glowY+"px";
+
+requestAnimationFrame(animateGlow);
+
+})();
+
 /* CARD TILT */
 
-document.querySelectorAll(".bw-card").forEach(card => {
+document.querySelectorAll(".bw-card").forEach(card=>{
 
-    const inner =
-        card.querySelector(".card-inner");
+const inner =
+card.querySelector(".card-inner");
 
-    card.addEventListener("mousemove", e => {
+const img =
+card.querySelector("img");
 
-        const rect =
-            card.getBoundingClientRect();
+const overlay =
+card.querySelector(".bw-overlay");
 
-        const x =
-            e.clientX - rect.left;
+const shine =
+document.createElement("div");
 
-        const y =
-            e.clientY - rect.top;
+shine.style.position="absolute";
+shine.style.inset="0";
+shine.style.pointerEvents="none";
+shine.style.opacity="0";
+shine.style.transition="opacity 0.25s ease";
+shine.style.borderRadius="inherit";
 
-        const rotateY =
-            ((x / rect.width) - 0.5) * 10;
+inner.appendChild(shine);
 
-        const rotateX =
-            ((y / rect.height) - 0.5) * -10;
+card.addEventListener("mousemove",e=>{
 
-        inner.style.transform =
-            `
-            perspective(900px)
-            rotateX(${rotateX}deg)
-            rotateY(${rotateY}deg)
-            scale(1.02)
-            `;
+const rect=
+card.getBoundingClientRect();
 
-    });
+const x=
+e.clientX-rect.left;
 
-    card.addEventListener("mouseleave", () => {
+const y=
+e.clientY-rect.top;
 
-        inner.style.transform =
-            `
-            perspective(900px)
-            rotateX(0deg)
-            rotateY(0deg)
-            scale(1)
-            `;
+const rotateY=
+((x/rect.width)-0.5)*12;
 
-    });
+const rotateX=
+((y/rect.height)-0.5)*-12;
+
+inner.style.transition=
+"transform 0.08s linear";
+
+inner.style.transform=
+`
+perspective(1200px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+scale(1.03)
+`;
+
+img.style.transform=
+"scale(1.05)";
+
+img.style.filter=
+"brightness(1.08)";
+
+shine.style.opacity="1";
+
+shine.style.background=
+`
+linear-gradient(
+${120+rotateY*2}deg,
+transparent 20%,
+rgba(255,255,255,0.14) 45%,
+transparent 80%
+)
+`;
+
+card.style.boxShadow=
+`
+${-rotateY*2}px
+${rotateX*2+20}px
+40px
+rgba(0,0,0,0.42),
+
+0 0 30px
+rgba(212,108,255,0.12)
+`;
+
+card.style.borderColor=
+"rgba(212,108,255,0.3)";
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+inner.style.transition=
+"transform 0.45s cubic-bezier(.2,.8,.2,1)";
+
+inner.style.transform=
+`
+perspective(1200px)
+rotateX(0deg)
+rotateY(0deg)
+scale(1)
+`;
+
+img.style.transform=
+"scale(1)";
+
+img.style.filter=
+"brightness(1)";
+
+shine.style.opacity="0";
+
+card.style.boxShadow=
+`
+0 16px 30px rgba(0,0,0,0.35),
+0 0 25px rgba(212,108,255,0.08)
+`;
+
+card.style.borderColor=
+"rgba(255,255,255,0.06)";
+
+});
 
 });
 
 /* FEATURED */
 
-const featuredGames = [
+const featuredGames=[
 
 {
-    name:"Minecraft",
-    link:"https://sites.google.com/view/blazewingz/games/minecraft",
-    img:"https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/minecraft-4.jpg?w=1600&h=900&fit=crop"
+name:"Minecraft",
+link:"https://sites.google.com/view/blazewingz/games/minecraft",
+img:"https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/minecraft-4.jpg?w=1600&h=900&fit=crop"
 },
 
 {
-    name:"Brotato",
-    link:"https://sites.google.com/view/blazewingz/games/brotato",
-    img:"https://wallpapercave.com/wp/wp13551118.png"
+name:"Brotato",
+link:"https://sites.google.com/view/blazewingz/games/brotato",
+img:"https://wallpapercave.com/wp/wp13551118.png"
 },
 
 {
-    name:"GTA: Vice City",
-    link:"https://sites.google.com/view/blazewingz/games/gta-vice-city",
-    img:"https://c4.wallpaperflare.com/wallpaper/500/833/264/car-gamer-grand-theft-auto-grand-theft-auto-vice-city-wallpaper-preview.jpg"
-},
-
-{
-    name:"YOMI Hustle",
-    link:"https://sites.google.com/view/blazewingz/games/yomi-hustle",
-    img:"https://images.steamusercontent.com/ugc/2038477893869161638/BB643F4DC6895EF1DBCA8AC1D613C5E3B7A55475/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
+name:"YOMI Hustle",
+link:"https://sites.google.com/view/blazewingz/games/yomi-hustle",
+img:"https://images.steamusercontent.com/ugc/2038477893869161638/BB643F4DC6895EF1DBCA8AC1D613C5E3B7A55475/"
 }
 
 ];
 
-const featured =
-    featuredGames[
-        Math.floor(Math.random() * featuredGames.length)
-    ];
-
-document.getElementById("featured-card").href =
-    featured.link;
-
-document.getElementById("featured-img").src =
-    featured.img;
-
-document.getElementById("featured-title").textContent =
-    featured.name;
-
-/* FILTER SYSTEM */
-
-const grid =
-    document.getElementById("grid");
-
-const dropdown =
-    document.getElementById("dropdown");
-
-const filterBtn =
-    document.getElementById("filter-btn");
-
-const searchInput =
-    document.getElementById("search");
-
-const tagsEl =
-    document.getElementById("tags");
-
-const randomCard =
-    document.getElementById("random-card");
-
-const randomImg =
-    document.getElementById("random-img");
-
-let cards =
-    Array.from(
-        grid.querySelectorAll(".bw-card")
-    ).filter(c => c !== randomCard);
-
-let filters = [];
-let search = "";
-let sortMode = "az";
-
-const multiplayer = [
-    "Minecraft",
-    "YOMI Hustle",
-    "Cheese Rolling"
+const featured=
+featuredGames[
+Math.floor(Math.random()*featuredGames.length)
 ];
 
-const featuredFilter = [
-    "Balatro",
-    "Brotato",
-    "GTA: Vice City",
-    "Minecraft",
-    "Terraria",
-    "YOMI Hustle"
-];
+document.getElementById("featured-card").href=
+featured.link;
 
-/* DROPDOWN */
+document.getElementById("featured-img").src=
+featured.img;
 
-filterBtn.onclick = e => {
-
-    e.stopPropagation();
-
-    dropdown.style.display =
-        dropdown.style.display === "flex"
-        ? "none"
-        : "flex";
-
-};
-
-document.addEventListener("click", () => {
-
-    dropdown.style.display = "none";
-
-});
-
-/* BUTTONS */
-
-dropdown.querySelectorAll("button").forEach(btn => {
-
-    btn.onclick = () => {
-
-        const s =
-            btn.dataset.sort;
-
-        const f =
-            btn.dataset.filter;
-
-        if(s){
-            sortMode = s;
-        }
-
-        if(f){
-
-            if(filters.includes(f)){
-
-                filters =
-                    filters.filter(x => x !== f);
-
-            }
-
-            else{
-
-                filters.push(f);
-
-            }
-
-        }
-
-        updateUI();
-        render();
-
-    };
-
-});
-
-/* TAGS */
-
-function updateUI(){
-
-    dropdown
-    .querySelectorAll("[data-sort]")
-    .forEach(b => {
-
-        b.classList.toggle(
-            "active",
-            b.dataset.sort === sortMode
-        );
-
-    });
-
-    tagsEl.innerHTML = "";
-
-    filters.forEach(f => {
-
-        const t =
-            document.createElement("div");
-
-        t.className =
-            "tag";
-
-        t.innerText =
-            f + " ✕";
-
-        t.onclick = () => {
-
-            filters =
-                filters.filter(x => x !== f);
-
-            updateUI();
-            render();
-
-        };
-
-        tagsEl.appendChild(t);
-
-    });
-
-}
-
-/* SEARCH */
-
-searchInput.oninput = e => {
-
-    search =
-        e.target.value.toLowerCase();
-
-    render();
-
-};
-
-/* RENDER */
-
-function render(){
-
-    let list = [...cards];
-
-    list.sort((a,b) => {
-
-        const aName =
-            a.querySelector(".bw-name")
-            .innerText
-            .trim();
-
-        const bName =
-            b.querySelector(".bw-name")
-            .innerText
-            .trim();
-
-        return sortMode === "az"
-            ? aName.localeCompare(bName)
-            : bName.localeCompare(aName);
-
-    });
-
-    grid.innerHTML = "";
-
-    grid.appendChild(randomCard);
-
-    list.forEach(card => {
-
-        const cleanName =
-            card.querySelector(".bw-name")
-            .innerText
-            .trim();
-
-        const lower =
-            cleanName.toLowerCase();
-
-        if(
-            search &&
-            !lower.includes(search)
-        ){
-            return;
-        }
-
-        for(let f of filters){
-
-            if(
-                f === "multiplayer" &&
-                !multiplayer.includes(cleanName)
-            ){
-                return;
-            }
-
-            if(
-                f === "featured" &&
-                !featuredFilter.includes(cleanName)
-            ){
-                return;
-            }
-
-        }
-
-        grid.appendChild(card);
-
-    });
-
-}
-
-/* RANDOM */
-
-function pick(){
-
-    return cards[
-        Math.floor(Math.random() * cards.length)
-    ];
-
-}
-
-let currentRandom =
-    pick();
-
-function updateRandom(){
-
-    currentRandom =
-        pick();
-
-    randomImg.style.opacity = 0;
-
-    setTimeout(() => {
-
-        randomImg.src =
-            currentRandom.querySelector("img").src;
-
-        randomImg.style.opacity = 1;
-
-    },180);
-
-}
-
-updateRandom();
-
-setInterval(updateRandom,5000);
-
-randomCard.onclick = e => {
-
-    e.preventDefault();
-
-    window.open(
-        currentRandom.href,
-        "_blank"
-    );
-
-};
-
-updateUI();
-render();
+document.getElementById("featured-title").textContent=
+featured.name;
 
 </script>
 
