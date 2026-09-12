@@ -1,1179 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<title>BlazeWingz | Home</title>
-
-<link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap" rel="stylesheet">
-
-<style>
-
-:root{
-    --accent:#ff00ff;
-    --glow:rgba(255,0,255,0.4);
-}
-
-*{
-    box-sizing:border-box;
-}
-
-html,
-body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#05010a;
-    font-family:'PT Serif', serif;
-    cursor:default;
-}
-
-/* VIDEO */
-
-.bg-video{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:0;
-    pointer-events:none;
-
-    transform:scale(1.03);
-
-    filter:
-        brightness(0.9)
-        saturate(1.08)
-        contrast(1.03);
-
-    transition:transform 0.4s ease;
-}
-
-/* OVERLAY */
-
-body::before{
-    content:'';
-    position:fixed;
-    inset:0;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(0,0,0,0) 0%,
-            rgba(5,0,15,0.22) 100%
-        );
-
-    z-index:1;
-    pointer-events:none;
-}
-
-/* CURSOR GLOW */
-
-#cursor-glow{
-    position:fixed;
-
-    width:120px;
-    height:120px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,0,255,0.08) 0%,
-            rgba(255,0,255,0.03) 40%,
-            transparent 75%
-        );
-
-    pointer-events:none;
-
-    z-index:2;
-
-    transform:translate(-50%,-50%);
-
-    transition:
-        transform 0.08s linear;
-
-    opacity:0.55;
-}
-
-/* MAIN */
-
-.main-ui{
-    position:relative;
-    z-index:10;
-
-    width:90%;
-    max-width:900px;
-
-    margin:auto;
-
-    text-align:center;
-    color:white;
-
-    top:50%;
-
-    transform:
-        translateY(-50%)
-        perspective(1400px)
-        rotateX(0deg)
-        rotateY(0deg);
-
-    transition:
-        transform 0.12s ease-out;
-}
-
-/* FADE */
-
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-        transform:translateY(12px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-
-}
-
-/* GLOW */
-
-@keyframes glowPulse{
-
-    0%{
-        text-shadow:
-            0 0 10px rgba(200,100,255,0.8),
-            0 0 30px rgba(180,80,255,0.4),
-            0 0 45px rgba(150,60,255,0.25);
-    }
-
-    50%{
-        text-shadow:
-            0 0 20px rgba(220,140,255,1),
-            0 0 40px rgba(200,100,255,0.6),
-            0 0 60px rgba(180,80,255,0.4);
-    }
-
-    100%{
-        text-shadow:
-            0 0 10px rgba(200,100,255,0.8),
-            0 0 30px rgba(180,80,255,0.4),
-            0 0 45px rgba(150,60,255,0.25);
-    }
-
-}
-
-/* FLOAT */
-
-@keyframes float{
-
-    0%,100%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-
-}
-
-/* SEARCH APPEAR */
-
-@keyframes resultIn{
-
-    from{
-        opacity:0;
-        transform:
-            translateY(10px)
-            scale(0.98);
-    }
-
-    to{
-        opacity:1;
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-}
-
-/* DAY */
-
-#day-box{
-
-    font-family:'Space Age', sans-serif;
-
-    font-size:80px;
-
-    letter-spacing:12px;
-
-    margin-bottom:10px;
-
-    text-transform:uppercase;
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards,
-        glowPulse 6s ease-in-out infinite,
-        float 4s ease-in-out infinite;
-
-    animation-delay:
-        0.2s,
-        0s,
-        0s;
-}
-
-/* DATE */
-
-#date-box{
-
-    font-size:20px;
-
-    letter-spacing:5px;
-
-    margin-bottom:12px;
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards,
-        glowPulse 6s ease-in-out infinite;
-
-    animation-delay:
-        0.6s,
-        0s;
-}
-
-/* TIME */
-
-#time-box{
-
-    font-size:22px;
-
-    letter-spacing:6px;
-
-    margin-bottom:35px;
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards,
-        glowPulse 6s ease-in-out infinite;
-
-    animation-delay:
-        1s,
-        0s;
-}
-
-/* TYPEWRITER */
-
-.type-wrap{
-
-    height:30px;
-
-    margin-bottom:40px;
-
-    font-family:'Courier New', monospace;
-
-    letter-spacing:2px;
-
-    font-weight:bold;
-
-    color:#ee00ff;
-
-    text-shadow:
-        0 0 8px var(--glow);
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards;
-
-    animation-delay:1.4s;
-}
-
-/* SEARCH */
-
-.home-search{
-
-    width:100%;
-
-    max-width:520px;
-
-    margin:auto;
-
-    position:relative;
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards;
-
-    animation-delay:1.8s;
-
-    z-index: 100;
-}
-
-.home-search input{
-
-    width:100%;
-
-    padding:18px 0;
-
-    background:transparent;
-
-    border:none;
-
-    border-bottom:2px solid rgba(255,255,255,0.18);
-
-    color:white;
-
-    font-size:20px;
-
-    text-align:center;
-
-    outline:none;
-
-    transition:0.35s ease;
-
-    font-family:'PT Serif', serif;
-
-    letter-spacing:2px;
-
-    backdrop-filter:blur(4px);
-}
-
-.home-search input:focus{
-
-    border-bottom:2px solid var(--accent);
-
-    box-shadow:
-        0 10px 20px -10px var(--glow);
-
-    letter-spacing:4px;
-}
-
-.home-search input::placeholder{
-
-    color:rgba(255,255,255,0.28);
-
-    text-transform:uppercase;
-
-    font-size:14px;
-
-    letter-spacing:4px;
-}
-
-/* RESULTS */
-
-#search-results{
-
-    width:100%;
-
-    margin-top:14px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transform:
-        translateY(-6px);
-
-    transition:
-        opacity 0.22s ease,
-        transform 0.22s ease;
-
-    z-index:50;
-
-    max-height:40vh;
-
-    overflow-y:auto;
-
-    padding-right:6px;
-}
-
-#search-results::-webkit-scrollbar{
-
-    width:6px;
-}
-
-#search-results::-webkit-scrollbar-track{
-
-    background:transparent;
-}
-
-#search-results::-webkit-scrollbar-thumb{
-
-    background:var(--glow);
-
-    border-radius:10px;
-}
-
-#search-results.active{
-
-    opacity:1;
-
-    pointer-events:auto;
-
-    transform:
-        translateY(0);
-}
-
-.search-item{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-    padding:10px;
-
-    border-radius:16px;
-
-    background:rgba(0,0,0,0.32);
-
-    backdrop-filter:blur(18px);
-
-    border:
-        1px solid rgba(255,255,255,0.08);
-
-    text-decoration:none;
-
-    color:white;
-
-    transition:0.25s ease;
-
-    opacity:0;
-
-    animation:
-        resultIn 0.3s ease forwards;
-}
-
-.search-item:hover{
-
-    transform:
-        scale(1.02)
-        translateY(-2px);
-
-    border-color:
-        rgba(255,0,255,0.5);
-
-    box-shadow:
-        0 0 20px rgba(255,0,255,0.15);
-}
-
-.search-item img{
-
-    width:60px;
-
-    height:60px;
-
-    object-fit:cover;
-
-    border-radius:12px;
-
-    flex-shrink:0;
-}
-
-.search-info{
-    text-align:left;
-}
-
-.search-title{
-
-    font-size:18px;
-
-    margin-bottom:4px;
-}
-
-.search-sub{
-
-    font-size:11px;
-
-    opacity:0.6;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-}
-
-/* QUICK LINKS */
-
-.quick-links{
-
-    display:flex;
-
-    justify-content:center;
-
-    flex-wrap:wrap;
-
-    gap:12px;
-
-    margin-top:35px;
-
-    opacity:0;
-
-    animation:
-        fadeIn 2s ease forwards;
-
-    animation-delay:2.2s;
-}
-
-.quick-links a{
-
-    padding:10px 18px;
-
-    border:
-        1px solid rgba(255,255,255,0.14);
-
-    background:
-        rgba(255,255,255,0.04);
-
-    backdrop-filter:blur(8px);
-
-    color:white;
-
-    text-decoration:none;
-
-    border-radius:12px;
-
-    transition:0.25s ease;
-
-    font-size:14px;
-
-    letter-spacing:1px;
-}
-
-.quick-links a:hover{
-
-    transform:
-        translateY(-2px);
-
-    border-color:var(--accent);
-
-    box-shadow:
-        0 0 16px var(--glow);
-}
-
-/* CURSOR */
-
-.cursor{
-
-    border-right:2px solid var(--accent);
-
-    animation:
-        blink 1s step-end infinite;
-}
-
-/* MOBILE */
-
-@media (max-width:700px){
-
-    #cursor-glow{
-        display:none;
-    }
-
-    #day-box{
-        font-size:42px;
-        letter-spacing:6px;
-    }
-
-    #date-box{
-        font-size:13px;
-        letter-spacing:2px;
-    }
-
-    #time-box{
-        font-size:15px;
-        letter-spacing:4px;
-    }
-
-    .type-wrap{
-        font-size:13px;
-    }
-
-    .home-search input{
-        font-size:16px;
-    }
-
-}
-
-/* GAME CARDS */
-
-.bw-card {
-    position: relative;
-    display: inline-block;
-    width: 200px;
-    height: 200px;
-    margin: 10px;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.bw-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.bw-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 0, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: 0.3s ease;
-    backdrop-filter: blur(4px);
-}
-
-.bw-card:hover .bw-overlay {
-    opacity: 1;
-}
-
-.bw-name {
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 0 0 10px var(--glow);
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drod</title>
+    <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            /* Deep space color */
+            background-color: #050512; 
+            overflow: hidden;
+            font-family: 'PT Serif', serif;
+            color: #fff;
+            user-select: none;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
 </head>
 <body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
 
-<video
-    id="bg-video"
-    class="bg-video"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
->
-    <source
-        src="https://raw.githubusercontent.com/blazewingz/blazewingz/blazewingz/Home/Assets/bg.mp4"
-        type="video/mp4"
-    >
-</video>
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-<div id="cursor-glow"></div>
+        // Audio Context
+        let audioCtx;
+        function playSound(type) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
 
-<div class="main-ui" id="main-ui">
-
-    <div id="day-box"></div>
-
-    <div id="date-box"></div>
-
-    <div id="time-box"></div>
-
-    <div class="type-wrap">
-        <span id="text"></span>
-        <span class="cursor"></span>
-    </div>
-
-    <div class="home-search">
-
-        <input
-            id="search-input"
-            type="text"
-            placeholder="SEARCH THE ARCHIVES..."
-            autocomplete="off"
-        >
-
-        <div id="search-results"></div>
-
-    </div>
-
-    <div class="quick-links">
-
-        <a href="https://sites.google.com/view/blazewingz/library" target="_blank">
-            Library
-        </a>
-
-        <a href="https://blazewingz.github.io/blazewingz-mobile" target="_blank">
-            Mobile Version
-        </a>
-
-        <a href="https://github.com/Knightsbytes/Precursor" target="_blank">
-            Precursor
-        </a>
-
-    </div>
-
-</div>
-
-<script>
-
-/* VIDEO FORCE PLAY */
-
-const video =
-    document.getElementById('bg-video');
-
-video.play().catch(() => {
-
-    window.addEventListener(
-        'click',
-        () => video.play(),
-        { once:true }
-    );
-
-});
-
-/* CLOCK */
-
-function updateTime(){
-
-    const now =
-        new Date();
-
-    const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ];
-
-    document.getElementById("day-box").textContent =
-        days[now.getDay()];
-
-    document.getElementById("date-box").textContent =
-        now.toLocaleDateString(
-            'en-GB',
-            {
-                day:'numeric',
-                month:'long',
-                year:'numeric'
+            if (type === 'shoot') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'enemyShoot') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.15);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+            } else if (type === 'boom') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'die') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.8);
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.8);
             }
-        ).toUpperCase();
-
-    const time =
-        now.toLocaleTimeString(
-            'en-GB',
-            {
-                hour:'2-digit',
-                minute:'2-digit'
-            }
-        );
-
-    document.getElementById("time-box").textContent =
-        `– ${time} –`;
-
-}
-
-updateTime();
-
-setInterval(updateTime,1000);
-
-/* TYPEWRITER */
-
-const lines = [
-
-    "Welcome to BlazeWingz",
-    "You can report bugs by clicking on the 'Give Feedback' button at the bottom of every page.",
-    "Website probably works.",
-    "whats 9+10?",
-    "bing chilling",
-    "blazewingz, by blazewingz, for blazewingz."
-
-];
-
-let lIdx = 0;
-let cIdx = 0;
-let isDel = false;
-
-function type(){
-
-    const cur =
-        lines[lIdx];
-
-    document.getElementById("text").textContent =
-        cur.substring(0,cIdx);
-
-    if(!isDel && cIdx < cur.length){
-
-        cIdx++;
-
-        setTimeout(type,100);
-
-    }
-
-    else if(isDel && cIdx > 0){
-
-        cIdx--;
-
-        setTimeout(type,50);
-
-    }
-
-    else{
-
-        isDel = !isDel;
-
-        if(!isDel){
-
-            lIdx =
-                (lIdx + 1) % lines.length;
-
         }
 
-        setTimeout(
-            type,
-            isDel ? 2000 : 500
-        );
-
-    }
-
-}
-
-type();
-
-/* MOUSE ATMOSPHERE */
-
-const glow =
-    document.getElementById("cursor-glow");
-
-const ui =
-    document.getElementById("main-ui");
-
-document.addEventListener("mousemove", e => {
-
-    const x =
-        e.clientX;
-
-    const y =
-        e.clientY;
-
-    glow.style.left =
-        x + "px";
-
-    glow.style.top =
-        y + "px";
-
-    const rotateY =
-        ((x / window.innerWidth) - 0.5) * 5;
-
-    const rotateX =
-        ((y / window.innerHeight) - 0.5) * -5;
-
-    ui.style.transform = `
-        translateY(-50%)
-        perspective(1400px)
-        rotateX(${rotateX}deg)
-        rotateY(${rotateY}deg)
-    `;
-
-});
-
-/* GAME DATABASE */
-
-const gameCards = `
-
-<a href="https://sites.google.com/view/blazewingz/games/10-minutes-till-dawn" target="_blank" class="bw-card">
-    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/10%20Minutes/10%20Minutes%20'Till%20Dawn%20Logo.png?raw=true">
-    <div class="bw-overlay"><div class="bw-name">10 Minutes 'Till Dawn</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/balatro" target="_blank" class="bw-card">
-    <img src="https://i.scdn.co/image/ab67616d0000b273b153ba98e093ff8841fc5d73">
-    <div class="bw-overlay"><div class="bw-name">Balatro</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/brotato" target="_blank" class="bw-card">
-  <img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_download_software/1x1_NSwitchDS_Brotato_image500w.jpg">
-  <div class="bw-overlay"><div class="bw-name">Brotato</div></div>
-</a>
-
-<a href="https://sites.google.com/view/blazewingz/games/buckshot-roulette" target="_blank" class="bw-card">
-    <img src="https://bleedingcool.com/wp-content/uploads/2024/10/Buckshot-Roulette-Main-Art-900x900.jpg">
-    <div class="bw-overlay"><div class="bw-name">Buckshot Roulette</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/crazy-cattle-3d" target="_blank" class="bw-card">
-    <img src="https://curverush.com/data/image/crazy-cattle-3d.png">
-    <div class="bw-overlay"><div class="bw-name">Crazy Cattle 3D</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/celeste" target="_blank" class="bw-card">
-    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Celeste/Celeste.png?raw=true">
-    <div class="bw-overlay"><div class="bw-name">Celeste</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/cheese-rolling" target="_blank" class="bw-card">
-    <img src="https://assets-prd.ignimgs.com/2026/01/01/untitled-1-1767290877734.png">
-    <div class="bw-overlay"><div class="bw-name">Cheese Rolling</div></div>
-  </a>
-
-  <a href="https://sites.google.com/view/blazewingz/games/doom" target="_blank" class="bw-card">
-    <img src="https://oramind.com/content/images/2020/08/doom-560.jpg">
-    <div class="bw-overlay"><div class="bw-name">Doom</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/fnaf" target="_blank" class="bw-card">
-    <img src="https://cdn2.steamgriddb.com/icon/6aab1270668d8cac7cef2566a1c5f569.png">
-    <div class="bw-overlay"><div class="bw-name">Five Nights at Freddy's</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/half-life" target="_blank" class="bw-card">
-    <img src="https://cdn.wikimg.net/en/strategywiki/images/thumb/b/ba/Half-Life_Boxart.jpg/250px-Half-Life_Boxart.jpg">
-    <div class="bw-overlay"><div class="bw-name">Half-Life</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/hollow-knight-x-silksong" target="_blank" class="bw-card">
-    <img src="https://pbs.twimg.com/media/G8QFE9VaQAA4XOT.jpg">
-    <div class="bw-overlay"><div class="bw-name">Hollow Knight & Silksong</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/minecraft" target="_blank" class="bw-card">
-  <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Minecraft/Minecraft%20Logo.png?raw=true">
-  <div class="bw-overlay"><div class="bw-name">Minecraft</div></div>
-</a>
-
-<a href="https://sites.google.com/view/blazewingz/games/my-friend-peppa" target="_blank" class="bw-card">
-    <img src="https://www.nintendo.com/eu/media/images/11_square_images/games_18/nintendo_switch_5/SQ_NSwitch_MyFriendPeppaPig_EN_image500w.jpg">
-    <div class="bw-overlay"><div class="bw-name">My Friend Peppa Pig</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/osu" target="_blank" class="bw-card">
-    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/osu!/osu!.png?raw=true">
-    <div class="bw-overlay"><div class="bw-name">osu!</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/people-playground" target="_blank" class="bw-card">
-    <img src="https://assets-prd.ignimgs.com/2023/07/30/people-1690697393849.jpg">
-    <div class="bw-overlay"><div class="bw-name">people playground</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/raft" target="_blank" class="bw-card">
-    <img src="https://vectorseek.com/wp-content/uploads/2023/08/Raft-Logo-Vector.svg-.png">
-    <div class="bw-overlay"><div class="bw-name">Raft</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/repo" target="_blank" class="bw-card">
-    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/REPO/REPO.png?raw=true">
-    <div class="bw-overlay"><div class="bw-name">REPO</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/slime-rancher" target="_blank" class="bw-card">
-    <img src="https://assets1.ignimgs.com/2018/08/30/slime-rancher---button-fin-1535671208121.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80">
-    <div class="bw-overlay"><div class="bw-name">Slime Rancher</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/stardew-valley" target="_blank" class="bw-card">
-    <img src="https://www.simsnetwork.com/sites/simsnetwork.com/files/styles/twittercard/public/simpedia/box-arts/StardewValleyBox.png?itok=6XolDRMa">
-    <div class="bw-overlay"><div class="bw-name">Stardew Valley</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/terraria" target="_blank" class="bw-card">
-    <img src="https://forums.terraria.org/index.php?attachments/icon-png.280655/">
-    <div class="bw-overlay"><div class="bw-name">Terraria</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/the-binding-of-isaac" target="_blank" class="bw-card">
-    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Binding%20of%20Isaac/Curse%20of%20Binding.png?raw=true">
-    <div class="bw-overlay"><div class="bw-name">The Binding of Isaac</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/to-the-core" target="_blank" class="bw-card">
-    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/To%20The%20Core/To%20The%20Core.png?raw=true">
-    <div class="bw-overlay"><div class="bw-name">To The Core</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/ultrakill" target="_blank" class="bw-card">
-    <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/Ultrakill/Ultrakill.png?raw=true">
-    <div class="bw-overlay"><div class="bw-name">Ultrakill</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/undertale" target="_blank" class="bw-card">
-    <img src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA09239_00/1/i_691ab24757a01bfc94c6f293abd4fac52478bdac0d5829388ceb9a4e4da9c7d1/i/icon0.png">
-    <div class="bw-overlay"><div class="bw-name">Undertale</div></div>
-  </a>
-
-<a href="https://sites.google.com/view/blazewingz/games/gta-vice-city" target="_blank" class="bw-card">
-  <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/GTA:%20Vice%20City/GTA-Vice-City.png?raw=true">
-  <div class="bw-overlay"><div class="bw-name">GTA: Vice City</div></div>
-</a>
-
-<a href="https://sites.google.com/view/blazewingz/games/yomi-hustle" target="_blank" class="bw-card">
-  <img src="https://github.com/blazewingz/Assets/blob/blazewingz/Assets/YOMI%20Hustle/YOMI-Hustle.png?raw=true">
-  <div class="bw-overlay"><div class="bw-name">YOMI Hustle</div></div>
-</a>
-
-`;
-
-/* SEARCH SYSTEM */
-
-const parser =
-    new DOMParser();
-
-const doc =
-    parser.parseFromString(
-        gameCards,
-        "text/html"
-    );
-
-const gameElements =
-    [...doc.querySelectorAll(".bw-card")];
-
-const games =
-    gameElements.map(card => ({
-
-        title:
-            card.querySelector(".bw-name")
-            ?.textContent
-            ?.trim(),
-
-        image:
-            card.querySelector("img")
-            ?.src,
-
-        url:
-            card.href
-
-    }));
-
-const input =
-    document.getElementById("search-input");
-
-const results =
-    document.getElementById("search-results");
-
-input.addEventListener("input", () => {
-
-    const value =
-        input.value
-        .toLowerCase()
-        .trim();
-
-    if(!value){
-
-        results.classList.remove("active");
-
-        setTimeout(() => {
-
-            results.innerHTML = "";
-
-        },180);
-
-        return;
-
-    }
-
-    const matches =
-        games.filter(game =>
-            game.title
-            .toLowerCase()
-            .includes(value)
-        );
-
-    results.innerHTML = "";
-
-    if(matches.length === 0){
-
-        results.classList.remove("active");
-
-        return;
-
-    }
-
-    matches
-    .slice(0,5)
-    .forEach((game,i) => {
-
-        const a =
-            document.createElement("a");
-
-        a.className =
-            "search-item";
-
-        a.href =
-            game.url;
-
-        a.target =
-            "_blank";
-
-        a.style.animationDelay =
-            `${i * 0.045}s`;
-
-        a.innerHTML = `
-
-            <img src="${game.image}">
-
-            <div class="search-info">
-
-                <div class="search-title">
-                    ${game.title}
-                </div>
-
-                <div class="search-sub">
-                    Launch Game
-                </div>
-
-            </div>
-
-        `;
-
-        results.appendChild(a);
-
-    });
-
-    requestAnimationFrame(() => {
-
-        results.classList.add("active");
-
-    });
-
-});
-
-/* ENTER = FIRST RESULT */
-
-input.addEventListener("keydown", e => {
-
-    if(e.key === "Enter"){
-
-        const first =
-            results.querySelector(".search-item");
-
-        if(first){
-
-            window.open(
-                first.href,
-                "_blank"
-            );
-
+        let state = 'MENU';
+        let score = 0;
+        let keys = {};
+        window.addEventListener('keydown', e => keys[e.code] = true);
+        window.addEventListener('keyup', e => keys[e.code] = false);
+
+        // Entities
+        let ship;
+        let lasers = [];
+        let enemyLasers = [];
+        let asteroids = [];
+        let bgAsteroids = [];
+        let enemies = [];
+        let particles = [];
+        let stars = [];
+        
+        let frameCount = 0;
+
+        // Initialize background environment once
+        function initEnvironment() {
+            stars = [];
+            for(let i=0; i<150; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    z: Math.random() * 3 + 1 // Depth for parallax
+                });
+            }
+            bgAsteroids = [];
+            for(let i=0; i<8; i++) {
+                let ast = {
+                    x: Math.random() * width, y: Math.random() * height,
+                    r: Math.random() * 40 + 30,
+                    vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+                    rot: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.02,
+                    verts: []
+                };
+                let numVerts = Math.floor(Math.random() * 5 + 7);
+                for (let j = 0; j < numVerts; j++) {
+                    ast.verts.push(ast.r + Math.random() * ast.r * 0.4 - ast.r * 0.2);
+                }
+                bgAsteroids.push(ast);
+            }
+        }
+        initEnvironment();
+
+        function initGame() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            state = 'PLAYING';
+            score = 0;
+            frameCount = 0;
+            ship = {
+                x: width / 2, y: height / 2,
+                r: 12, a: -Math.PI / 2,
+                vx: 0, vy: 0, cooldown: 0
+            };
+            lasers = []; enemyLasers = [];
+            asteroids = []; enemies = []; particles = [];
+            
+            for(let i=0; i<5; i++) spawnAsteroid();
         }
 
-    }
+        window.addEventListener('mousedown', () => {
+            if (state === 'MENU' || state === 'DEAD') initGame();
+        });
 
-});
+        function spawnAsteroid(x, y, r) {
+            let ast = {
+                x: x !== undefined ? x : Math.random() * width,
+                y: y !== undefined ? y : (Math.random() > 0.5 ? -50 : height + 50),
+                r: r || (Math.random() * 25 + 20),
+                vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3,
+                verts: []
+            };
+            if (x === undefined && Math.hypot(ast.x - width/2, ast.y - height/2) < 150) ast.x = -50; 
+            let numVerts = Math.floor(Math.random() * 5 + 7);
+            for (let i = 0; i < numVerts; i++) ast.verts.push(ast.r + Math.random() * ast.r * 0.4 - ast.r * 0.2);
+            asteroids.push(ast);
+        }
 
-</script>
+        function spawnEnemy() {
+            enemies.push({
+                x: Math.random() > 0.5 ? -30 : width + 30,
+                y: Math.random() * height,
+                r: 14, a: 0, vx: 0, vy: 0,
+                cooldown: 60
+            });
+        }
 
+        function createExplosion(x, y, color, amount=20) {
+            for (let i = 0; i < amount; i++) {
+                particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.5) * 12,
+                    life: 1, decay: Math.random() * 0.02 + 0.02, color: color
+                });
+            }
+        }
+
+        function update() {
+            frameCount++;
+
+            // Parallax Environment (moves opposite to ship)
+            let driftX = state === 'PLAYING' ? ship.vx : 0.5;
+            let driftY = state === 'PLAYING' ? ship.vy : 0;
+            
+            stars.forEach(s => {
+                s.x -= driftX / s.z;
+                s.y -= driftY / s.z;
+                if (s.x < 0) s.x = width; if (s.x > width) s.x = 0;
+                if (s.y < 0) s.y = height; if (s.y > height) s.y = 0;
+            });
+
+            bgAsteroids.forEach(a => {
+                a.x += a.vx - (driftX * 0.2);
+                a.y += a.vy - (driftY * 0.2);
+                a.rot += a.rotSpeed;
+                if (a.x < -a.r*2) a.x = width + a.r*2; if (a.x > width + a.r*2) a.x = -a.r*2;
+                if (a.y < -a.r*2) a.y = height + a.r*2; if (a.y > height + a.r*2) a.y = -a.r*2;
+            });
+
+            if (state === 'PLAYING') {
+                // Ship Controls
+                if (keys['ArrowLeft'] || keys['KeyA']) ship.a -= 0.1;
+                if (keys['ArrowRight'] || keys['KeyD']) ship.a += 0.1;
+                if (keys['ArrowUp'] || keys['KeyW']) {
+                    ship.vx += Math.cos(ship.a) * 0.35;
+                    ship.vy += Math.sin(ship.a) * 0.35;
+                    particles.push({
+                        x: ship.x - Math.cos(ship.a) * ship.r, y: ship.y - Math.sin(ship.a) * ship.r,
+                        vx: -Math.cos(ship.a) * 5 + (Math.random()-0.5)*2, vy: -Math.sin(ship.a) * 5 + (Math.random()-0.5)*2,
+                        life: 1, decay: 0.05, color: '#00ffff'
+                    });
+                }
+                
+                ship.vx *= 0.98; ship.vy *= 0.98;
+                ship.x += ship.vx; ship.y += ship.vy;
+                if (ship.x < 0) ship.x = width; if (ship.x > width) ship.x = 0;
+                if (ship.y < 0) ship.y = height; if (ship.y > height) ship.y = 0;
+
+                // Forgiving & Faster Shooting
+                if (ship.cooldown > 0) ship.cooldown--;
+                if (keys['Space'] && ship.cooldown === 0) {
+                    lasers.push({
+                        x: ship.x + Math.cos(ship.a) * ship.r, y: ship.y + Math.sin(ship.a) * ship.r,
+                        vx: Math.cos(ship.a) * 22, vy: Math.sin(ship.a) * 22, // Faster lasers
+                        life: 45
+                    });
+                    ship.cooldown = 12;
+                    playSound('shoot');
+                }
+
+                // Enemy Spawning
+                if (frameCount % 400 === 0 && enemies.length < 3) spawnEnemy();
+            }
+
+            // Update Player Lasers
+            for (let i = lasers.length - 1; i >= 0; i--) {
+                lasers[i].x += lasers[i].vx; lasers[i].y += lasers[i].vy;
+                lasers[i].life--;
+                if (lasers[i].life <= 0) lasers.splice(i, 1);
+            }
+
+            // Update Enemy Lasers
+            for (let i = enemyLasers.length - 1; i >= 0; i--) {
+                enemyLasers[i].x += enemyLasers[i].vx; enemyLasers[i].y += enemyLasers[i].vy;
+                enemyLasers[i].life--;
+                
+                // Hit Player
+                if (state === 'PLAYING') {
+                    if (Math.hypot(enemyLasers[i].x - ship.x, enemyLasers[i].y - ship.y) < ship.r + 5) {
+                        createExplosion(ship.x, ship.y, '#00ffff', 40);
+                        playSound('die'); state = 'DEAD';
+                        setTimeout(() => state = 'MENU', 2500);
+                        enemyLasers.splice(i, 1);
+                        continue;
+                    }
+                }
+                if (enemyLasers[i].life <= 0) enemyLasers.splice(i, 1);
+            }
+
+            // Enemies AI & Collisions
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                let e = enemies[i];
+                if (state === 'PLAYING') {
+                    // Track player
+                    let angleToPlayer = Math.atan2(ship.y - e.y, ship.x - e.x);
+                    e.a = angleToPlayer;
+                    e.vx += Math.cos(e.a) * 0.1; e.vy += Math.sin(e.a) * 0.1;
+                    
+                    // Shoot player
+                    e.cooldown--;
+                    if (e.cooldown <= 0 && Math.hypot(ship.x - e.x, ship.y - e.y) < 400) {
+                        enemyLasers.push({
+                            x: e.x + Math.cos(e.a)*e.r, y: e.y + Math.sin(e.a)*e.r,
+                            vx: Math.cos(e.a) * 10, vy: Math.sin(e.a) * 10, life: 60
+                        });
+                        e.cooldown = 90;
+                        playSound('enemyShoot');
+                    }
+                }
+                e.vx *= 0.98; e.vy *= 0.98;
+                e.x += e.vx; e.y += e.vy;
+                if (e.x < -50) e.x = width+50; if (e.x > width+50) e.x = -50;
+                if (e.y < -50) e.y = height+50; if (e.y > height+50) e.y = -50;
+
+                // Hit by player laser
+                let enemyDestroyed = false;
+                for (let j = lasers.length - 1; j >= 0; j--) {
+                    if (Math.hypot(lasers[j].x - e.x, lasers[j].y - e.y) < e.r + 15) { // Forgiving hitbox
+                        createExplosion(e.x, e.y, '#ff3333');
+                        playSound('boom');
+                        enemies.splice(i, 1);
+                        lasers.splice(j, 1);
+                        score += 250;
+                        enemyDestroyed = true;
+                        break;
+                    }
+                }
+                if (enemyDestroyed) continue;
+
+                // Player crashing into enemy
+                if (state === 'PLAYING' && Math.hypot(ship.x - e.x, ship.y - e.y) < ship.r + e.r) {
+                    createExplosion(ship.x, ship.y, '#00ffff', 40);
+                    playSound('die'); state = 'DEAD';
+                    setTimeout(() => state = 'MENU', 2500);
+                }
+            }
+
+            // Update Asteroids & Collisions
+            for (let i = asteroids.length - 1; i >= 0; i--) {
+                let a = asteroids[i];
+                a.x += a.vx; a.y += a.vy;
+
+                if (a.x < -a.r) a.x = width + a.r; if (a.x > width + a.r) a.x = -a.r;
+                if (a.y < -a.r) a.y = height + a.r; if (a.y > height + a.r) a.y = -a.r;
+
+                if (state === 'PLAYING') {
+                    if (Math.hypot(ship.x - a.x, ship.y - a.y) < ship.r + a.r * 0.8) {
+                        createExplosion(ship.x, ship.y, '#00ffff', 40);
+                        playSound('die'); state = 'DEAD';
+                        setTimeout(() => state = 'MENU', 2500);
+                    }
+                }
+
+                // Laser hitting asteroid (Forgiving Hitbox applied here: a.r + 15)
+                for (let j = lasers.length - 1; j >= 0; j--) {
+                    let l = lasers[j];
+                    if (Math.hypot(l.x - a.x, l.y - a.y) < a.r + 15) { 
+                        createExplosion(a.x, a.y, '#ff00ff');
+                        playSound('boom');
+                        
+                        if (Math.random() < 0.20 && a.r > 15) {
+                            spawnAsteroid(a.x, a.y, a.r / 1.5); spawnAsteroid(a.x, a.y, a.r / 1.5);
+                        }
+                        
+                        asteroids.splice(i, 1); lasers.splice(j, 1);
+                        score += 100;
+                        if (asteroids.length < 3) spawnAsteroid(); 
+                        break;
+                    }
+                }
+            }
+
+            // Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].x += particles[i].vx; particles[i].y += particles[i].vy;
+                particles[i].life -= particles[i].decay;
+                if (particles[i].life <= 0) particles.splice(i, 1);
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(5, 5, 18, 0.4)'; // Dark blue/purple trail effect
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+
+            // Draw Parallax Stars
+            ctx.fillStyle = '#ffffff';
+            stars.forEach(s => {
+                let size = 1.5 / s.z;
+                ctx.globalAlpha = 1 / s.z;
+                ctx.beginPath(); ctx.arc(s.x, s.y, size, 0, Math.PI*2); ctx.fill();
+            });
+            ctx.globalAlpha = 1.0;
+
+            // Draw Background Asteroids
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.lineWidth = 1;
+            bgAsteroids.forEach(a => {
+                ctx.save();
+                ctx.translate(a.x, a.y);
+                ctx.rotate(a.rot);
+                ctx.beginPath();
+                for (let i = 0; i < a.verts.length; i++) {
+                    let angle = (i / a.verts.length) * Math.PI * 2;
+                    let rx = Math.cos(angle) * a.verts[i];
+                    let ry = Math.sin(angle) * a.verts[i];
+                    if (i === 0) ctx.moveTo(rx, ry); else ctx.lineTo(rx, ry);
+                }
+                ctx.closePath(); ctx.stroke();
+                ctx.restore();
+            });
+
+            // Draw Particles (Godrays)
+            ctx.globalCompositeOperation = 'lighter';
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.life * 4, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.shadowBlur = 12; ctx.shadowColor = p.color;
+                ctx.fill();
+            });
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.shadowBlur = 0;
+
+            // Draw Asteroids
+            ctx.strokeStyle = '#ff00ff'; // Neon purple asteroids
+            ctx.shadowColor = '#ff00ff';
+            ctx.shadowBlur = 5;
+            ctx.lineWidth = 2;
+            asteroids.forEach(a => {
+                ctx.beginPath();
+                for (let i = 0; i < a.verts.length; i++) {
+                    let angle = (i / a.verts.length) * Math.PI * 2;
+                    let rx = a.x + Math.cos(angle) * a.verts[i];
+                    let ry = a.y + Math.sin(angle) * a.verts[i];
+                    if (i === 0) ctx.moveTo(rx, ry); else ctx.lineTo(rx, ry);
+                }
+                ctx.closePath(); ctx.stroke();
+            });
+            ctx.shadowBlur = 0;
+
+            // Draw Enemies
+            enemies.forEach(e => {
+                ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(e.a);
+                ctx.strokeStyle = '#ff3333'; ctx.shadowBlur = 15; ctx.shadowColor = '#ff3333';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(e.r, 0); ctx.lineTo(-e.r, -e.r * 0.8);
+                ctx.lineTo(-e.r * 0.4, 0); ctx.lineTo(-e.r, e.r * 0.8);
+                ctx.closePath(); ctx.stroke();
+                ctx.restore();
+            });
+
+            // Draw Lasers
+            ctx.lineWidth = 3;
+            lasers.forEach(l => {
+                ctx.strokeStyle = '#00ffff'; ctx.shadowColor = '#00ffff'; ctx.shadowBlur = 10;
+                ctx.beginPath(); ctx.moveTo(l.x, l.y); ctx.lineTo(l.x - l.vx*0.6, l.y - l.vy*0.6); ctx.stroke();
+            });
+            enemyLasers.forEach(l => {
+                ctx.strokeStyle = '#ff3333'; ctx.shadowColor = '#ff3333'; ctx.shadowBlur = 10;
+                ctx.beginPath(); ctx.moveTo(l.x, l.y); ctx.lineTo(l.x - l.vx*0.6, l.y - l.vy*0.6); ctx.stroke();
+            });
+            ctx.shadowBlur = 0;
+
+            // Draw Ship
+            if (state === 'PLAYING') {
+                ctx.save(); ctx.translate(ship.x, ship.y); ctx.rotate(ship.a);
+                ctx.strokeStyle = '#00ffff'; ctx.shadowBlur = 15; ctx.shadowColor = '#00ffff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(ship.r, 0); ctx.lineTo(-ship.r, -ship.r * 0.7);
+                ctx.lineTo(-ship.r * 0.5, 0); ctx.lineTo(-ship.r, ship.r * 0.7);
+                ctx.closePath(); ctx.stroke();
+                ctx.restore();
+            }
+
+            // Draw UI
+            ctx.fillStyle = '#fff'; ctx.textAlign = 'center';
+            if (state === 'MENU') {
+                ctx.font = '72px "Space Age", sans-serif';
+                ctx.shadowBlur = 15; ctx.shadowColor = '#fff';
+                ctx.fillText('DROD', width / 2, height / 2 - 20);
+                ctx.shadowBlur = 0;
+                ctx.font = '24px "PT Serif", serif';
+                ctx.fillText('CLICK TO START', width / 2, height / 2 + 50);
+            } else if (state === 'DEAD') {
+                ctx.font = '64px "Space Age", sans-serif';
+                ctx.fillStyle = '#ff3333'; ctx.shadowBlur = 20; ctx.shadowColor = '#ff3333';
+                ctx.fillText('DESTROYED', width / 2, height / 2 - 20);
+                ctx.shadowBlur = 0;
+            }
+
+            if (state === 'PLAYING' || state === 'DEAD') {
+                ctx.font = '24px "Space Age", sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#fff';
+                ctx.fillText(`SCORE: ${score}`, 30, 50);
+            }
+        }
+
+        function loop() {
+            update(); draw(); requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
 </body>
 </html>
